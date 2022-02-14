@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="152" height="152" viewBox="0 0 152 152">
+  <g id="Grupo_1287" data-name="Grupo 1287" transform="translate(-428 -211)">
+    <rect id="Retângulo_12" data-name="Retângulo 12" width="152" height="152" rx="4" transform="translate(428 211)" opacity="0.05"/>
+    <g id="camera-4998_6cfaba91-b912-413d-93da-fb6e3acecf44" transform="translate(480 263)" opacity="0.4">
+      <rect id="Retângulo_473" data-name="Retângulo 473" width="48" height="48" fill="none"/>
+      <g id="Grupo_995" data-name="Grupo 995" transform="translate(1.5 6.75)">
+        <path id="layer2" d="M44.75,15h-9.3L30.5,9h-12l-4.95,6H4.25A2.25,2.25,0,0,0,2,17.25v22.5A2.25,2.25,0,0,0,4.25,42h40.5A2.25,2.25,0,0,0,47,39.75V17.25A2.25,2.25,0,0,0,44.75,15Z" transform="translate(-2 -9)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+        <circle id="layer1" cx="10.5" cy="10.5" r="10.5" transform="translate(12 7.5)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+        <circle id="layer1-2" data-name="layer1" cx="0.75" cy="0.75" r="0.75" transform="translate(38.25 11.25)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+        <circle id="layer1-3" data-name="layer1" cx="4.5" cy="4.5" r="4.5" transform="translate(18 13.5)" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

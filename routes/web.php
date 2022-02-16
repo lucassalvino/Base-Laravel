@@ -1,16 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\UsuarioController;
-use App\Http\Controllers\Web\admin\Categorizadores\EspecialidadesController;
 use App\Http\Controllers\Web\admin\Categorizadores\SexoController;
 use App\Http\Controllers\Web\admin\Categorizadores\TipoDocumentoController;
-use App\Http\Controllers\Web\admin\ConsultaController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
-use App\Http\Controllers\Web\admin\Produtos\ProdutosController;
 use App\Http\Controllers\Web\admin\Usuarios\GrupoController;
-use App\Http\Controllers\Web\admin\Questionario\QuestionarioController;
-use App\Http\Controllers\Web\admin\Questionario\RespostasQuestionarioController;
 use App\Http\Controllers\Web\admin\Usuarios\UsuarioController as UsuarioAdminController;
 use App\Http\Controllers\Web\cms\CMSController;
 use App\Http\Controllers\Web\Produtos\InfoprodutoController;
@@ -56,6 +51,7 @@ if(!function_exists('ConstruiRotaPadraoAdmin')){
         });
     }
 }
+
 /* Área publica */
 Route::middleware(['cors'])->group(function(){
     Route::prefix('/login')->group(function(){

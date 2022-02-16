@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\ConsultaController;
-use App\Http\Controllers\Api\Categorizadores\EspecialidadesController;
 use App\Http\Controllers\Api\Categorizadores\SexoController;
 use App\Http\Controllers\Api\Categorizadores\TipoDocumentoController;
 use App\Http\Controllers\Api\CategorizadoresAPIController;

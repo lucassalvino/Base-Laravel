@@ -23,12 +23,12 @@
 
         <script src="{{asset('assets/js/main.js')}}?v=1.0"></script>
 
-        <meta name="description" content="DESCRICAO"/>
+        <meta name="description" content="teste"/>
         <meta property="og:type" content="website"/>
         <meta property="og:title" content="NOME" />
         <meta property="og:site_name" content="NOME" />
         <meta property="og:url" content="LINK" />
-        <meta property="og:description" content="DESCRICAO" />
+        <meta property="og:description" content="teste" />
         <meta property="og:locale" content="pt_BR" />
         <meta property="og:image" content="IMG PADRAO"/>
         <meta name="keywords" content="PALAVRAS" />
@@ -49,70 +49,3 @@
         <link href="https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap" rel="stylesheet"> --}}
     </head>
     <body>
-
-        <nav class="navbar navbar-expand-lg bg-blue fixed-top">
-            <div class="container">
-                <div class="row vertical-row-center">
-                    <div class="col-lg-6">
-                        <a class="navbar-brand" href="{{ url('/home') }}">
-                            <img src="{{asset('assets/img/logo.png')}}">
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        @hasSection('auth')
-                            <div class="hidden-m">
-                                <div class="nav-content">
-                                    <ul class="list-itens-icons">
-                                        <li><a href="#"><img src="{{asset('assets/img/icons/nav-heart.svg')}}"><span>1</span></a></li>
-                                        <li><a href="#"><img src="{{asset('assets/img/icons/nav-cart.svg')}}"><span>1</span></a></li>
-                                        <li><a href="#"><img src="{{asset('assets/img/icons/nav-bell.svg')}}"><span>1</span></a></li>
-                                    </ul>
-                                    <div class="dropdown nav-user-dropdown">
-                                        <div class="dropdown-toggle nav-user-header" id="dropdownNavUser" data-bs-toggle="dropdown" aria-expanded="false">
-                                            @if(Session::has('usuarioAvatar'))
-                                                <img src="{{ Session::get('usuarioAvatar')}}" class="avatar">
-                                            @else
-                                                <img src="{{asset('assets/img/icons/user.svg')}}" class="avatar">
-                                            @endif
-                                            <span class="max_line max_line_1">
-                                                @if(Session::has('usuarioNome'))
-                                                    {{ Session::get('usuarioNome')}}
-                                                @endif
-                                            </span>
-                                            <img src="{{asset('assets/img/icons/nav-carret.png')}}" class="carret">
-                                        </div>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownNavUser">
-                                            <div class="nav-user-content">
-                                                @if(Session::has('usuarioAvatar'))
-                                                    <img src="{{ Session::get('usuarioAvatar')}}" class="avatar">
-                                                @else
-                                                    <img src="{{asset('assets/img/icons/user.svg')}}" class="avatar">
-                                                @endif
-                                                <div class="content">
-                                                    <p class="name max_line max_line_1">
-                                                        @if(Session::has('usuarioNome'))
-                                                            {{ Session::get('usuarioNome')}}
-                                                        @endif
-                                                    </p>
-                                                    <p class="email">
-                                                        @if(Session::has('usuarioEmail'))
-                                                            {{ Session::get('usuarioEmail')}}
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <ul>
-                                                <li><a href="#"><img src="{{asset('assets/img/icons/nav-drop-user.svg')}}">Editar meu perfil</a></li>
-                                                <li><a href="#"><img src="{{asset('assets/img/icons/nav-drop-star.svg')}}">Meus cursos</a></li>
-                                                <li><a href="#"><img src="{{asset('assets/img/icons/nav-drop-bell.svg')}}">Receber Notificações</a></li>
-                                                <li><a href="{{ url('/logout') }}"><img src="{{asset('assets/img/icons/nav-drop-logout.svg')}}">Sair da Conta</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                </div>            
-            </div>
-        </nav>

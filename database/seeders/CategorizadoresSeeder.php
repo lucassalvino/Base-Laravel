@@ -24,7 +24,7 @@ class CategorizadoresSeeder extends Seeder
             $dadosInserir = $class::ObtenhaRegistrosPadrao();
             foreach($dadosInserir as $inserir){
                 if(array_key_exists('id', $inserir)){
-                    $dbTipo = $class::query()
+                    $dbTipo = $class::withTrashed()
                     ->where('id','=', $inserir['id'])
                     ->first();
                     if(!$dbTipo){

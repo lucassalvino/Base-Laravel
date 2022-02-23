@@ -13,4 +13,10 @@ class BaseModelCategorizadores extends BaseModel{
         }
         return $consulta->get($ColunaListar);
     }
+    
+    public static function ObtemCategorizadorPorSlug($busca, $camposSlug = 'slug', $operador = 'ilike'){
+        return static::query()
+        ->where($camposSlug, $operador, $busca)
+        ->first();
+    }
 }

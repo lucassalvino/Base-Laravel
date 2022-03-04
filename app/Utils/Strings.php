@@ -2,22 +2,12 @@
 namespace App\Utils;
 class Strings{
     public static function slugify($text, string $divider = '-'){
-        // replace non letter or digits by divider
         $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
-
-        // transliterate
         $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
 
-        // remove unwanted characters
         $text = preg_replace('~[^-\w]+~', '', $text);
-
-        // trim
         $text = trim($text, $divider);
-
-        // remove duplicate divider
         $text = preg_replace('~-+~', $divider, $text);
-
-        // lowercase
         $text = strtolower($text);
 
         if (empty($text)) {
@@ -28,5 +18,17 @@ class Strings{
 
     public static function SomenteNumeros($texto){
         return preg_replace( '/[^0-9]/is', '', $texto );
+    }
+
+    public static function obfuscate_email($email){
+        $em   = explode("@",$email);
+        $name = implode('@', array_slice($em, 0, count($em)-1));
+        $len  = floor(strlen($name)/2);
+
+        return substr($name,0, $len) . str_repeat('*', $len) . "@" . end($em);   
+    }
+
+    public static function isNullOrEmpty($str){
+        return ($str === null || trim($str) === '');
     }
 }

@@ -103,6 +103,9 @@ class BaseModel extends Model{
     public static function NormalizaDados(&$dados, $atualizacao = false){
     }
 
+    public static function CriaLog(&$dadosRequisicao, $idRegistro = null, $atualizacao = false){
+    }
+
     /**
      * Retorna um UUID se cadastro ocorreu com suceso, ou um Validator caso tenha falhado na validação
      */
@@ -138,13 +141,15 @@ class BaseModel extends Model{
 
     public static function CadastraElemento(Request $request){
         try{
-            $id = static::CadastraElementoArray($request->all());
+            $dados = $request->all();
+            $id = static::CadastraElementoArray($dados);
             if(static::CheckIfIsValidator($id)){
                 return BaseRetornoApi::GetRetornoErro($id->errors()->all(), "O registro não foi criado");
             }else{
                 if($id instanceof JsonResponse)
                     return $id;
                 if($id){
+                    static::CriaLog($dados, $id);
                     return BaseRetornoApi::GetRetornoSucessoId("Registro Criado com sucesso", $id);
                 }else{
                     return BaseRetornoApi::GetRetornoErro(Array());
@@ -207,14 +212,17 @@ class BaseModel extends Model{
         try{
             $item = static::query()->where('id', '=', $id)->first();
             if($item){
-                $atualiza = static::AtualizaElementoArray($request->all(), $item);
+                $dados = $request->all();
+                $atualiza = static::AtualizaElementoArray($dados, $item);
                 if( static::CheckIfIsValidator($atualiza) ){
                     return BaseRetornoApi::GetRetornoErro($atualiza->errors()->all(), "O registro não foi atualizado");
                 }else{
                     if($atualiza instanceof JsonResponse)
                         return $atualiza;
-                    else
+                    else{
+                        static::CriaLog($dados, $id, true);
                         return BaseRetornoApi::GetRetornoSucessoId("Registro atualizado com sucesso", $id);
+                    }
                 }
             }else{
                 return BaseRetornoApi::GetRetornoNaoEncontrado();

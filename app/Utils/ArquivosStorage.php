@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Utils;
 use Illuminate\Support\Str;
 class ArquivosStorage{
@@ -36,7 +36,7 @@ class ArquivosStorage{
         }
         return $dbUrl;
     }
-    
+
     public static function GetRelativePatch($dbUrl){
         return self::$BasePath.DIRECTORY_SEPARATOR.$dbUrl;
     }
@@ -73,7 +73,7 @@ class ArquivosStorage{
         }
         return "txt";
     }
-    
+
     public static function GetTypeByExtensao($extensao){
         $arrayRetorno = static::GetExtensoesPossiveis();
         foreach($arrayRetorno as $key=>$ret){
@@ -84,7 +84,7 @@ class ArquivosStorage{
     }
 
     public static function GetExtensoesPossiveis(){
-        $arrayRetorno = Array( 
+        $arrayRetorno = Array(
             'image/jpeg' => 'jpg',
             'image/jpg' => 'jpg',
             'image/png' => 'png',
@@ -153,5 +153,4 @@ class ArquivosStorage{
         );
         return $arrayRetorno;
     }
-    
 }

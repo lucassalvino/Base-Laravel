@@ -55,8 +55,31 @@ class BaseModel extends Model{
     public function ConstruiFiltroListagem(Builder $consulta, Request $request) : Builder{
         return $consulta;
     }
+
     public function ColunasListagem() : Array{
         return $this->fillable;
+    }
+
+    /**
+     * Gera array para ordenação a partir da requisicao orderby
+     */
+    public function ColunasOrdenacao(Request $request) : Array{
+        $arrayorder = $request->get('orderby', []);
+        if(!is_array($arrayorder)) return [];
+        $retorno = Array();
+        foreach($arrayorder as $ordena){
+            if(array_key_exists('campo', $ordena)){
+                $add = Array(
+                    'campo' => $ordena['campo'],
+                    'ordem' => 'ASC'
+                );
+                if(array_key_exists('ordem', $ordena)){
+                    $add['ordem'] = $ordena['ordem'];
+                }
+                array_push($retorno, $add);
+            }
+        }
+        return $retorno;
     }
 
     public function ColunasEdicao(){
@@ -101,6 +124,9 @@ class BaseModel extends Model{
     }
 
     public static function NormalizaDados(&$dados, $atualizacao = false){
+    }
+
+    public static function NormalizaFiltros(Request &$filtros){
     }
 
     public static function CriaLog(&$dadosRequisicao, $idRegistro = null, $atualizacao = false){
@@ -188,8 +214,12 @@ class BaseModel extends Model{
         return BaseRetornoApi::GetRetornoErro($erros, $mesagem, $codigo);
     }
 
-    public static function ObtenhaDataTimeBanco($data){
-        $data = new Carbon($data);
+    public static function ObtenhaDataTimeBanco($data, $format = 'd/m/Y H:i:s'){
+        if(is_null($format)){
+            $data = new Carbon($data);
+        }else{
+            $data = Carbon::createFromFormat($format, $data);
+        }
         $data->timezone('America/Sao_Paulo');
         $data = $data->toDateTimeString();
         return $data;
@@ -229,7 +259,6 @@ class BaseModel extends Model{
             }
         }
         catch(Exception $erro){
-
             return BaseRetornoApi::GetRetornoErro([$erro->getMessage()]);
         }
     }
@@ -250,7 +279,7 @@ class BaseModel extends Model{
         return $consulta;
     }
 
-    public static function ListagemElemento(Request $request){
+    public static function ListagemElemento(Request $request, $nopaginate = NULL){
         $instancia = new static;
         $consulta = self::query();
         $incluiExcluidos = false;
@@ -268,11 +297,26 @@ class BaseModel extends Model{
         if( !is_null($request->get('search', null)) ){
             $instancia->MontarConsultaBuscaTexto($consulta, $_GET['search']);
         }
+
         $camposRetorno = $instancia->ColunasListagem();
+        $camposOrdenacao = $instancia->ColunasOrdenacao($request);
+        static::NormalizaFiltros($request);
+
         if($incluiExcluidos){
             array_push($camposRetorno,$instancia->GetTableName().'.deleted_at');
         }
-        return $instancia->ConstruiFiltroListagem($consulta, $request)->paginate(intval($request->get('per_page', 20)), $camposRetorno);
+        
+        $consulta = $instancia->ConstruiFiltroListagem($consulta, $request);
+
+        foreach($camposOrdenacao as $ordena){
+            $consulta = $consulta->orderBy($ordena['campo'], $ordena['ordem']);
+        }
+
+        if(!$nopaginate) {
+            return $consulta->paginate(intval($request->get('per_page', 20)), $camposRetorno);
+        } else {
+            return $consulta->get($camposRetorno);
+        }
     }
 
     public static function Detalhado(Request $request, $id){
@@ -312,7 +356,6 @@ class BaseModel extends Model{
     }
 
     public static function SalvaImagem($base64Imagem, $tipoImagem, $caminhorelativo=false, $storageFolder = 'imagens'){
-
         $nomeArquivo = false;
 
         if(isset($base64Imagem)){
@@ -362,5 +405,11 @@ class BaseModel extends Model{
         }
 
         return $nomesArquivo;
+    }
+
+    public static function ObtemSqlQueryBuilder($consulta){
+        $query = str_replace(array('?'), array('\'%s\''), $consulta->toSql());
+        $query = vsprintf($query, $consulta->getBindings());
+        return $query;
     }
 }

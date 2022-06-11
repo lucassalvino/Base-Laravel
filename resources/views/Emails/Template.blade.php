@@ -1,3 +1,8 @@
+<?php 
+if(!isset($exibirselopagamento)){
+    $exibirselopagamento = false;
+}
+?>
 <html>
 <head>
     <title>

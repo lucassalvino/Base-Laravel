@@ -5,7 +5,7 @@ use App\Models\Bases\BaseModel;
 Class Telefone extends BaseModel{
     protected $table = 'telefone';
     protected $fillable = [
-        'id', 'ddd', 'numero', 'padrao'
+        'id', 'ddd', 'numero', 'padrao', 'usuario_id'
     ];
 
     public function GetLikeFields(){

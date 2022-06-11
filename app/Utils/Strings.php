@@ -89,6 +89,7 @@ class Strings{
         $textoAlterar = str_replace("", "", $textoAlterar);
         $textoAlterar = str_replace(" ", "%20", $textoAlterar);
         $textoAlterar = preg_replace('/<[^>]*>/', '', $textoAlterar);
+
         return $textoAlterar;
     }
 

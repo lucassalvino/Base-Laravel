@@ -102,11 +102,6 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         ConstruiRotaPadraoAdmin('usuario', UsuarioAdminController::class);
         ConstruiRotaPadraoAdmin('grupousuarios', GrupoController::class);
 
-        Route::prefix('/categorizadores')->group(function(){
-            ConstruiRotaPadraoAdmin('sexo', SexoController::class);
-            ConstruiRotaPadraoAdmin('tipodocumento', TipoDocumentoController::class);
-        });
-
         Route::prefix('/cms')->group(function(){
             Route::get('/seo', [CMSController::class, 'seo'])->name("home.seo");
             Route::get('/banner', [CMSController::class, 'banner'])->name('cms.banner');

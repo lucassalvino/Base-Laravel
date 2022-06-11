@@ -6,7 +6,7 @@ Class Endereco extends BaseModel{
     protected $table = 'endereco';
     protected $fillable = [
         'id', 'cep', 'logradouro', 'numero', 'bairro', 'complemento',
-        'cidade', 'estado', 'padrao', 'latitude', 'longitude'
+        'cidade', 'estado', 'padrao', 'latitude', 'longitude', 'usuario_id'
     ];
 
     public function GetLikeFields(){

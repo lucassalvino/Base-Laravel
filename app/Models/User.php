@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Bases\BaseModelAuthenticatable;
+use App\Models\Enuns\Sexo;
 use App\Utils\ArquivosStorage;
 use App\Utils\EnvConfig;
 use Exception;
@@ -27,7 +28,7 @@ class User extends BaseModelAuthenticatable{
         'email',
         'password',
         'path_avatar',
-        'sexo_id'
+        'sexo'
     ];
 
     public function GetLikeFields(){
@@ -51,7 +52,7 @@ class User extends BaseModelAuthenticatable{
             'email' => 'required|max:255|unique:users',
             'path_avatar' => 'required|max:300',
             'password' => 'required|max:300',
-            'sexo_id' => 'exists:sexo,id'
+            'sexo' => 'exists:sexo:100'
         ];
     }
 
@@ -62,14 +63,14 @@ class User extends BaseModelAuthenticatable{
             'email' => ['required', 'max:255', Rule::unique('users')->ignore($id)],
             'path_avatar' => 'max:300',
             'password' => 'required|max:300',
-            'sexo_id' => 'required|exists:sexo,id'
+            'sexo' => 'required|max:100'
         ];
     }
 
     public static function NormalizaDados(&$dados, $atualizacao = false){
-        $existeSexoId = array_key_exists('sexo_id', $dados);
-        if(!$existeSexoId || ($existeSexoId && !Str::isUuid($dados['sexo_id']))){
-            $dados['sexo_id'] = static::$guidempty;
+        $existeSexo = array_key_exists('sexo', $dados);
+        if(!$existeSexo || ($existeSexo)){
+            $dados['sexo'] = Sexo::NaoDefinido;
         }
         if(array_key_exists('password', $dados) && !$atualizacao){
             if(($atualizacao && strcasecmp('', $dados['password']) != 0) || (!$atualizacao)){
@@ -121,8 +122,8 @@ class User extends BaseModelAuthenticatable{
         DB::beginTransaction();
         try{
             $nomeArquivo = "";
-            if(array_key_exists('sexo_id', $dados) || !Str::isUuid($dados['sexo_id'])){
-                $dados['sexo_id'] = $instanciaBanco->sexo_id;
+            if(array_key_exists('sexo', $dados) || !Str::isUuid($dados['sexo'])){
+                $dados['sexo'] = $instanciaBanco->sexo;
             }
             if(array_key_exists('avatar_base_64', $dados) && array_key_exists('tipo_imagem_avatar', $dados)){
                 $nomeArquivo = self::SalvaImagem($dados['avatar_base_64'], $dados['tipo_imagem_avatar']);

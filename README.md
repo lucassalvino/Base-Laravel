@@ -29,7 +29,7 @@ obs.: crie o banco antes de seguir os passos
 * ```HASH_SENHA```: algoritmo de hash a ser usado no hash da senha de usuários. Definir antes da criação da base. Valor padrão: *** sha512 ***. O campo string do banco salva no máximo 128 digitos
 * ```HASH_TOKEN_API```: algoritmo de hash a ser usado no hash do token da api. Valor padrão: *** sha512 ***. O campo string do banco salva no máximo 128 digitos
 * ```SESSAO_ATIVA_USUARIO```: Quantidade de sessões ativas por usuário, por padrão duas sessões (em tese uma para mobile e outra para descktop - web).
-* ```COMPLEMENTO_PATCH_IMAGEM```: Complemento de url para configuração de endereço auxiliar do host do servidor de catracas. É usuado para complementar o endereço para multiplos sites hospedados no mesmo servidor (apache), sendo a configuração o caminho relativo. Ex.: `4selet/public`. Caso não tenha necessidade preencher com string vazia
+* ```COMPLEMENTO_PATCH_IMAGEM```: Complemento de url para configuração de endereço auxiliar do host do servidor de catracas. É usuado para complementar o endereço para multiplos sites hospedados no mesmo servidor (apache), sendo a configuração o caminho relativo. Ex.: `raiz/public`. Caso não tenha necessidade preencher com string vazia
 * ```TIPO_CADASTRO_IMAGEM```: Configuração para cadastro de imagem nos terminais facias
 * * `url`: o cadastro será feito via endereço http do servidor, necessário que o servidor esteja aberto para a rede interna
 * * `base64`: o cadastro será feito com base64, não sendo necessário a hospedagem da imagem, somente do bas64 da mesma

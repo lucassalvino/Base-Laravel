@@ -34,27 +34,6 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul>
-                        <li class="sidebar-dropdown" id="menu-categorizadores">
-                            <a href="#">
-                                <i class="fas fa-toggle-on"></i>
-                                <span>Categorizadores</span>
-                            </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
-                                        <a href="{{route('admin:sexo.index')}}">Sexo</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('admin:tipodocumento.index')}}">Tipo Documento</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        </li>
-                    </ul>
-                </div>
-                <div class="sidebar-menu">
-                    <ul>
                         <li class="sidebar-dropdown" id="menu-usuarios">
                             <a href="#">
                                 <i class="fas fa-users"></i>

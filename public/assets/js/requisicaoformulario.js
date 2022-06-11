@@ -22,22 +22,6 @@ jQuery(function($){
         console.log("Atividade realizada com erros");
         console.log(RetornoErroAPI);
 
-        // if(!$('#ModalMensagemErro').lenght) {
-        //     $('body').append('<div class="modal fade" id="ModalMensagemErro"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h3 class="modal-title"></h3><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"></div><div class="modal-footer"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button></div></div></div></div>');
-        // }
-
-        // $('#ModalMensagemErro').find('.modal-title').html(RetornoErroAPI.responseJSON.mensagem);
-        
-        // var mensagemErroText = '';
-        // $.each(RetornoErroAPI.responseJSON.mensagenserro, function(i, item){
-        //     mensagemErroText += '<p>'+item+'</p>'
-        // });
-
-        // $('#ModalMensagemErro').find('.modal-body').html(mensagemErroText);
-
-        // var modalError = new bootstrap.Modal(document.getElementById('ModalMensagemErro'));
-        // modalError.show();
-
         let mensagemErroText = '';
         
         $.each(RetornoErroAPI.responseJSON.mensagenserro, function(i, item){

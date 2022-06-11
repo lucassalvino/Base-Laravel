@@ -11,7 +11,6 @@ class CategorizadoresSeeder extends Seeder
 {
     private function ClassesSeeder(){
         return Array(
-            Sexo::class, TipoDocumento::class
         );
     }
 

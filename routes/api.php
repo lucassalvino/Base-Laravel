@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\Categorizadores\SexoController;
-use App\Http\Controllers\Api\Categorizadores\TipoDocumentoController;
-use App\Http\Controllers\Api\CategorizadoresAPIController;
 use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\LoginApiController;
 use App\Http\Controllers\Api\PadroesController;
@@ -52,11 +49,6 @@ Route::namespace('Api')->middleware(['cors'])->group(function(){
         Route::post('/', [LoginApiController::class, 'RealizaLogin'])->name('RealizaLogin');
     });
 
-    Route::prefix('/categorizadores')->group(function(){
-        Route::get('/sexo', [CategorizadoresAPIController::class, 'Sexo'])->name('categorizadores.sexo');
-        Route::get('/tipodocumento', [CategorizadoresAPIController::class, 'TipoDocumento'])->name('categorizadores.tipodocumento');
-    });
-
     Route::delete('/deletabanner/{id}', [CMSController::class, 'deletabanner'])->name('deletabanner');
 });
 
@@ -74,7 +66,4 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
 
     ConstruiRotaPadraoApi('usuario', UsuarioController::class);
     ConstruiRotaPadraoApi('grupousuarios', GrupoController::class);
-
-    ConstruiRotaPadraoApi('sexo', SexoController::class);
-    ConstruiRotaPadraoApi('tipodocumento', TipoDocumentoController::class);
 });

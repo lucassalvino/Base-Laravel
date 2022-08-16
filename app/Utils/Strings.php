@@ -3,17 +3,11 @@ namespace App\Utils;
 use Illuminate\Support\Str;
 class Strings{
     public static function slugify($text, string $divider = '-'){
-        // replace non letter or digits by divider
         $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
-        // transliterate
         $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-        // remove unwanted characters
         $text = preg_replace('~[^-\w]+~', '', $text);
-        // trim
         $text = trim($text, $divider);
-        // remove duplicate divider
         $text = preg_replace('~-+~', $divider, $text);
-        // lowercase
         $text = strtolower($text);
         if (empty($text)) {
             return 'n-a';
@@ -22,6 +16,7 @@ class Strings{
     }
 
     public static function SomenteNumeros($texto){
+        if(static::isNullOrEmpty($texto)) $texto = "";
         return preg_replace( '/[^0-9]/is', '', $texto );
     }
 
@@ -29,9 +24,7 @@ class Strings{
         $em   = explode("@",$email);
         $name = implode('@', array_slice($em, 0, count($em)-1));
         $len  = floor(strlen($name)/2);
-
         $qtd = strlen($name) - $len;
-
         return mb_substr($name,0, $len) . str_repeat('*', $qtd) . "@" . end($em);
     }
 

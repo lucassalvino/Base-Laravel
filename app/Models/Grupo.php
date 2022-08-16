@@ -30,7 +30,7 @@ Class Grupo extends BaseModel{
         ];
     }
 
-    public static function NormalizaDados(&$dados, $atualizacao = false){
+    public function NormalizaDados(&$dados, $atualizacao = false){
         $existeNome = array_key_exists('nome', $dados);
         $existeSlug = array_key_exists('slug', $dados);
         if(!$existeSlug and $existeNome) {

@@ -67,7 +67,7 @@ class User extends BaseModelAuthenticatable{
         ];
     }
 
-    public static function NormalizaDados(&$dados, $atualizacao = false){
+    public function NormalizaDados(&$dados, $atualizacao = false){
         $existeSexo = array_key_exists('sexo', $dados);
         if(!$existeSexo || ($existeSexo)){
             $dados['sexo'] = Sexo::NaoDefinido;

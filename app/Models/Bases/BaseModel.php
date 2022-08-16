@@ -97,14 +97,30 @@ class BaseModel extends Model{
     public function GetLikeFields(){
         return [];
     }
+
     public function GetMenssagensValidacao(){
         return Array(
             'required' => "O campo ':attribute' é requerido",
             'unique' => "O campo ':attribute' já contem um valor idêntico",
             'exists' => "O ':attribute' não existe na tabela alvo",
             'current_password' => "Senha informada não corresponde a atual",
+            'date' => "O campo ':attribute' não é uma data válida",
+            'after' => "A data informada em ':attribute' deve ser posterior a ':date'",
+            'before' => "A data informada em ':attribute' deve ser anterior a ':date'",
+            'boolean' => "O campo ':attribute' deve ser um booleano",
+            'url' => "O campo ':attribute' não corresponde a uma URL",
+            'email' => "O campo ':attribute' não é um email válido",
+            'max' => [
+                "numeric" => "O campo ':attribute' deve ter o valor máximo de :max",
+                "string" => "O campo ':attribute' deve ter o comprimento máximo de :max"
+            ],
+            'min' => [
+                "numeric" => "O campo ':attribute' deve ter o valor mínimo de :min",
+                "string" => "O campo ':attribute' deve ter o comprimento mínimo de :min"
+            ],
         );
     }
+
     public function GeraArrayInsert($request){
         if($request instanceof Request)
             return $request->all();
@@ -123,7 +139,7 @@ class BaseModel extends Model{
         $item->save();
     }
 
-    public static function NormalizaDados(&$dados, $atualizacao = false){
+    public function NormalizaDados(&$dados, $atualizacao = false){
     }
 
     public static function NormalizaFiltros(Request &$filtros){
@@ -137,7 +153,7 @@ class BaseModel extends Model{
      */
     public static function CadastraElementoArray($dados){
         $instancia = new static;
-        static::NormalizaDados($dados);
+        $instancia->NormalizaDados($dados);
         $valida = Validator::make($dados, $instancia->GetValidadorCadastro($dados), $instancia->GetMenssagensValidacao());
         if ($valida->fails()) {
             return $valida;
@@ -198,10 +214,13 @@ class BaseModel extends Model{
 
         if($rollback)
             DB::rollBack();
-        if(parent::CheckIfIsValidator($erros))
+        if(parent::CheckIfIsValidator($erros)){
             $erros = $erros->errors()->all();
-        if($erros instanceof JsonResponse){
+        }elseif($erros instanceof JsonResponse){
             $erros = $erros->original[BaseRetornoApi::$MensagensErro];
+        }elseif($erros instanceof Exception){
+            Log::error($erros);
+            $erros = [$erros->getMessage()];
         }else{
             if(!is_array($erros))
                 $erros = [$erros];
@@ -227,7 +246,7 @@ class BaseModel extends Model{
 
     public static function AtualizaElementoArray($dados, &$instanciaBanco){
         $instancia = new static;
-        static::NormalizaDados($dados, true);
+        $instancia->NormalizaDados($dados, true);
         $valida = Validator::make($dados, $instancia->GetValidadorAtualizacao($dados, $instanciaBanco->id), $instancia->GetMenssagensValidacao());
         if($valida->fails()){
             return $valida;

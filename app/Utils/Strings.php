@@ -99,4 +99,22 @@ class Strings{
         $valor = str_replace(',', '.', $valor);
         return $valor;
     }
+
+    /**
+      *  Aplica mascara para uma string
+      *  $cpf = AplicaMascara($documento, '###.###.###-##');
+      *  $cnpj = AplicaMascara($documento, '##.###.###/####-##');
+    */
+    public function AplicaMascara($valor, $mascara) {
+        $mascarado = '';
+        $k = 0;
+        for($i = 0; $i<=strlen($mascara)-1; $i++) {
+            if($mascara[$i] == '#') {
+                if(isset($valor[$k])) $mascarado .= $valor[$k++];
+            } else {
+                if(isset($mascara[$i])) $mascarado .= $mascara[$i];
+            }
+        }
+        return $mascarado;
+    }
 }

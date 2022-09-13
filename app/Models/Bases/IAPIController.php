@@ -8,4 +8,5 @@ interface IAPIController {
     public function Atualiza (Request $request, $id);
     public function Deleta (Request $request, $id);
     public function Restaura (Request $request, $id);
+    public function ClonarRegistro (Request $request, $id);
 }

@@ -36,19 +36,23 @@ class BaseAPIController extends Controller{
 
     public function Detalhado(Request $request, $id)
     {
-        return $this->class->Detalhado($request, $id);
+        return $this->class::Detalhado($request, $id);
     }
     function Atualiza(Request $request, $id)
     {
-        return $this->class->AtualizaElemento($request, $id);
+        return $this->class::AtualizaElemento($request, $id);
     }
     function Deleta(Request $request, $id)
     {
-        return $this->class->DeleteElemento($request, $id);
+        return $this->class::DeleteElemento($request, $id);
     }
 
     function Restaura(Request $request, $id)
     {
-        return $this->class->RestoreElemento($request, $id);
+        return $this->class::RestoreElemento($request, $id);
+    }
+
+    public function ClonarRegistro(Request $request, $id){
+        return $this->class::ClonaRegistro($request, $id);
     }
 }

@@ -177,4 +177,8 @@ class PadroesController extends Controller implements IAPIController
         {
                 return ["End point somente de documentação, não funcional"];
         }
+
+        public function ClonarRegistro (Request $request, $id){
+                return ["End point somente de documentação, não funcional"];
+        }
 }

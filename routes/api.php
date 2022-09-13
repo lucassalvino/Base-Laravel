@@ -28,6 +28,7 @@ if(!function_exists('ConstruiRotaPadraoApi')){
             Route::put('/{id}', [$controller, 'Atualiza'])->name($nome.'.api.editar');
             Route::delete('/{id}', [$controller, 'Deleta'])->name($nome.'.api.deleta');
             Route::post('/restore/{id}', [$controller, 'Restaura'])->name($nome.'.api.restaura');
+            Route::post('/clone/{id}', [$controller, 'ClonarRegistro'])->name($nome.'.api.clone');
         });
     }
 }

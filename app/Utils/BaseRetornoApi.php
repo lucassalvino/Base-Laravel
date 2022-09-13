@@ -1,5 +1,7 @@
 <?php
 namespace App\Utils;
+use Exception;
+use Illuminate\Support\Facades\Log;
 class BaseRetornoApi{
     public static $CampoMensagem = 'mensagem';
     public static $MensagensErro = 'mensagenserro';
@@ -54,5 +56,10 @@ class BaseRetornoApi{
             self::$id => $idRetorno,
             self::$codigoRetorno => $codigoErro
         ], $codigoErro);
+    }
+
+    public static function GetRetornoErroException(Exception $erro){
+        Log::error($erro);
+        return self::GetRetornoErro([$erro->getMessage()], "Um erro aconteceu", 500);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bases\IAPIController;
+use App\Models\User;
 use App\Servicos\UsuarioServico;
 use Illuminate\Http\Request;
 
@@ -95,5 +96,9 @@ class UsuarioController extends Controller implements IAPIController
     function Restaura(Request $request, $id)
     {
         return $this->servico->Restaura($request, $id);
+    }
+
+    public function ClonarRegistro (Request $request, $id){
+        return User::ClonaRegistro($request, $id);
     }
 }

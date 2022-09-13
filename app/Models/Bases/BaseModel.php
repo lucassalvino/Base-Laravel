@@ -199,8 +199,7 @@ class BaseModel extends Model{
             }
         }
         catch(Exception $erro){
-            Log::error($erro);
-            return BaseRetornoApi::GetRetornoErro([$erro->getMessage()]);
+            return BaseRetornoApi::GetRetornoErroException($erro);
         }
     }
 
@@ -278,9 +277,73 @@ class BaseModel extends Model{
             }
         }
         catch(Exception $erro){
-            return BaseRetornoApi::GetRetornoErro([$erro->getMessage()]);
+            return BaseRetornoApi::GetRetornoErroException($erro);
         }
     }
+
+    #region ClonarRegistro
+    public static function ObtemColunasClonar(){
+        $ins = new static;
+        return $ins->fillable;
+    }
+
+    public static function ObtemPKClonar($class){
+        return Array();
+    }
+
+    public static function ObtemModelsPKClonar(){
+        return Array();
+    }
+
+    public static function ClonaRegistro(Request $request, $id){
+        try{
+            $item = static::query()->where('id', '=', $id)->first();
+            if(!$item){
+                return BaseRetornoApi::GetRetorno404("O elemento informado não existe ou já foi excluído");
+            }
+            $idNovoRegistro = static::ClonaRegistroArray($item, $request->all());
+            return BaseRetornoApi::GetRetornoSucessoId("Registro clonado com sucesso", $idNovoRegistro);
+        }catch(Exception $erro){
+            return BaseRetornoApi::GetRetornoErroException($erro);
+        }
+    }
+
+    /** 
+     * $original: deve ser a referencia para a instancia do banco que deve ser clonado.
+     * $novosValores: array com os valores que devem ser clonados com valores diferentes dos original
+    */
+    public static function ClonaRegistroArray(&$original, $novosValores = []){
+        $originalArray = $original->toArray();
+        $colunasClonar = static::ObtemColunasClonar();
+        $insert = Array();
+        foreach($colunasClonar as $cc){
+            if(array_key_exists($cc, $originalArray) && (strcasecmp('id', $cc) != 0)){
+                $insert[$cc] = $originalArray[$cc];
+                if(array_key_exists($cc, $novosValores)){
+                    $insert[$cc] = $novosValores[$cc];
+                }
+            }
+        }
+        $dolly = static::create($insert);
+        $modesRelacionados = static::ObtemModelsPKClonar();
+        foreach($modesRelacionados as $model){
+            $pk = $model::ObtemPKClonar(static::class);
+            if(is_null($pk)){
+                continue;
+            }
+            $arrayNovosValores = Array(
+                $pk => $dolly->id
+            );
+            $instanciasRelacionadas = $model::query()
+            ->where($pk, '=', $original->id)
+            ->get();
+            foreach($instanciasRelacionadas as $insRela){
+                $model::ClonaRegistroArray($insRela, $arrayNovosValores);
+            }
+        }
+        return $dolly->id;
+    }
+    #endregion ClonarRegistro
 
     protected function MontarConsultaBuscaTexto(&$consulta, $termo){
         $buscaTexto = "%".strtoupper($termo)."%";

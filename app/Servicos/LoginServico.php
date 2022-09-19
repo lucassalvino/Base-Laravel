@@ -60,7 +60,7 @@ class LoginServico{
         $grupos = static::ObtemGrupoUsuario($sessao['user_id']);
         static::ResetaValidadores();
         foreach($grupos as $grupo){
-            if(strcasecmp($grupo->slug, 'admin') == 0){
+            if(strcasecmp($grupo->slug, static::SlugAdmin) == 0){
                 self::$admin = true;
             }
         }

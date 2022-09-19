@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BuscasController;
 use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\LoginApiController;
 use App\Http\Controllers\Api\PadroesController;
@@ -49,8 +50,6 @@ Route::namespace('Api')->middleware(['cors'])->group(function(){
         Route::post('/registra_resetar_senha', [LoginApiController::class, 'RegistraResetarSenha'])->name('RegistraResetarSenha');
         Route::post('/', [LoginApiController::class, 'RealizaLogin'])->name('RealizaLogin');
     });
-
-    Route::delete('/deletabanner/{id}', [CMSController::class, 'deletabanner'])->name('deletabanner');
 });
 
 
@@ -60,11 +59,16 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
         Route::delete('/', [LoginApiController::class, 'Logout'])->name('Logout');
     });
 
+    Route::prefix("/buscas")->group(function(){
+        Route::get('/usuario', [BuscasController::class, 'Usuarios'])->name("api.busca.usuarios");
+    });
+
     Route::get('/obtem-dados-logado', [LoginApiController::class, 'ObtemDadosLogado'])->name('obtem-dados-logado');
 
     Route::prefix('/cms')->group(function(){
         Route::post('/seo', [CMSController::class, 'cadastraseo'])->name('cadastraseo');
         Route::post('/banners', [CMSController::class, 'cadastrabanner'])->name('cadastrabanner');
+        Route::delete('/deletabanner/{id}', [CMSController::class, 'deletabanner'])->name('deletabanner');
     });
 
     ConstruiRotaPadraoApi('usuario', UsuarioController::class);

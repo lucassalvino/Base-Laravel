@@ -1,6 +1,8 @@
 <?php 
 namespace App\Servicos;
 use App\Models\User;
+use App\Utils\BaseRetornoApi;
+use Exception;
 use Illuminate\Http\Request;
 
 class UsuarioServico{
@@ -8,7 +10,11 @@ class UsuarioServico{
     }
 
     public function CadastraUsuario(Request $request){
-        return User::CadastraElemento($request);
+        try{
+            return User::CadastraElemento($request);
+        }catch(Exception $erro){
+            return BaseRetornoApi::GetRetornoErroException($erro);
+        }
     }
 
     public function Atualiza(Request $request, $id){

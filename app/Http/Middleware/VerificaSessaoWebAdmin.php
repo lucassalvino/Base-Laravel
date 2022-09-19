@@ -12,7 +12,11 @@ class VerificaSessaoWebAdmin{
         $sessao = LoginServico::ObtemSessao($token);
 
         if(isset($sessao)){
-            return $next($request->merge(['sessao'=>$sessao]));
+            if(LoginServico::UsuarioAdmin($sessao)){
+                return $next($request->merge(['sessao' => $sessao]));
+            }else{
+                return redirect()->route('site.login');    
+            }
         }else{
             return redirect()->route('admin:login');
         }

@@ -27,7 +27,7 @@ class UsuarioController extends Controller implements IAPIController
      * @bodyParam  name     string  required    Nome que o usuário deseja ser chamado, tamanho máximo de 255 caracteres
      * @bodyParam  username     string  required    nome do usuário (para login), colocar email como padrão
      * @bodyParam  email     string  required    email do usuário
-     * @bodyParam  sexo_id    uuid  required      Sexo do usuário, Obtito no categorizador. Se não for informado será preenchido com guid empty
+     * @bodyParam  sexo    enum  required      Sexo do usuário, Obtito no categorizador. Se não for informado será preenchido com guid empty
      * @bodyParam  password     string  required     Senha (não criptografada) do usuário. Não será executada nenhuma validação de complexidade de senha.
      * @bodyParam  avatar_base_64     string  required     String base64 contendo o base64 da imagem de do avatar do usuário
      * @bodyParam  tipo_imagem_avatar     string  required     tipo da imagen (ex. image/jpg)
@@ -69,7 +69,7 @@ class UsuarioController extends Controller implements IAPIController
      * @bodyParam  name     string  required    Nome que o usuário deseja ser chamado, tamanho máximo de 255 caracteres
      * @bodyParam  username     string  required    nome do usuário (para login), colocar email como padrão
      * @bodyParam  email     string  required    email do usuário
-     * @bodyParam  sexo_id    uuid  required      Sexo do usuário, Obtito no categorizador. Se não for informado será mantido o atual
+     * @bodyParam  sexo    enum  required      Sexo do usuário, Obtito no categorizador. Se não for informado será mantido o atual
      * @bodyParam  password     string  required     Senha (não criptografada) do usuário. Se não for informado, será mantida a atual
      * @bodyParam  avatar_base_64     string  required     String base64 contendo o base64 da imagem de do avatar do usuário
      * @bodyParam  tipo_imagem_avatar     string  required     tipo da imagen (ex. image/jpg)

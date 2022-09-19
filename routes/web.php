@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BuscasController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
@@ -81,9 +82,6 @@ Route::middleware(['cors', 'CheckDeslogado'])->group(function(){
 
 /* Área logada */
 Route::middleware(['cors', 'VerificaSessaoWeb'])->group(function(){
-
-    ConstruiRotaPadrao('/produtos/infoprodutos', InfoprodutoController::class);
-    ConstruiRotaPadrao('/produtos/servicos', ServicosController::class);
 });
 
 Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
@@ -112,5 +110,9 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
 Route::namespace('Api')->middleware(['cors'])->group(function(){
     Route::prefix('/publicoapi')->group(function(){
         Route::post('/usuario',[UsuarioController::class, 'Cadastra'])->name("cadastra.usuario.csrf");
+        
+        Route::prefix("/buscas")->group(function(){
+            Route::get('/usuario', [BuscasController::class, 'Usuarios'])->name("api.publica.busca.usuarios");
+        });
     });
 });

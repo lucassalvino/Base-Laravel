@@ -60,6 +60,8 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
         Route::delete('/', [LoginApiController::class, 'Logout'])->name('Logout');
     });
 
+    Route::get('/obtem-dados-logado', [LoginApiController::class, 'ObtemDadosLogado'])->name('obtem-dados-logado');
+
     Route::prefix('/cms')->group(function(){
         Route::post('/seo', [CMSController::class, 'cadastraseo'])->name('cadastraseo');
         Route::post('/banners', [CMSController::class, 'cadastrabanner'])->name('cadastrabanner');

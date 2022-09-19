@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Login;
 use App\Models\ResetarSenha;
+use App\Models\User;
+use App\Utils\ArquivosStorage;
+use App\Utils\BaseRetornoApi;
 use Illuminate\Http\Request;
 
 /**
@@ -64,5 +67,19 @@ class LoginApiController extends Controller
     public function Logout(Request $request)
     {
         return Login::Logout($request);
+    }
+
+    public function ObtemDadosLogado(Request $request){
+        $usuarioLogado = User::query()->where('id', '=', $request['sessao']['user_id'])->first();
+        return response()->json([
+            BaseRetornoApi::$CampoMensagem => "Usuário Logado com sucesso",
+            BaseRetornoApi::$codigoRetorno => 200,
+            BaseRetornoApi::$CampoErro => false,
+            "path_avatar" => ArquivosStorage::GetUrlView($usuarioLogado->path_avatar),
+            "name" => $usuarioLogado->name,
+            "email" => $usuarioLogado->email,
+            "user_id" => $usuarioLogado->id,
+            "user_name" => $usuarioLogado->username,
+        ], 200);
     }
 }

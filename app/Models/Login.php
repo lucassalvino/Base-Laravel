@@ -99,7 +99,9 @@ class Login extends BaseModel{
                     BaseRetornoApi::$CampoErro => false,
                     "path_avatar" => ArquivosStorage::GetUrlView($usuarioLogado->path_avatar),
                     "name" => $usuarioLogado->name,
-                    "email" => $usuarioLogado->email
+                    "userName" => $usuarioLogado->username,
+                    "email" => $usuarioLogado->email,
+                    "user_id" => $usuarioLogado->id
                 ], 200);
             }else{
                 return BaseRetornoApi::GetRetornoErro(

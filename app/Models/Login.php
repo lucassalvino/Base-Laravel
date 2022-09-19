@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Models\Bases\BaseModel;
+use App\Servicos\LoginServico;
 use App\Utils\ArquivosStorage;
 use App\Utils\BaseRetornoApi;
 use App\Utils\EnvConfig;
@@ -18,6 +19,7 @@ class Login extends BaseModel{
         $sessao = self::query()->where('api_token', '=', $token)->first();
         if($sessao)
             $sessao->delete();
+        LoginServico::RemoveTokenSessao($token);
         return BaseRetornoApi::GetRetornoSucesso("Usuário Deslogado");
     }
 

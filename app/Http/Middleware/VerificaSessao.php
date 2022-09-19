@@ -2,20 +2,15 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Login;
+use App\Servicos\LoginServico;
 use App\Utils\BaseRetornoApi;
 use Closure;
 
 class VerificaSessao{
-    private function ObtemSessao($token){
-        return Login::query()
-        ->where('api_token', '=', $token)
-        ->first();
-    }
 
     public function handle($request, Closure $next){
         $token = $request->header('Authorization');
-        $sessao = $this->ObtemSessao($token);
+        $sessao = LoginServico::ObtemSessao($token);
 
         if(isset($sessao)){
             return $next($request->merge(['sessao'=>$sessao]));

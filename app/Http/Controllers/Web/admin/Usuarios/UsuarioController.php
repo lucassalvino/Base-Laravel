@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\admin\Usuarios;
 
 use App\Http\Controllers\Web\admin\BaseAdminController;
-use App\Models\Categorizadores\Sexo;
+use App\Models\Enuns\Sexo;
 use App\Models\User;
 
 class UsuarioController extends BaseAdminController{
@@ -17,7 +17,7 @@ class UsuarioController extends BaseAdminController{
     
     public function ObtemItensViewNovo(){
         return Array(
-            'sexo' => Sexo::ObtenhaRegistrosAtuais()
+            'sexo' => Sexo::GetAllEnum()
         );
     }
 }

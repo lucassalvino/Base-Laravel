@@ -28,10 +28,10 @@
                     <input type="email" name="email" class="form-control"  id="email" placeholder="Email Usuário" required maxlength="255">
                 </div>
                 <div class="w-48 form-group ml-2">
-                    <label for="sexo_id">Sexo</label>
-                    <select name="sexo_id" id="sexo_id" class="select2">
+                    <label for="sexo">Sexo</label>
+                    <select name="sexo" id="sexo" class="select2">
                         @foreach($itensView['sexo'] as $key => $value)
-                            <option value="{{$value->id}}"> {{$value->descricao}} </option>          
+                            <option value="{{$key}}"> {{$value}} </option>          
                         @endforeach
                     </select>
                 </div>

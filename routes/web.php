@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\UsuarioController;
-use App\Http\Controllers\Web\admin\Categorizadores\SexoController;
-use App\Http\Controllers\Web\admin\Categorizadores\TipoDocumentoController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
 use App\Http\Controllers\Web\admin\Usuarios\GrupoController;

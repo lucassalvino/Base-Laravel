@@ -52,7 +52,7 @@ class User extends BaseModelAuthenticatable{
             'email' => 'required|max:255|unique:users',
             'path_avatar' => 'required|max:300',
             'password' => 'required|max:300',
-            'sexo' => 'exists:sexo:100'
+            'sexo' => 'required|max:100'
         ];
     }
 

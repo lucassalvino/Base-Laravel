@@ -30,13 +30,13 @@
                 </div>
                 <div class="w-48 form-group ml-2">
                     <label for="senha">Sexo</label>
-                    <select name="sexo_id" id="sexo_id" class="select2">
+                    <select name="sexo" id="sexo" class="select2">
                         @foreach($itensView['sexo'] as $key => $value)
-                            <option value="{{$value->id}}"
-                            @if( strcasecmp($value->id, $item->sexo_id) == 0)
-                            {{'selected'}}
+                            <option value="{{$key}}"
+                            @if( strcasecmp($key, $item->sexo) == 0)
+                            {{'selected' }}
                             @endif
-                            > {{$value->descricao}} </option>          
+                            > {{$value}} </option>          
                         @endforeach
                     </select>
                 </div>

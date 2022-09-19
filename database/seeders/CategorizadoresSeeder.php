@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Categorizadores\Sexo;
-use App\Models\Categorizadores\TipoDocumento;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

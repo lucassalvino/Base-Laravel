@@ -1,14 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\BuscasController;
+use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
 use App\Http\Controllers\Web\admin\Usuarios\GrupoController;
 use App\Http\Controllers\Web\admin\Usuarios\UsuarioController as UsuarioAdminController;
 use App\Http\Controllers\Web\cms\CMSController;
-use App\Http\Controllers\Web\Produtos\InfoprodutoController;
-use App\Http\Controllers\Web\Produtos\ServicosController;
 use App\Http\Controllers\Web\PublicoController;
 use App\Utils\Strings;
 use Illuminate\Support\Facades\Route;

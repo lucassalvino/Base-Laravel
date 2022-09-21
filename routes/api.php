@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\BuscasController;
+use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\LoginApiController;
 use App\Http\Controllers\Api\PadroesController;

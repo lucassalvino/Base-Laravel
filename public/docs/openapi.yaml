@@ -6,8 +6,1304 @@ info:
 servers:
   -
     url: 'http://localhost'
-paths: []
-tags: []
+paths:
+  /api/login/resetar_senha:
+    post:
+      summary: 'Realiza solicitação de resetar a senha'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Email do usuário que deseja resetar a senha'
+                  example: teste@teste.com.br
+              required:
+                - email
+      security: []
+  /api/login/registra_resetar_senha:
+    post:
+      summary: 'Altera senha do usuário via solicitação de resete de senha'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: 'Token de resete de senha, o usuário obtem este token ao solicitar resete de senha'
+                  example: ftrjs1s23...
+                senha:
+                  type: string
+                  description: 'Nova senha a ser definida'
+                  example: nova_senha
+                resenha:
+                  type: string
+                  description: 'Confirmação da senha'
+                  example: nova_senha
+              required:
+                - token
+                - senha
+                - resenha
+      security: []
+  /api/login:
+    post:
+      summary: 'Realiza login do usuário.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  mensagem: 'Usuário Logado com sucesso'
+                  api_token: ab8b417439871f95f95c8b27000b331abb49a80397c977f9f3ba500558da7059
+                  codigoretorno: 200
+                  erro: false
+                  path_avatar: 'http://localhost/public/resources/storage/imagens/1bab6d41_20cc_492e_b622_153a4f408f99.jpg'
+                  name: kame
+                properties:
+                  mensagem:
+                    type: string
+                    example: 'Usuário Logado com sucesso'
+                  api_token:
+                    type: string
+                    example: ab8b417439871f95f95c8b27000b331abb49a80397c977f9f3ba500558da7059
+                  codigoretorno:
+                    type: integer
+                    example: 200
+                  erro:
+                    type: boolean
+                    example: false
+                  path_avatar:
+                    type: string
+                    example: 'http://localhost/public/resources/storage/imagens/1bab6d41_20cc_492e_b622_153a4f408f99.jpg'
+                  name:
+                    type: string
+                    example: kame
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                  description: 'Identificador do usuário'
+                  example: teste@teste.com.br
+                password:
+                  type: string
+                  description: 'senha do usuário'
+                  example: minha_senha
+              required:
+                - user
+                - password
+      security: []
+    delete:
+      summary: 'Desloga o usuário atual'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Autenticação
+  /api/obtem-dados-logado:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  mensagem: 'Esse token não existe ou já foi deslogado'
+                  erro: true
+                  mensagenserro: []
+                  id: 00000000-0000-0000-0000-000000000000
+                  codigoretorno: 401
+                properties:
+                  mensagem:
+                    type: string
+                    example: 'Esse token não existe ou já foi deslogado'
+                  erro:
+                    type: boolean
+                    example: true
+                  mensagenserro:
+                    type: array
+                    example: []
+                  id:
+                    type: string
+                    example: 00000000-0000-0000-0000-000000000000
+                  codigoretorno:
+                    type: integer
+                    example: 401
+      tags:
+        - Autenticação
+      security: []
+  /api/buscas/usuario:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  mensagem: 'Esse token não existe ou já foi deslogado'
+                  erro: true
+                  mensagenserro: []
+                  id: 00000000-0000-0000-0000-000000000000
+                  codigoretorno: 401
+                properties:
+                  mensagem:
+                    type: string
+                    example: 'Esse token não existe ou já foi deslogado'
+                  erro:
+                    type: boolean
+                    example: true
+                  mensagenserro:
+                    type: array
+                    example: []
+                  id:
+                    type: string
+                    example: 00000000-0000-0000-0000-000000000000
+                  codigoretorno:
+                    type: integer
+                    example: 401
+      tags:
+        - Endpoints
+      security: []
+  /api/cms/seo:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/cms/banners:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/cms/deletabanner/{id}':
+    delete:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the deletabanner.'
+        example: quo
+        required: true
+        schema:
+          type: string
+  /api/grupousuarios:
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - 'Grupo de Usuários'
+      security: []
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  mensagem: 'Esse token não existe ou já foi deslogado'
+                  erro: true
+                  mensagenserro: []
+                  id: 00000000-0000-0000-0000-000000000000
+                  codigoretorno: 401
+                properties:
+                  mensagem:
+                    type: string
+                    example: 'Esse token não existe ou já foi deslogado'
+                  erro:
+                    type: boolean
+                    example: true
+                  mensagenserro:
+                    type: array
+                    example: []
+                  id:
+                    type: string
+                    example: 00000000-0000-0000-0000-000000000000
+                  codigoretorno:
+                    type: integer
+                    example: 401
+      tags:
+        - 'Grupo de Usuários'
+      security: []
+  '/api/grupousuarios/{id}':
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  mensagem: 'Esse token não existe ou já foi deslogado'
+                  erro: true
+                  mensagenserro: []
+                  id: 00000000-0000-0000-0000-000000000000
+                  codigoretorno: 401
+                properties:
+                  mensagem:
+                    type: string
+                    example: 'Esse token não existe ou já foi deslogado'
+                  erro:
+                    type: boolean
+                    example: true
+                  mensagenserro:
+                    type: array
+                    example: []
+                  id:
+                    type: string
+                    example: 00000000-0000-0000-0000-000000000000
+                  codigoretorno:
+                    type: integer
+                    example: 401
+      tags:
+        - 'Grupo de Usuários'
+      security: []
+    put:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - 'Grupo de Usuários'
+      security: []
+    delete:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - 'Grupo de Usuários'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the grupousuario.'
+        example: dolore
+        required: true
+        schema:
+          type: string
+  '/api/grupousuarios/restore/{id}':
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - 'Grupo de Usuários'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the restore.'
+        example: ut
+        required: true
+        schema:
+          type: string
+  '/api/grupousuarios/clone/{id}':
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - 'Grupo de Usuários'
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the clone.'
+        example: vel
+        required: true
+        schema:
+          type: string
+  /api/padroes:
+    post:
+      summary: 'Realiza o cadastro de entidades'
+      description: "A requisição irá depender de cada entidade, essa sempre será especificada\n\nTodo retorno da api possui a estrutura abaixo (com exceção de erros 500 não mapeados. esses retornam a pilha de excessão do laravel)\n\"mensagem\": resumo da atividade realizada\n\"erro\": variável que representa se tudo o processo foi realizado com erros ou não\n\"mensagenserro\": caso tenha acontecido um ou mais erros, estarão descritos neste retorno (array de strings)\n\"id\": id (essa aplicação trabalha somente com UUID) da entidade que foi cadastrada.\n\"codigoretorno\": código http do retorno da requisição. O retorno tb será o mesmo (não irá acontecer retorno 200 com codigoretorno 500 kkkkkk), esse campo foi criado a um caso de um dev que não conseguia obter o código de retorno\n\nObs.: Pode acontecer do campo \"id\" possuir vários ids, é o caso quando é necessário de mais informações do cadastro e não somente o id.\nEspera-se que esses casos sejam mapeados no endpoint que ocorrer\n\nObs.: O retorno 401 será obtido sempre que o token da API não for encontrado ou já deslogado.\n\nObs.: O token não possui tempo de vida definido. Mas a quantidade de logins por usuário é limitada. Consulte o administrador para saber a quantidade de sessões permitidas (é parametrizavel)\n\nO retorno padrão de cadastro é o 200."
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  mensagem: 'Entidade cadastrado com sucesso'
+                  erro: false
+                  mensagenserro: []
+                  id: 867f0b91-1fd8-46ab-b906-10e65ffd5e6a
+                  codigoretorno: 200
+                properties:
+                  mensagem:
+                    type: string
+                    example: 'Entidade cadastrado com sucesso'
+                  erro:
+                    type: boolean
+                    example: false
+                  mensagenserro:
+                    type: array
+                    example: []
+                  id:
+                    type: string
+                    example: 867f0b91-1fd8-46ab-b906-10e65ffd5e6a
+                  codigoretorno:
+                    type: integer
+                    example: 200
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  mensagem: 'Um erro aconteceu'
+                  erro: true
+                  mensagenserro:
+                    - 'O campo ''nome'' é requerido'
+                    - 'O campo ''idade'' é requerido'
+                  id: 00000000-0000-0000-0000-000000000000
+                  codigoretorno: 400
+                properties:
+                  mensagem:
+                    type: string
+                    example: 'Um erro aconteceu'
+                  erro:
+                    type: boolean
+                    example: true
+                  mensagenserro:
+                    type: array
+                    example:
+                      - 'O campo ''nome'' é requerido'
+                      - 'O campo ''idade'' é requerido'
+                    items:
+                      type: string
+                  id:
+                    type: string
+                    example: 00000000-0000-0000-0000-000000000000
+                  codigoretorno:
+                    type: integer
+                    example: 400
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  mensagem: 'Esse token não existe ou já foi deslogado'
+                  erro: true
+                  mensagenserro: []
+                  id: 00000000-0000-0000-0000-000000000000
+                  codigoretorno: 401
+                properties:
+                  mensagem:
+                    type: string
+                    example: 'Esse token não existe ou já foi deslogado'
+                  erro:
+                    type: boolean
+                    example: true
+                  mensagenserro:
+                    type: array
+                    example: []
+                  id:
+                    type: string
+                    example: 00000000-0000-0000-0000-000000000000
+                  codigoretorno:
+                    type: integer
+                    example: 401
+      tags:
+        - Padrões
+    get:
+      summary: 'Obtem Listagem de Entidades cadastrados'
+      description: 'Todo endpoint de listagem padrão possui os seguintes filtros'
+      parameters:
+        -
+          in: query
+          name: per_page
+          description: 'quantidade de elementos por página. Valor padrão: 20'
+          example: 10
+          required: false
+          schema:
+            type: integer
+            description: 'quantidade de elementos por página. Valor padrão: 20'
+            example: 10
+        -
+          in: query
+          name: with_trashed
+          description: 'trazer elementos que estão na lixeira, valores 1 ou 0'
+          example: 20
+          required: false
+          schema:
+            type: integer
+            description: 'trazer elementos que estão na lixeira, valores 1 ou 0'
+            example: 20
+        -
+          in: query
+          name: trashed_only
+          description: 'trazer somente elementos que estão na lixeira, valores 1 ou 0'
+          example: 3
+          required: false
+          schema:
+            type: integer
+            description: 'trazer somente elementos que estão na lixeira, valores 1 ou 0'
+            example: 3
+        -
+          in: query
+          name: id
+          description: 'uuid Filtro por id'
+          example: architecto
+          required: false
+          schema:
+            type: string
+            description: 'uuid Filtro por id'
+            example: architecto
+        -
+          in: query
+          name: search
+          description: "Busca por texto\n\n\nO retorno padrão é o 200, o array \"data\" contém as entidades de fato. O restante do retorno é referente a paginação"
+          example: culpa
+          required: false
+          schema:
+            type: string
+            description: "Busca por texto\n\n\nO retorno padrão é o 200, o array \"data\" contém as entidades de fato. O restante do retorno é referente a paginação"
+            example: culpa
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n      \"current_page\": 1,\n      \"data\": [\n          {\n              \"id\": \"c1c3bd4a-3749-4fa5-b709-8e2cb59c3fee\",\n              \"nome\": \"teste\",\n              \"idade\": 3\n          }, {...}\n      ],\n      \"first_page_url\": \"http://localhost/public/api/questionario?page=1\",\n      \"from\": 1,\n      \"last_page\": 1,\n      \"last_page_url\": \"http://localhost/public/api/questionario?page=1\",\n      \"links\": [\n          {\n              \"url\": null,\n              \"label\": \"&laquo; Previous\",\n              \"active\": false\n          },\n          {\n              \"url\": \"http://localhost/public/api/questionario?page=1\",\n              \"label\": \"1\",\n              \"active\": true\n          },\n          {\n              \"url\": null,\n              \"label\": \"Next &raquo;\",\n              \"active\": false\n          }\n      ],\n      \"next_page_url\": null,\n      \"path\": \"http://localhost/public/api/questionario\",\n      \"per_page\": 20,\n      \"prev_page_url\": null,\n      \"to\": 2,\n      \"total\": 2\n  }"
+      tags:
+        - Padrões
+  '/api/padroes/{id}':
+    get:
+      summary: 'Obtem Visualizao detalhado'
+      description: "O retorno detalhado é a entidade e algum possível retorno associado. Ex. questionário e suas perguntas ou a pessoa e seu endereço\nO retorno não é paginado (pois é view unica (por id))"
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example:
+                  - 'End point somente de documentação, não funcional'
+      tags:
+        - Padrões
+    put:
+      summary: 'Realiza a edição de um cadastro'
+      description: 'geralmente a requisição é a mesma do cadastro'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Padrões
+    delete:
+      summary: 'Move o registro para a lixeira'
+      description: 'Não existe deleção real de registro'
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Padrões
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the padro.'
+        example: veritatis
+        required: true
+        schema:
+          type: string
+  '/api/padroes/restore/{id}':
+    post:
+      summary: 'Remove um registro da lixeira'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Padrões
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the restore.'
+        example: asperiores
+        required: true
+        schema:
+          type: string
+  /api/usuario:
+    post:
+      summary: 'Realiza o cadastro do usuários'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 'Retornos padrões'
+      tags:
+        - Usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Nome que o usuário deseja ser chamado, tamanho máximo de 255 caracteres'
+                  example: eveniet
+                username:
+                  type: string
+                  description: 'nome do usuário (para login), colocar email como padrão'
+                  example: est
+                email:
+                  type: string
+                  description: 'email do usuário'
+                  example: voluptas
+                sexo:
+                  type: enum
+                  description: 'Sexo do usuário, Obtito no categorizador. Se não for informado será preenchido com guid empty'
+                  example: provident
+                password:
+                  type: string
+                  description: 'Senha (não criptografada) do usuário. Não será executada nenhuma validação de complexidade de senha.'
+                  example: voluptate
+                avatar_base_64:
+                  type: string
+                  description: 'String base64 contendo o base64 da imagem de do avatar do usuário'
+                  example: facilis
+                tipo_imagem_avatar:
+                  type: string
+                  description: 'tipo da imagen (ex. image/jpg)'
+                  example: odit
+              required:
+                - name
+                - username
+                - email
+                - sexo
+                - password
+                - avatar_base_64
+                - tipo_imagem_avatar
+      security: []
+    get:
+      summary: "Obtem Listagem de usuários\nPossui todos os filtros padrões"
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: padrões
+      tags:
+        - Usuário
+  '/api/usuario/{id}':
+    get:
+      summary: 'Obtem Visualizao unica de usuário'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  mensagem: 'Esse token não existe ou já foi deslogado'
+                  erro: true
+                  mensagenserro: []
+                  id: 00000000-0000-0000-0000-000000000000
+                  codigoretorno: 401
+                properties:
+                  mensagem:
+                    type: string
+                    example: 'Esse token não existe ou já foi deslogado'
+                  erro:
+                    type: boolean
+                    example: true
+                  mensagenserro:
+                    type: array
+                    example: []
+                  id:
+                    type: string
+                    example: 00000000-0000-0000-0000-000000000000
+                  codigoretorno:
+                    type: integer
+                    example: 401
+      tags:
+        - Usuário
+    put:
+      summary: 'Atualiza Usuário'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: '{YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Nome que o usuário deseja ser chamado, tamanho máximo de 255 caracteres'
+                  example: sint
+                username:
+                  type: string
+                  description: 'nome do usuário (para login), colocar email como padrão'
+                  example: ipsum
+                email:
+                  type: string
+                  description: 'email do usuário'
+                  example: corporis
+                sexo:
+                  type: enum
+                  description: 'Sexo do usuário, Obtito no categorizador. Se não for informado será mantido o atual'
+                  example: eligendi
+                password:
+                  type: string
+                  description: 'Senha (não criptografada) do usuário. Se não for informado, será mantida a atual'
+                  example: est
+                avatar_base_64:
+                  type: string
+                  description: 'String base64 contendo o base64 da imagem de do avatar do usuário'
+                  example: asperiores
+                tipo_imagem_avatar:
+                  type: string
+                  description: 'tipo da imagen (ex. image/jpg)'
+                  example: dolores
+              required:
+                - name
+                - username
+                - email
+                - sexo
+                - password
+                - avatar_base_64
+                - tipo_imagem_avatar
+    delete:
+      summary: 'Move o usuário para a lixeira'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Usuário
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the usuario.'
+        example: nobis
+        required: true
+        schema:
+          type: string
+  '/api/usuario/restore/{id}':
+    post:
+      summary: 'Remove o usuário da lixeira'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Usuário
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the restore.'
+        example: aut
+        required: true
+        schema:
+          type: string
+  '/api/usuario/clone/{id}':
+    post:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Usuário
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the clone.'
+        example: ducimus
+        required: true
+        schema:
+          type: string
+tags:
+  -
+    name: Autenticação
+    description: "\nEndponits para administrar os logins de usuário"
+  -
+    name: Endpoints
+    description: ''
+  -
+    name: 'Grupo de Usuários'
+    description: "\nEndponits para gestão de grupos de usuários"
+  -
+    name: Padrões
+    description: "\nExemplos de retornos e filtros padrões de toda a API"
+  -
+    name: Usuário
+    description: "\nEndponits para gestão de usuários"
 components:
   securitySchemes:
     default:

@@ -27,6 +27,14 @@ class EnvConfig{
     }
 
     public static function ObtemMauticURL(){
-        return env('EMAIL_MAUTIC_URL', 'https://serrinha.goiasec.com.br');
+        return env('EMAIL_MAUTIC_URL', 'https://mautic.com.br');
+    }
+
+    public static function ObtemTipoStorage(){
+        return env('STORAGE', "local");
+    }
+
+    public static function UrlBaseStorage(){
+        return env('URL_STORAGE', 'https://files.com.br');
     }
 }

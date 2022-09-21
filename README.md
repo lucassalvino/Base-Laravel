@@ -1,8 +1,5 @@
 # Base laravel
 
-- [Requisitos](https://docs.google.com/document/d/1JOSH04RZh5PhQrkFu_DuPIfsxBpypM5x/edit#)
-- [Sprints](https://docs.google.com/document/d/1zRVytOqUMYYkCHu_DQZKfkFfUCJXVCwRJ76Bx38Xs5o/edit)
-
 # Configuração da conexão PGSQL
 
 0. Instalar postgresql versão 10 ou superior
@@ -68,6 +65,8 @@ Passos:
 Alterar `QUEUE_CONNECTION` no `.env` para `database`. Ex.: `QUEUE_CONNECTION=database`
 * Serviços: `php artisan schedule:work` : Executa Agendamentos 
 
+Obs.: Em produção utilizar o supervisor. Ler mais em SUPERVISOR.md
+
 
 # Comandos Desenvolvimento
 
@@ -84,4 +83,12 @@ Alterar `QUEUE_CONNECTION` no `.env` para `database`. Ex.: `QUEUE_CONNECTION=dat
 * * `MAUTIC`: Será utilizado o envio pelo mauitc, sendo necessário realizar a configuração da URL do mautic
 > > Ex.: EMAIL_TIPO_ENVIO=MAUTIC
 * `EMAIL_MAUTIC_URL`: URL do mauitc. Recomendavel utilizar HTTPS
-> > Ex.: EMAIL_MAUTIC_URL=https://serrinha.goiasec.com.br
+> > Ex.: EMAIL_MAUTIC_URL=https://mautic.com.br
+
+
+# STORAGE
+## .env
+
+* ```STORAGE```
+* * `S3`: Será utilzilido o armazenamento no S3 da AWS. Quando selecionado, é necessário configurar as credenciais da AWS (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION, AWS_BUCKET, AWS_USE_PATH_STYLE_ENDPOINT).
+* * `local`: Será armazenado localmente, dentro de public/storage

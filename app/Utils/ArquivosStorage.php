@@ -1,9 +1,15 @@
 <?php
 namespace App\Utils;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 class ArquivosStorage{
     public static $BasePath = 'resources'.DIRECTORY_SEPARATOR.'storage';
+
     public static function Base64ParaImagem($base64_string, $output_file) {
+        if(strcasecmp(EnvConfig::ObtemTipoStorage(), 'S3') == 0){
+            $path = Storage::disk('s3')->put('storage/imagens/'.basename($output_file), base64_decode( $base64_string ));
+            return $path;
+        }
         $ifp = fopen( $output_file, 'wb' );
         fwrite( $ifp, base64_decode( $base64_string ));
         fclose( $ifp );
@@ -23,6 +29,11 @@ class ArquivosStorage{
 
     public static function GetUrlView($dbUrl, $getUrlFromEnv = false){
         if (strpos($dbUrl, 'http') === false) {
+            if(strcasecmp(EnvConfig::ObtemTipoStorage(), 'S3') == 0){
+                $url =  str_replace('\\','/', $dbUrl);
+                $url = EnvConfig::UrlBaseStorage()."/storage/".$url;
+                return $url;
+            }
             $url =  str_replace('\\','/', url( ArquivosStorage::$BasePath.DIRECTORY_SEPARATOR.$dbUrl));
             if($getUrlFromEnv){
                 $complemento = EnvConfig::ObtemComplementoPathImagem();

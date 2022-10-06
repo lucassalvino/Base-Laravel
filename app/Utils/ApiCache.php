@@ -37,4 +37,13 @@ class ApiCache{
     public static function GeraChaveRequest(Array $filtros){
         return md5(json_encode($filtros));
     }
+
+    public static function ObtemDadosCache($chave, $functionObtemDados, $fatorTempo = 1){
+        if(ApiCache::Existe($chave)){
+            return ApiCache::Obtem($chave);
+        }
+        $dado = $functionObtemDados();
+        ApiCache::AddCache($chave, $dado, $fatorTempo);
+        return $dado;
+    }
 }

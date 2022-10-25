@@ -76,6 +76,24 @@
                         </li>
                     </ul>
                 </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="sidebar-dropdown" id="menu-configuracao">
+                            <a href="#">
+                                <i class="fas fa-tools"></i>
+                                <span>Configurações</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{{route('admin:tokenapi.index')}}">API Key</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="sidebar-footer">
                 <a href="#">

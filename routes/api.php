@@ -4,6 +4,7 @@ use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\LoginApiController;
 use App\Http\Controllers\Api\PadroesController;
+use App\Http\Controllers\Api\TokenApiApiController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\cms\CMSController;
 use Illuminate\Support\Facades\Route;
@@ -73,4 +74,5 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
 
     ConstruiRotaPadraoApi('usuario', UsuarioController::class);
     ConstruiRotaPadraoApi('grupousuarios', GrupoController::class);
+    ConstruiRotaPadraoApi('tokenapi', TokenApiApiController::class);
 });

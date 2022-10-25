@@ -1,6 +1,7 @@
 <?php 
 namespace App\Servicos;
 
+use App\Models\Configuracoes\TokensAPI;
 use App\Models\Grupo;
 use App\Models\Login;
 use App\Models\User;
@@ -24,6 +25,17 @@ class LoginServico{
         $login = Login::query()
             ->where('api_token', '=', $token)
             ->first();
+        if(!$login){
+            $login = TokensAPI::query()
+            ->where('api_key', '=', $token)
+            ->first();
+            if($login){
+                $login->api_token = $token;
+                $login->user_id = $login->usuario_id;
+                $login->codigo_verificacao_login = '';
+                $login->validado = true;
+            }
+        }
 
         ApiCache::AddCache($chave, $login);
         return $login;

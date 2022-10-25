@@ -136,7 +136,6 @@ class BaseModel extends Model{
                 $item->{$campo} = $request[$campo];
             }
         }
-        $item->save();
     }
 
     public function NormalizaDados(&$dados, $atualizacao = false){

@@ -12,7 +12,6 @@ use App\Models\Grupo;
  */
 class GrupoController extends BaseAPIController implements IAPIController
 {
-    private $model = null;
     function __construct(){
         parent::__construct(Grupo::class);
     }

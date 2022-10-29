@@ -126,7 +126,11 @@ class User extends BaseModelAuthenticatable{
                 $dados['sexo'] = $instanciaBanco->sexo;
             }
             if(array_key_exists('avatar_base_64', $dados) && array_key_exists('tipo_imagem_avatar', $dados)){
-                $nomeArquivo = self::SalvaImagem($dados['avatar_base_64'], $dados['tipo_imagem_avatar']);
+                $nomeArquivo = self::SalvaImagem(
+                    $dados['avatar_base_64'],
+                    $dados['tipo_imagem_avatar'],
+                    $instanciaBanco->id
+                );
                 if($nomeArquivo) 
                     $dados['path_avatar'] = $nomeArquivo;
             }else{

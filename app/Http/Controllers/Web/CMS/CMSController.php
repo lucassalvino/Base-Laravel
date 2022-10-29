@@ -48,10 +48,10 @@ class CMSController extends Controller
         $descktop = '';
         $mobile = '';
         if($dados['patch_descktop_base_64'] && $dados['tipo_patch_descktop']){
-            $descktop = BaseModel::SalvaImagem($dados['patch_descktop_base_64'], $dados['tipo_patch_descktop']);
+            $descktop = Banners::SalvaImagem($dados['patch_descktop_base_64'], $dados['tipo_patch_descktop']);
         }
         if($dados['patch_mobile_base_64'] && $dados['tipo_patch_mobile']){
-            $mobile = BaseModel::SalvaImagem($dados['patch_mobile_base_64'], $dados['tipo_patch_mobile']);
+            $mobile = Banners::SalvaImagem($dados['patch_mobile_base_64'], $dados['tipo_patch_mobile']);
         }
         if( strcasecmp($dados['id'], "00000000-0000-0000-0000-000000000000") != 0 ){
             $banner = Banners::query()->where('id', '=', $dados['id'])->first();

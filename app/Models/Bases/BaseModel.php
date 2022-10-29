@@ -1,6 +1,7 @@
 <?php
 namespace App\Models\Bases;
 
+use App\Models\MultimidiaArquivos;
 use App\Utils\ArquivosStorage;
 use App\Utils\BaseRetornoApi;
 use Carbon\Carbon;
@@ -437,7 +438,7 @@ class BaseModel extends Model{
         }
     }
 
-    public static function SalvaImagem($base64Imagem, $tipoImagem, $caminhorelativo = false, $storageFolder = 'imagens'){
+    public static function SalvaImagem($base64Imagem, $tipoImagem, $usuario_id = null, $caminhorelativo = false, $storageFolder = 'imagens'){
         $nomeArquivo = false;
         if(isset($base64Imagem)){
             if(isset($tipoImagem)){
@@ -451,6 +452,11 @@ class BaseModel extends Model{
                 throw new Exception("É necessário informar o tipo da imagem.");
             }
         }
+        MultimidiaArquivos::create(Array(
+            'usuario_id' => $usuario_id, 
+            'path_relativo' => $nomeArquivo,
+            'model' => static::class
+        ));
         return $nomeArquivo;
     }
 

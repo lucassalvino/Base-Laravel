@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\Configuracoes\TokenApiController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
+use App\Http\Controllers\Web\admin\MonitoramentoController;
 use App\Http\Controllers\Web\admin\Usuarios\GrupoController;
 use App\Http\Controllers\Web\admin\Usuarios\UsuarioController as UsuarioAdminController;
 use App\Http\Controllers\Web\cms\CMSController;
@@ -102,6 +103,10 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
             Route::get('/seo', [CMSController::class, 'seo'])->name("home.seo");
             Route::get('/banner', [CMSController::class, 'banner'])->name('cms.banner');
             Route::get('/banner/{id}', [CMSController::class, 'cadastrarbanner'])->name('cms.cadastrabanner');
+        });
+
+        Route::prefix('/monitoramento')->group(function(){
+            Route::get('/cache', [MonitoramentoController::class, 'Cache'])->name('monitora-cache');
         });
     });
 });

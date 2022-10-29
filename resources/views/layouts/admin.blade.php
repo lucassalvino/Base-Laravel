@@ -94,6 +94,24 @@
                         </li>
                     </ul>
                 </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="sidebar-dropdown" id="menu-status">
+                            <a href="#">
+                                <i class="fas fa-cogs"></i>
+                                <span>Monitoramento Servidor</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{{route('admin:monitora-cache')}}">Cache</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="sidebar-footer">
                 <a href="#">

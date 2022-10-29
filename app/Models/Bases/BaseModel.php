@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+
 class BaseModel extends Model{
     use SoftDeletes;
     
@@ -436,9 +437,8 @@ class BaseModel extends Model{
         }
     }
 
-    public static function SalvaImagem($base64Imagem, $tipoImagem, $caminhorelativo=false, $storageFolder = 'imagens'){
+    public static function SalvaImagem($base64Imagem, $tipoImagem, $caminhorelativo = false, $storageFolder = 'imagens'){
         $nomeArquivo = false;
-
         if(isset($base64Imagem)){
             if(isset($tipoImagem)){
                 if($caminhorelativo){
@@ -447,7 +447,6 @@ class BaseModel extends Model{
                     $nomeArquivo = ArquivosStorage::GetRelativePath($storageFolder, $tipoImagem);
                 }
                 ArquivosStorage::Base64ParaImagem($base64Imagem, ArquivosStorage::GetPathImagem($nomeArquivo, $storageFolder));
-
             }else{
                 throw new Exception("É necessário informar o tipo da imagem.");
             }
@@ -458,20 +457,14 @@ class BaseModel extends Model{
     public static $BasePath = 'resources'.DIRECTORY_SEPARATOR.'storage';
 
     public static function SalvaArquivo($files, $storageFolder = 'arquivos'){
-
         $nomesArquivo = [];
-
         if(isset($files)){
             if (!file_exists(public_path($storageFolder))) {
                 mkdir(public_path(self::$BasePath), 0755, true);
             }
-
             $targetDir = public_path(self::$BasePath. DIRECTORY_SEPARATOR . $storageFolder);
-
             if (isset($_FILES[$files])) {
                 $total = count($_FILES[$files]['name']);
-
-                // Loop through each file
                 for( $i=0 ; $i < $total ; $i++ ) {
                     $ext = pathinfo($_FILES[$files]['name'][$i], PATHINFO_EXTENSION); //Pegando extensão do arquivo
                     $new_name = md5(date('d-m-Y H:i:s:u')).'.'.$ext; //Definindo um novo nome para o arquivo
@@ -484,7 +477,6 @@ class BaseModel extends Model{
                 throw new Exception("É necessário informar o tipo da imagem.");
             }
         }
-
         return $nomesArquivo;
     }
 

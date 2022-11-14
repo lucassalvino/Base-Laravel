@@ -8,7 +8,7 @@ Class Documento extends BaseModel{
         'id', 'tipo', 'numero', 'usuario_id'
     ];
 
-    public function GetLikeFields(){
+    public function GetValidadorCadastro($request){
         return [
             'tipo' => 'required|max:100',
             'numero' => 'required|max:300',

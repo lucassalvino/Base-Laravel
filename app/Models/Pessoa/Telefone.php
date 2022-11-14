@@ -8,7 +8,7 @@ Class Telefone extends BaseModel{
         'id', 'ddd', 'numero', 'padrao', 'usuario_id'
     ];
 
-    public function GetLikeFields(){
+    public function GetValidadorCadastro($request){
         return [
             'ddd' => 'required|max:20',
             'numero' => 'required|max:100'

@@ -9,7 +9,7 @@ Class Endereco extends BaseModel{
         'cidade', 'estado', 'padrao', 'latitude', 'longitude', 'usuario_id'
     ];
 
-    public function GetLikeFields(){
+    public function GetValidadorCadastro($request){
         return [
             'cep' => 'required|max:40',
             'logradouro' => 'required|max:300',

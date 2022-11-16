@@ -41,7 +41,7 @@ class BaseModel extends Model{
         return [];
     }
     public function GetValidadorAtualizacao($request, $id){
-        return [];
+        return $this->GetValidadorCadastro($request);
     }
 
     public static  function AplicaFiltroConsulta(Builder $consulta, $filtros, $chave, $nomeChaveConsulta = null, $operador = '=', $where = 'where'){

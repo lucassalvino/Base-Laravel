@@ -53,7 +53,6 @@
                                 </ul>
                             </div>
                         </li>
-                        </li>
                     </ul>
                 </div>
                 <div class="sidebar-menu">
@@ -91,7 +90,6 @@
                                 </ul>
                             </div>
                         </li>
-                        </li>
                     </ul>
                 </div>
                 <div class="sidebar-menu">
@@ -108,7 +106,6 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
                         </li>
                     </ul>
                 </div>

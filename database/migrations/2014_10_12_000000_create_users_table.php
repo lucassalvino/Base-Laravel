@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('path_avatar', 300);
             $table->string('password', 300);
             $table->string('sexo', 100)->nullable();
+            $table->date('data_nascimento')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

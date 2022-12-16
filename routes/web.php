@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
 use App\Http\Controllers\Web\admin\MonitoramentoController;
 use App\Http\Controllers\Web\admin\Usuarios\GrupoController;
+use App\Http\Controllers\Web\admin\Usuarios\PermissaoController;
 use App\Http\Controllers\Web\admin\Usuarios\UsuarioController as UsuarioAdminController;
 use App\Http\Controllers\Web\cms\CMSController;
 use App\Http\Controllers\Web\PublicoController;
@@ -74,7 +75,7 @@ Route::middleware(['cors', 'CheckDeslogado'])->group(function(){
     Route::get('/esqueci-minha-senha', function () {
         return view('esqueci-minha-senha');
     });
-    
+
     Route::get('/esqueci-minha-senha-token', function () {
         return view('esqueci-minha-senha-token');
     });
@@ -90,7 +91,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         Route::post('/', [LoginControllerAdmin::class, 'RealizarLogin'])->name('realizar.login');
         Route::get('/logout', [LoginControllerAdmin::class, 'RealizarLogout'])->name('realizar.logout');
     });
-    
+
     Route::get('/construindo', [DashBoardController::class, 'EmConstrucao'])->name('construindo');
 
     Route::group(['middleware' => 'VerificaSessaoWebAdmin'], function(){
@@ -98,6 +99,11 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         ConstruiRotaPadraoAdmin('usuario', UsuarioAdminController::class);
         ConstruiRotaPadraoAdmin('grupousuarios', GrupoController::class);
         ConstruiRotaPadraoAdmin('tokenapi', TokenApiController::class);
+
+        Route::group(['prefix' => '/permissoes'], function(){
+            Route::get('/grupopermissoes', [PermissaoController::class, 'Index'])->name('grupo.permissoes');
+            Route::get('/usuariogrupo/{id}', [PermissaoController::class, 'UsuariosGrupo'])->name('grupo.usuarios');
+        });
 
         Route::prefix('/cms')->group(function(){
             Route::get('/seo', [CMSController::class, 'seo'])->name("home.seo");
@@ -115,7 +121,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
 Route::namespace('Api')->middleware(['cors'])->group(function(){
     Route::prefix('/publicoapi')->group(function(){
         Route::post('/usuario',[UsuarioController::class, 'Cadastra'])->name("cadastra.usuario.csrf");
-        
+
         Route::prefix("/buscas")->group(function(){
             Route::get('/usuario', [BuscasController::class, 'Usuarios'])->name("api.publica.busca.usuarios");
         });

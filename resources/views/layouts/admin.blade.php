@@ -48,7 +48,7 @@
                                         <a href="{{route('admin:grupousuarios.index')}}">Grupos</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('admin:construindo')}}">Permissões</a>
+                                        <a href="{{route('admin:grupo.permissoes')}}">Permissões</a>
                                     </li>
                                 </ul>
                             </div>

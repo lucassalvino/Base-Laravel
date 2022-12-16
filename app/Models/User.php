@@ -19,7 +19,7 @@ class User extends BaseModelAuthenticatable{
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     protected $table = "users";
     public static $pathAvatarPadrao = "imagens/c7ae38b4_1280_4e19_9fcb_c6c8b557ae3c.png";
-    
+
 
     protected $fillable = [
         'id',
@@ -28,7 +28,8 @@ class User extends BaseModelAuthenticatable{
         'email',
         'password',
         'path_avatar',
-        'sexo'
+        'sexo',
+        'data_nascimento'
     ];
 
     public function GetLikeFields(){
@@ -52,19 +53,16 @@ class User extends BaseModelAuthenticatable{
             'email' => 'required|max:255|unique:users',
             'path_avatar' => 'required|max:300',
             'password' => 'required|max:300',
-            'sexo' => 'required|max:100'
+            'sexo' => 'required|max:100',
+            'data_nascimento' => 'date'
         ];
     }
 
     public function GetValidadorAtualizacao($request, $id){
-        return [
-            'name' => 'required|max:255',
-            'username' => ['required', 'max:255', Rule::unique('users')->ignore($id)],
-            'email' => ['required', 'max:255', Rule::unique('users')->ignore($id)],
-            'path_avatar' => 'max:300',
-            'password' => 'required|max:300',
-            'sexo' => 'required|max:100'
-        ];
+        $validacao = $this->GetValidadorCadastro($request);
+        $validacao['username'] = ['required', 'max:255', Rule::unique('users')->ignore($id)];
+        $validacao['email'] = ['required', 'max:255', Rule::unique('users')->ignore($id)];
+        return $validacao;
     }
 
     public function NormalizaDados(&$dados, $atualizacao = false){
@@ -92,14 +90,14 @@ class User extends BaseModelAuthenticatable{
         }
         return $retorno;
     }
-    
+
     public static function CadastraElementoArray($dados){
         DB::beginTransaction();
         try{
             $nomeArquivo = "";
             if(array_key_exists('avatar_base_64', $dados) && array_key_exists('tipo_imagem_avatar', $dados)){
                 $nomeArquivo = self::SalvaImagem($dados['avatar_base_64'], $dados['tipo_imagem_avatar']);
-                if($nomeArquivo) 
+                if($nomeArquivo)
                     $dados['path_avatar'] = $nomeArquivo;
             }
             $cadastro = parent::CadastraElementoArray($dados);
@@ -131,7 +129,7 @@ class User extends BaseModelAuthenticatable{
                     $dados['tipo_imagem_avatar'],
                     $instanciaBanco->id
                 );
-                if($nomeArquivo) 
+                if($nomeArquivo)
                     $dados['path_avatar'] = $nomeArquivo;
             }else{
                 $dados['path_avatar'] = $instanciaBanco->path_avatar;

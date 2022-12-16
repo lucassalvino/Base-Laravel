@@ -25,7 +25,7 @@ class Pessoa extends Migration
             $table->boolean("padrao")->default(false);
             $table->double('latitude')->default(0);
             $table->double('longitude')->default(0);
-            $table->uuid('usuario_id');
+            $table->uuid('usuario_id')->nullable();
             $table->foreign('usuario_id')->references('id')->on('users');
             $table->softDeletes();
             $table->timestamps();
@@ -35,7 +35,7 @@ class Pessoa extends Migration
             $table->uuid('id')->primary();
             $table->string("numero", 300);
             $table->string("tipo", 100);
-            $table->uuid('usuario_id');
+            $table->uuid('usuario_id')->nullable();
             $table->foreign('usuario_id')->references('id')->on('users');
             $table->softDeletes();
             $table->timestamps();
@@ -46,7 +46,7 @@ class Pessoa extends Migration
             $table->string("ddd", 20);
             $table->string("numero", 100);
             $table->boolean("padrao")->default(false);
-            $table->uuid('usuario_id');
+            $table->uuid('usuario_id')->nullable();
             $table->foreign('usuario_id')->references('id')->on('users');
             $table->softDeletes();
             $table->timestamps();

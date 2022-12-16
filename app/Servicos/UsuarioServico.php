@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Servicos;
 use App\Models\User;
 use App\Utils\BaseRetornoApi;

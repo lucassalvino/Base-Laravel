@@ -13,7 +13,7 @@ Class UsuarioGrupo extends BaseModelPKComposta{
     protected $fillable = [
         'grupo_id', 'usuario_id'
     ];
-    
+
     protected $primaryKey = ['grupo_id', 'usuario_id'];
 
     private static $Grupos = Array();
@@ -37,7 +37,7 @@ Class UsuarioGrupo extends BaseModelPKComposta{
                         $erros = self::ProcessaAtualizacaoCadastro('usuario_id', 'grupo_id', $usuarioBanco, $usuario['grupos'], self::CarregaGrupos($usuario['grupos']), $gruposUsuario);
                         array_merge($arrayErros, $erros);
                     }else{
-                        array_push($arrayErros, "O Id do usuário informado não é válido");    
+                        array_push($arrayErros, "O Id do usuário informado não é válido");
                     }
                 }else{
                     array_push($arrayErros, "O Id do usuário não foi setado");

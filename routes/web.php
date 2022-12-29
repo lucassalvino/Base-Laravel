@@ -120,8 +120,20 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
 /* API CSRF */
 Route::namespace('Api')->middleware(['cors'])->group(function(){
     Route::prefix('/publicoapi')->group(function(){
-        Route::post('/usuario',[UsuarioController::class, 'Cadastra'])->name("cadastra.usuario.csrf");
 
+        Route::post('/refresh-csrf', function(){
+            return response()->json([
+                'csrf-token' => csrf_token()
+            ]);
+        })->name("refresh-csrf");
+
+        Route::post('/check-csrf', function(){
+            return response()->json([
+                "ok" => "ok"
+            ]);
+        })->name("check-csrf");
+
+        Route::post('/usuario',[UsuarioController::class, 'Cadastra'])->name("cadastra.usuario.csrf");
         Route::prefix("/buscas")->group(function(){
             Route::get('/usuario', [BuscasController::class, 'Usuarios'])->name("api.publica.busca.usuarios");
         });

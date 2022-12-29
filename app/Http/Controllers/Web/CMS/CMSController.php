@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\Web\cms;
 
 use App\Http\Controllers\Controller;
-use App\Models\Bases\BaseModel;
 use App\Models\CMS\Banners;
 use App\Models\cms\SEO;
 use App\Utils\ArquivosStorage;

@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Storage;
 class ArquivosStorage{
     public static $BasePath = 'resources'.DIRECTORY_SEPARATOR.'storage';
 
-    public static function Base64ParaImagem($base64_string, $output_file) {
+    public static function Base64ParaImagem($base64_string, $output_file, $pasta = 'imagens') {
         if(strcasecmp(EnvConfig::ObtemTipoStorage(), 'S3') == 0){
-            $path = Storage::disk('s3')->put('storage/imagens/'.basename($output_file), base64_decode( $base64_string ));
+            $path = Storage::disk('s3')->put('storage/' . $pasta . '/' .basename($output_file), base64_decode( $base64_string ));
             return $path;
         }
         $ifp = fopen( $output_file, 'wb' );
@@ -53,6 +53,10 @@ class ArquivosStorage{
     }
 
     public static function DeletaArquivo($PathRelativo){
+        if(strcasecmp(EnvConfig::ObtemTipoStorage(), 'S3') == 0){
+            Storage::disk('s3')->delete($PathRelativo);
+            return;
+        }
         if(strcasecmp("", $PathRelativo) != 0){
             unlink(self::$BasePath. DIRECTORY_SEPARATOR . $PathRelativo);
         }

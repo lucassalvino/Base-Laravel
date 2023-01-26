@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 class BaseModel extends Model{
     use SoftDeletes;
-    
+
     public static $guidempty = "00000000-0000-0000-0000-000000000000";
 
     protected static function boot(){
@@ -32,7 +32,7 @@ class BaseModel extends Model{
     public function getIncrementing(){
         return false;
     }
-    
+
     public function getKeyType(){
         return 'string';
     }
@@ -128,7 +128,7 @@ class BaseModel extends Model{
             return $request->all();
         return $request;
     }
-    
+
     public function UpdateRegistro($request, Model &$item){
         $colunasEdicao = $this->ColunasEdicao();
         foreach($colunasEdicao as $campo){
@@ -205,10 +205,10 @@ class BaseModel extends Model{
     }
 
     public static function GeraErro(
-        $erros, 
-        $rollback = true, 
-        $mesagem ="Um erro aconteceu", 
-        $codigo = 400, 
+        $erros,
+        $rollback = true,
+        $mesagem ="Um erro aconteceu",
+        $codigo = 400,
         $apagarImagens = false,
         $pathsImagens = []){
 
@@ -309,7 +309,7 @@ class BaseModel extends Model{
         }
     }
 
-    /** 
+    /**
      * $original: deve ser a referencia para a instancia do banco que deve ser clonado.
      * $novosValores: array com os valores que devem ser clonados com valores diferentes dos original
     */
@@ -388,7 +388,7 @@ class BaseModel extends Model{
         if($incluiExcluidos){
             array_push($camposRetorno,$instancia->GetTableName().'.deleted_at');
         }
-        
+
         $consulta = $instancia->ConstruiFiltroListagem($consulta, $request);
 
         foreach($camposOrdenacao as $ordena){
@@ -447,13 +447,17 @@ class BaseModel extends Model{
                 }else{
                     $nomeArquivo = ArquivosStorage::GetRelativePath($storageFolder, $tipoImagem);
                 }
-                ArquivosStorage::Base64ParaImagem($base64Imagem, ArquivosStorage::GetPathImagem($nomeArquivo, $storageFolder));
+                ArquivosStorage::Base64ParaImagem(
+                    $base64Imagem,
+                    ArquivosStorage::GetPathImagem($nomeArquivo, $storageFolder),
+                    $storageFolder
+                );
             }else{
                 throw new Exception("É necessário informar o tipo da imagem.");
             }
         }
         MultimidiaArquivos::create(Array(
-            'usuario_id' => $usuario_id, 
+            'usuario_id' => $usuario_id,
             'path_relativo' => $nomeArquivo,
             'model' => static::class
         ));

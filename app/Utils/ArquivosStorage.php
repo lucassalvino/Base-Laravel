@@ -1,7 +1,9 @@
 <?php
 namespace App\Utils;
-use Illuminate\Support\Str;
+
+use Aws\S3\S3Client;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 class ArquivosStorage{
     public static $BasePath = 'resources'.DIRECTORY_SEPARATOR.'storage';
 
@@ -18,11 +20,11 @@ class ArquivosStorage{
 
     public static function GetPathFolder($folder, $delete = false){
         if (!file_exists(public_path(self::$BasePath))) {
-            mkdir(public_path(self::$BasePath), 0755, true);
+            mkdir(public_path(self::$BasePath), 0777, true);
         }
         $diretorio = public_path(self::$BasePath. DIRECTORY_SEPARATOR . $folder);
         if (!file_exists($diretorio)) {
-            mkdir($diretorio, 0755, true);
+            mkdir($diretorio, 0777, true);
         }
         return $diretorio;
     }
@@ -68,11 +70,11 @@ class ArquivosStorage{
 
     public static function GetPathImagem($caminhoRelativo, $storageFolder){
         if (!file_exists(public_path(self::$BasePath))) {
-            mkdir(public_path(self::$BasePath), 0755, true);
+            mkdir(public_path(self::$BasePath), 0777, true);
         }
         $diretorio = public_path(self::$BasePath. DIRECTORY_SEPARATOR . $storageFolder);
         if (!file_exists($diretorio)) {
-            mkdir($diretorio, 0755, true);
+            mkdir($diretorio, 0777, true);
         }
         return public_path(self::$BasePath. DIRECTORY_SEPARATOR . $caminhoRelativo);
     }
@@ -98,6 +100,35 @@ class ArquivosStorage{
         return "";
     }
 
+    public static function ObtemS3Cliente() : S3Client{
+        $s3 = new S3Client([
+            'region' => env('AWS_DEFAULT_REGION'),
+            'version' => 'latest',
+            'http' => [
+                'verify' => false
+            ],
+            'credentials' => [
+                'key' => env('AWS_ACCESS_KEY_ID'),
+                'secret' => env('AWS_SECRET_ACCESS_KEY')
+            ]
+        ]);
+        return $s3;
+    }
+
+    public static function ObtemListaArquivos(S3Client $s3, $pasta){
+        return $s3->getIterator('ListObjects', array(
+            "Bucket" => env('AWS_BUCKET'),
+            "Prefix" => $pasta
+        ));
+    }
+
+    public static function CheckIfFileExistis(S3Client $s3, $fileName){
+        return $s3->doesObjectExistV2(
+            env('AWS_BUCKET'),
+            $fileName
+        );
+    }
+
     public static function GetExtensoesPossiveis(){
         $arrayRetorno = Array(
             'image/jpeg' => 'jpg',
@@ -114,6 +145,7 @@ class ArquivosStorage{
             'video/x-msvideo' => 'avi',
             'application/vnd.amazon.ebook' => 'azw',
             'application/octet-stream' => 'bin',
+            "application/octet-stream" => "PRN",
             'application/x-bzip' => 'bz',
             'application/x-bzip2' => 'bz2',
             'application/x-csh' => 'csh',

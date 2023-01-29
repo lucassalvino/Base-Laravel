@@ -104,6 +104,9 @@
                                     <li>
                                         <a href="{{route('admin:monitora-cache')}}">Cache</a>
                                     </li>
+                                    <li>
+                                        <a href="{{route('admin:chamada-jobs')}}">Jobs</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

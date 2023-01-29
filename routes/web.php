@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\UsuarioController;
+use App\Http\Controllers\Web\admin\ChamadaJobsController;
 use App\Http\Controllers\Web\admin\Configuracoes\TokenApiController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
@@ -113,6 +114,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
 
         Route::prefix('/monitoramento')->group(function(){
             Route::get('/cache', [MonitoramentoController::class, 'Cache'])->name('monitora-cache');
+            Route::get('/chamadajobs', [ChamadaJobsController::class, 'ChamadaJobs'])->name('chamada-jobs');
         });
     });
 });

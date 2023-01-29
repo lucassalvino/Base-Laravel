@@ -1,8 +1,6 @@
 <?php
 namespace App\Models\Enuns;
-
-class PastasStorages extends BaseEnum
-{
+class PastasStorages extends BaseEnum{
     protected $enumeradores = [
         'imagens' => 'Imagens'
     ];

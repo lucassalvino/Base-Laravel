@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\LoginApiController;
 use App\Http\Controllers\Api\PadroesController;
 use App\Http\Controllers\Api\TokenApiApiController;
 use App\Http\Controllers\Api\UsuarioController;
+use App\Http\Controllers\Web\admin\MonitoramentoController;
 use App\Http\Controllers\Web\admin\Usuarios\PermissaoController;
 use App\Http\Controllers\Web\cms\CMSController;
 use Illuminate\Support\Facades\Route;
@@ -76,6 +77,11 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
         Route::post('/seo', [CMSController::class, 'cadastraseo'])->name('cadastraseo');
         Route::post('/banners', [CMSController::class, 'cadastrabanner'])->name('cadastrabanner');
         Route::delete('/deletabanner/{id}', [CMSController::class, 'deletabanner'])->name('deletabanner');
+    });
+
+    Route::prefix('/acoes-servidor')->group(function(){
+        Route::post('/limpacache', [MonitoramentoController::class, "LimpaCache"])->name('solicita.limpeza.cache');
+        Route::prefix('/chamada-jobs')->group(function(){});
     });
 
     ConstruiRotaPadraoApi('usuario', UsuarioController::class);

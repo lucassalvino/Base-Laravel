@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if(env('FORCE_HTTPS',false)) {
+            URL::forceScheme('https');
+        }
         $mainPath = database_path('migrations');
         $directories = glob($mainPath . '/*' , GLOB_ONLYDIR);
         $paths = array_merge([$mainPath], $directories);

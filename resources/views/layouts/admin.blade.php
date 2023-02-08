@@ -85,6 +85,9 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
+                                        <a href="{{route('admin:Index.configuracao')}}">Sistema</a>
+                                    </li>
+                                    <li>
                                         <a href="{{route('admin:tokenapi.index')}}">API Key</a>
                                     </li>
                                 </ul>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\ChamadaJobsController;
+use App\Http\Controllers\Web\admin\Configuracoes\ConfiguracoesSistemaController;
 use App\Http\Controllers\Web\admin\Configuracoes\TokenApiController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
@@ -99,7 +100,11 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         Route::get('/', [DashBoardController::class, 'Index'])->name("home");
         ConstruiRotaPadraoAdmin('usuario', UsuarioAdminController::class);
         ConstruiRotaPadraoAdmin('grupousuarios', GrupoController::class);
-        ConstruiRotaPadraoAdmin('tokenapi', TokenApiController::class);
+        
+        Route::prefix('/configuracoes')->group(function(){
+            ConstruiRotaPadraoAdmin('tokenapi', TokenApiController::class);
+            Route::get('/sistema', [ConfiguracoesSistemaController::class, 'Index'])->name('Index.configuracao');
+        });
 
         Route::group(['prefix' => '/permissoes'], function(){
             Route::get('/grupopermissoes', [PermissaoController::class, 'Index'])->name('grupo.permissoes');

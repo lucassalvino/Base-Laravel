@@ -2,6 +2,7 @@
 namespace App\Models\Bases;
 
 use App\Models\MultimidiaArquivos;
+use App\Utils\ApiCache;
 use App\Utils\ArquivosStorage;
 use App\Utils\BaseRetornoApi;
 use Carbon\Carbon;
@@ -400,6 +401,19 @@ class BaseModel extends Model{
         } else {
             return $consulta->get($camposRetorno);
         }
+    }
+
+    public static function ObtemElementoUnicoCache($id, $fator = 1){
+        $chave = ApiCache::GeraChaveRequest([
+            'id' => $id,
+            'model' => static::class,
+            'fator' => $fator,
+            'metodo' => __FUNCTION__
+        ]);
+
+        return ApiCache::ObtemDadosCache($chave, function() use ($id){
+            return self::ObtemElementoUnico($id);
+        }, $fator);
     }
 
     public static function Detalhado(Request $request, $id){

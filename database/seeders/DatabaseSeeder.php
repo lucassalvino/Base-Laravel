@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ConfiguracoesSistema;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 
@@ -17,5 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorizadoresSeeder::class);
         if(!User::query()->first())
             $this->call(UsersSeeder::class);
+        if(!ConfiguracoesSistema::query()->first())
+            $this->call(ConfiguracoesSistemaSeeder::class);
     }
 }

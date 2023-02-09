@@ -100,7 +100,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         Route::get('/', [DashBoardController::class, 'Index'])->name("home");
         ConstruiRotaPadraoAdmin('usuario', UsuarioAdminController::class);
         ConstruiRotaPadraoAdmin('grupousuarios', GrupoController::class);
-        
+
         Route::prefix('/configuracoes')->group(function(){
             ConstruiRotaPadraoAdmin('tokenapi', TokenApiController::class);
             Route::get('/sistema', [ConfiguracoesSistemaController::class, 'Index'])->name('Index.configuracao');

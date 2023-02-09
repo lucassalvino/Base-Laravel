@@ -40,7 +40,7 @@ class LoginApiController extends Controller
 
     /**
      * Realiza solicitação de resetar a senha
-     * 
+     *
      * @bodyParam   email    string  required     Email do usuário que deseja resetar a senha  Example: teste@teste.com.br
      */
     public function ResetarSenha(Request $request)
@@ -50,7 +50,7 @@ class LoginApiController extends Controller
 
     /**
      * Altera senha do usuário via solicitação de resete de senha
-     * 
+     *
      * @bodyParam   token   string  required    Token de resete de senha, o usuário obtem este token ao solicitar resete de senha   Example: ftrjs1s23...
      * @bodyParam   senha   string  required    Nova senha a ser definida   Example: nova_senha
      * @bodyParam   resenha   string  required    Confirmação da senha   Example: nova_senha

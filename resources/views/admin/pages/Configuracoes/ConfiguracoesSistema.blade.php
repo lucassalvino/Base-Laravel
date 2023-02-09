@@ -1,6 +1,6 @@
 <?php
 $titulo = "Configuração do sistema";
-$urlSubmit = "#";
+$urlSubmit = route('configuracoessistema.api.cadastra');
 ?>
 
 @extends('layouts.admin')
@@ -12,9 +12,18 @@ $urlSubmit = "#";
         <h3 class="text-secondary">{{$titulo}}</h3>
     </div>
     <div class="d-flex w-100 border-top pt-3">
-        <form class="w-100 formulario-padrao" action="{{$urlSubmit}}" method="POST" 
+        <form class="w-100 formulario-padrao" action="{{$urlSubmit}}" method="POST"
             enctype="multipart/form-data" data-onsubmit data-back data-Authorization="{{session('Authorization','')}}">
-            @yield('input_form')
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex flex-column">
+                            <label for="quantidade_sessoes_permitidas">Quantidade de Sessões permitidas</label>
+                            <input type="number" value="{{$configuracao?$configuracao->quantidade_sessoes_permitidas:''}}" name="quantidade_sessoes_permitidas" id="quantidade_sessoes_permitidas" class="form-control" placeholder="N de logins por usuário">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="d-flex w-100 justify-content-end pt-4">
                 <div class="d-flex">
                     <button type="submit" class="btn btn-primary pl-4 pr-4"> Salvar </button>

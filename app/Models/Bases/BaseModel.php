@@ -412,7 +412,7 @@ class BaseModel extends Model{
         ]);
 
         return ApiCache::ObtemDadosCache($chave, function() use ($id){
-            return self::ObtemElementoUnico($id);
+            return static::withTrashed()->where('id', '=', $id)->first();
         }, $fator);
     }
 

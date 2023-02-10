@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Servicos;
 
 use App\Models\Configuracoes\TokensAPI;
@@ -14,6 +14,7 @@ class LoginServico{
     protected static $admin;
 
     const SlugAdmin = 'administradores';
+    const SlugRoot = 'root';
 
     public static function ObtemSessao($token){
         $chave = ApiCache::GeraChaveRequest(Array(
@@ -55,7 +56,7 @@ class LoginServico{
     }
 
     public static function ObtemGrupoUsuario($usuario_id){
-        return 
+        return
         Grupo::query()
             ->join('usuario_grupo', 'usuario_grupo.grupo_id', '=', 'grupo.id')
             ->where('usuario_grupo.usuario_id', '=', $usuario_id)

@@ -20,7 +20,6 @@ class User extends BaseModelAuthenticatable{
     protected $table = "users";
     public static $pathAvatarPadrao = "imagens/c7ae38b4_1280_4e19_9fcb_c6c8b557ae3c.png";
 
-
     protected $fillable = [
         'id',
         'name',

@@ -22,6 +22,20 @@ $urlSubmit = route('configuracoessistema.api.cadastra');
                             <input type="number" value="{{$configuracao?$configuracao->quantidade_sessoes_permitidas:''}}" name="quantidade_sessoes_permitidas" id="quantidade_sessoes_permitidas" class="form-control" placeholder="N de logins por usuário">
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="usuario_sistema_id">Usuário responsável</label>
+                            <select name="usuario_sistema_id" id="usuario_sistema_id">
+                                @foreach($usuarios as $key => $value)
+                                    <option value="{{$value->id}}"
+                                        @if(isset($configuracao) && (strcasecmp($value->id, $configuracao->usuario_sistema_id) == 0))
+                                            selected
+                                        @endif
+                                    >{{$value->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="d-flex w-100 justify-content-end pt-4">

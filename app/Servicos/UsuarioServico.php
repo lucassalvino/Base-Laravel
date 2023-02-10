@@ -4,9 +4,18 @@ use App\Models\User;
 use App\Utils\BaseRetornoApi;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UsuarioServico{
     function __construct() {
+    }
+
+    public static function ObtemUsuariosGrupo($slugGrupo){
+        $sql = "SELECT users.id, users.name From users
+        inner join usuario_grupo ON usuario_grupo.usuario_id = users.id
+        inner join grupo on grupo.id = usuario_grupo.grupo_id
+        where grupo.slug = '".$slugGrupo."'";
+        return DB::select($sql);
     }
 
     public function CadastraUsuario(Request $request){

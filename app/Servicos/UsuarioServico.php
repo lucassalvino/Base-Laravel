@@ -19,15 +19,23 @@ class UsuarioServico{
     }
 
     public function CadastraUsuario(Request $request){
+        DB::beginTransaction();
         try{
-            return User::CadastraElemento($request);
+            $cadastro = User::CadastraElemento($request);
+            DB::commit();
         }catch(Exception $erro){
-            return BaseRetornoApi::GetRetornoErroException($erro);
+            return User::GeraErro($erro);
         }
     }
 
     public function Atualiza(Request $request, $id){
-        return User::AtualizaElemento($request, $id);
+        DB::beginTransaction();
+        try{
+            return User::AtualizaElemento($request, $id);
+            DB::commit();
+        }catch(Exception $erro){
+            return User::GeraErro($erro);
+        }
     }
 
     public function Listagem(Request $request){

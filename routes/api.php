@@ -25,8 +25,8 @@ use Illuminate\Support\Facades\Route;
 
 
 if(!function_exists('ConstruiRotaPadraoApi')){
-    function ConstruiRotaPadraoApi($nome, $controller){
-        Route::group(['prefix' => $nome], function()use($nome, $controller){
+    function ConstruiRotaPadraoApi($nome, $controller, $rotascomplementares = null){
+        Route::group(['prefix' => $nome], function()use($nome, $controller, $rotascomplementares){
             Route::post('/', [$controller, 'Cadastra'])->name($nome.'.api.cadastra');
             Route::get('/', [$controller, 'Listagem'])->name($nome.'.api.listagem');
             Route::get('/{id}', [$controller, 'Detalhado'])->name($nome.'.api.detalhado');
@@ -34,6 +34,9 @@ if(!function_exists('ConstruiRotaPadraoApi')){
             Route::delete('/{id}', [$controller, 'Deleta'])->name($nome.'.api.deleta');
             Route::post('/restore/{id}', [$controller, 'Restaura'])->name($nome.'.api.restaura');
             Route::post('/clone/{id}', [$controller, 'ClonarRegistro'])->name($nome.'.api.clone');
+            if(!is_null($rotascomplementares)){
+                $rotascomplementares();
+            }
         });
     }
 }

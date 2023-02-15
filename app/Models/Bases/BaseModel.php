@@ -41,6 +41,7 @@ class BaseModel extends Model{
     public function GetValidadorCadastro($request){
         return [];
     }
+
     public function GetValidadorAtualizacao($request, $id){
         return $this->GetValidadorCadastro($request);
     }
@@ -97,6 +98,7 @@ class BaseModel extends Model{
     public function GetTableName(){
         return $this->table;
     }
+
     public function GetLikeFields(){
         return [];
     }

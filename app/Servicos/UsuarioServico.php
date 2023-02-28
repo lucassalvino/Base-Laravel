@@ -22,7 +22,11 @@ class UsuarioServico{
         DB::beginTransaction();
         try{
             $cadastro = User::CadastraElemento($request);
+            if(!User::VerificaRetornoSucesso($cadastro)){
+                return User::GeraErro($cadastro);
+            }
             DB::commit();
+            return $cadastro;
         }catch(Exception $erro){
             return User::GeraErro($erro);
         }
@@ -31,8 +35,12 @@ class UsuarioServico{
     public function Atualiza(Request $request, $id){
         DB::beginTransaction();
         try{
-            return User::AtualizaElemento($request, $id);
+            $atualizacao = User::AtualizaElemento($request, $id);
+            if(!User::VerificaRetornoSucesso($atualizacao)){
+                return User::GeraErro($atualizacao);
+            }
             DB::commit();
+            return $atualizacao;
         }catch(Exception $erro){
             return User::GeraErro($erro);
         }

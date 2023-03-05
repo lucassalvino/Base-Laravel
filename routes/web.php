@@ -11,7 +11,7 @@ use App\Http\Controllers\Web\admin\MonitoramentoController;
 use App\Http\Controllers\Web\admin\Usuarios\GrupoController;
 use App\Http\Controllers\Web\admin\Usuarios\PermissaoController;
 use App\Http\Controllers\Web\admin\Usuarios\UsuarioController as UsuarioAdminController;
-use App\Http\Controllers\Web\cms\CMSController;
+use App\Http\Controllers\Web\CMS\CMSController;
 use App\Http\Controllers\Web\PublicoController;
 use App\Utils\Strings;
 use Illuminate\Support\Facades\Route;

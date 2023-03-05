@@ -78,14 +78,12 @@ Obs.: Em produção utilizar o supervisor. Ler mais em SUPERVISOR.md
 
 ## .env
 
-* ```EMAIL_TIPO_ENVIO``` : 
+* ```EMAIL_TIPO_ENVIO```: 
 * * `SMTP`: Será utilizado o envio padrão do laravel, sendo necessário realizar a configuração de MAIL_* no .env
 * * `MAUTIC`: Será utilizado o envio pelo mauitc, sendo necessário realizar a configuração da URL do mautic
 > > Ex.: EMAIL_TIPO_ENVIO=MAUTIC
 * `EMAIL_MAUTIC_URL`: URL do mauitc. Recomendavel utilizar HTTPS
 > > Ex.: EMAIL_MAUTIC_URL=https://mautic.com.br
-* ```FORCE_HTTPS```:
-* * `true` ou `false`: Determina se o sistema utilizará ou não https
 
 
 # STORAGE

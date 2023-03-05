@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\TokenApiApiController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\MonitoramentoController;
 use App\Http\Controllers\Web\admin\Usuarios\PermissaoController;
-use App\Http\Controllers\Web\cms\CMSController;
+use App\Http\Controllers\Web\CMS\CMSController;
 use Illuminate\Support\Facades\Route;
 
 /*

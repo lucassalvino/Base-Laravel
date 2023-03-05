@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 class LoginServico{
     protected static $sessao;
     protected static $admin;
+    protected static $root;
 
     const SlugAdmin = 'administradores';
     const SlugRoot = 'root';
@@ -76,15 +77,18 @@ class LoginServico{
             if(strcasecmp($grupo->slug, static::SlugAdmin) == 0){
                 self::$admin = true;
             }
+            if(strcasecmp($grupo->slug, static::SlugRoot) == 0){
+                self::$root = true;
+            }
         }
     }
 
     public static function UsuarioAdmin($sessao){
         if(self::$sessao && strcasecmp(self::$sessao['api_token'], $sessao['api_token']) == 0){
-            return self::$admin;
+            return self::$admin || self::$root;
         }
         static::AtualizaValidadores($sessao);
-        return self::$admin;
+        return self::$admin || self::$root;
     }
 
     public static function ObtemUsuariosSlug($slug){

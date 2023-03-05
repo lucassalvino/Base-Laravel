@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Web\cms;
+namespace App\Http\Controllers\Web\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Models\CMS\Banners;

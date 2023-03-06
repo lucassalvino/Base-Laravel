@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\UsuarioController;
+use App\Http\Controllers\Web\admin\Carteira\CarteirasController;
 use App\Http\Controllers\Web\admin\ChamadaJobsController;
 use App\Http\Controllers\Web\admin\Configuracoes\ConfiguracoesSistemaController;
 use App\Http\Controllers\Web\admin\Configuracoes\TokenApiController;
@@ -120,6 +121,12 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         Route::prefix('/monitoramento')->group(function(){
             Route::get('/cache', [MonitoramentoController::class, 'Cache'])->name('monitora-cache');
             Route::get('/chamadajobs', [ChamadaJobsController::class, 'ChamadaJobs'])->name('chamada-jobs');
+        });
+
+        Route::prefix('/carteiras')->group(function(){
+            Route::get('index', [CarteirasController::class, 'Index'])->name('carteiras.index');
+            Route::get('transacoes/{carteira_id}', [CarteirasController::class, 'Movimentacoes'])->name('movimentacoes.carteira.index');
+            Route::get('cobranca/{cobraca_id}', [CarteirasController::class, 'DetalheCobranca'])->name('detalhe.cobranca.carteira.index');
         });
     });
 });

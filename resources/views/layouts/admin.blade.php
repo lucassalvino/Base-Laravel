@@ -57,6 +57,23 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul>
+                        <li class="sidebar-dropdown" id="menu-carteiras">
+                            <a href="#">
+                                <i class="fas fa-coins"></i>
+                                <span>Carteiras</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="{{route('admin:carteiras.index')}}">Carteira</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-menu">
+                    <ul>
                         <li class="sidebar-dropdown" id="menu-cms">
                             <a href="#">
                                 <i class="fas fa-globe"></i>

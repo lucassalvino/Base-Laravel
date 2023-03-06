@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 if(!function_exists('ConstruiRotaPadraoApi')){
     function ConstruiRotaPadraoApi($nome, $controller, $rotascomplementares = null){
         Route::group(['prefix' => $nome], function()use($nome, $controller, $rotascomplementares){
@@ -58,7 +57,6 @@ Route::namespace('Api')->middleware(['cors'])->group(function(){
         Route::post('/', [LoginApiController::class, 'RealizaLogin'])->name('RealizaLogin');
     });
 });
-
 
 // rotinas privadas
 Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(){

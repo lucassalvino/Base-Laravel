@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Servicos;
 
 use App\Utils\EnvConfig;
 use Illuminate\Support\Facades\Log;
@@ -9,7 +9,7 @@ class IntegracaoMautic{
     public $url = "";
     public $urlRetorno = "";
 
-    function __construct($urlRetorno = 'https://ingresso.goiasec.com.br') {
+    function __construct($urlRetorno = '') {
         $this->url = EnvConfig::ObtemMauticURL();
         $this->urlRetorno = $urlRetorno;
     }

@@ -1,7 +1,7 @@
 <?php 
 namespace App\Email;
 
-use App\Services\IntegracaoMautic;
+use App\Servicos\IntegracaoMautic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

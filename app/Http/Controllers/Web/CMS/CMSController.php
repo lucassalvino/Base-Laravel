@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Web\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Models\CMS\Banners;
-use App\Models\cms\SEO;
+use App\Models\CMS\SEO;
 use App\Utils\ArquivosStorage;
 use App\Utils\BaseRetornoApi;
 use Illuminate\Http\Request;

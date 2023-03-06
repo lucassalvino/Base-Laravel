@@ -14,6 +14,7 @@ class TokenApiController extends BaseAdminController{
             'admin.pages.Configuracoes.TokenAPI.novo'
         );
     }
+    
     public function ObtemItensViewNovo(){
         $tokenAleatorio = hash('sha256', ((string) Str::uuid()));
         return Array(

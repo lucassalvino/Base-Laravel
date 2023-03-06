@@ -52,9 +52,11 @@ class Login extends BaseModel{
     }
 
     private static function VerificaSessoesAtivas($userId){
+        $config = ConfiguracoesSistema::ObtemConfiguracaoCache();
+        $config->quantidade_sessoes_permitidas = intval($config->quantidade_sessoes_permitidas);
         $sessoes = self::query()->where('user_id','=',$userId)->orderBy('created_at')->get();
-        if(isset($sessoes) && count($sessoes) >= EnvConfig::QtdSessaoPorUsuario()){
-            $qtdRemover = count($sessoes) - EnvConfig::QtdSessaoPorUsuario() + 1;
+        if(isset($sessoes) && count($sessoes) >= $config->quantidade_sessoes_permitidas){
+            $qtdRemover = count($sessoes) - ($config->quantidade_sessoes_permitidas + 1);
             for($i = 0; $i<$qtdRemover; $i++){
                 $sessoes[$i]->delete();
             }

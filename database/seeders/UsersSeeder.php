@@ -24,13 +24,18 @@ class UsersSeeder extends Seeder {
             'slug' => "administradores"
         ));
 
-        $grupoAdmin = Grupo::create(Array(
+        $grupoRoot = Grupo::create(Array(
             'nome' => "Root",
             'slug' => "root"
         ));
 
         $usuarioGrupo = UsuarioGrupo::create(Array(
             'grupo_id' => $grupoAdmin->id,
+            'usuario_id' => $usuario->id
+        ));
+        
+        $usuarioGrupo = UsuarioGrupo::create(Array(
+            'grupo_id' => $grupoRoot->id,
             'usuario_id' => $usuario->id
         ));
     }

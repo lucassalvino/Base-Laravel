@@ -23,8 +23,7 @@ Class Endereco extends BaseModel{
 
     public static function ObtemEnderecosUsuario($usuarioId){
         return Endereco::query()
-        ->join('users_endereco', 'users_endereco.endereco_id', '=', 'endereco.id')
-        ->where('users_endereco.usuario_id', '=', $usuarioId)
+        ->where('endereco.usuario_id', '=', $usuarioId)
         ->get([
             'endereco.id',
             'endereco.cep',

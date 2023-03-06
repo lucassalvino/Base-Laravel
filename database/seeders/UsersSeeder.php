@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ConfiguracoesSistema;
 use App\Models\Grupo;
 use App\Models\Relacionamentos\UsuarioGrupo;
 use App\Models\User;
@@ -37,6 +38,11 @@ class UsersSeeder extends Seeder {
         $usuarioGrupo = UsuarioGrupo::create(Array(
             'grupo_id' => $grupoRoot->id,
             'usuario_id' => $usuario->id
+        ));
+
+        ConfiguracoesSistema::create(Array(
+            'quantidade_sessoes_permitidas' => 10,
+            'usuario_sistema_id' => $usuario->id
         ));
     }
 }

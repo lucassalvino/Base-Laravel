@@ -32,6 +32,7 @@ function CriaLoad(texto = 'Aguarde...'){
         allowOutsideClick: false
     });
 }
+
 function ExibeMensagemErroAPI(err){
     let erro = err.responseJSON;
     let message = "";
@@ -54,11 +55,65 @@ function ExibeMensagemErroAPI(err){
         confirmButtonText: 'OK'
     });
 }
+
+function buscaCep() {
+    if ($.trim($("input[name='endereco[cep]']").val()) != "") {
+        $.getJSON("https://viacep.com.br/ws/" + $("input[name='endereco[cep]']").val().replace(".", "") + "/json/",
+            function (dados) {
+                if (!("erro" in dados)) {
+                    $("input[name='endereco[logradouro]']").val(dados.logradouro);
+                    $("input[name='endereco[bairro]']").val(dados.bairro);
+                    $("input[name='endereco[cidade]']").val(dados.localidade);
+                    $("input[name='endereco[estado]']").val(dados.uf);
+                    $("input[name='endereco[numero]']").val('s/n');
+                } else {
+                }
+            }
+        );
+    } else {
+        $("input[name='endereco[cep]']").focus();
+    }
+}
+
 $(document).ready(function () {
     if ($(window).width() <= 768) {
         $(".page-wrapper").removeClass("toggled");
     }
-    $('.select2').select2();
+
+    $("input[name='endereco[cep]']").bind("blur", function (event) {
+        buscaCep();
+    });
+
+    if ($('.select2').length) {
+        $('.select2').select2();
+    }
+
+    if ($('.mask-cep').length) {
+        $('.mask-cep').mask('00000-000');
+    }
+
+    if ($('.mask-telefone').length){
+        $('.mask-telefone').mask("(00) 0000-00009");
+    }
+
+    if ($('.mask-date').length){
+        $('.mask-date').mask("00/00/0000");
+    }
+
+    if ($('.mask-cpfcnpj').length) {
+        var CpfCnpjMaskBehavior = function (val) {
+            return val.replace(/\D/g, "").length <= 11
+                ? "000.000.000-009"
+                : "00.000.000/0000-00";
+        },
+        cpfCnpjpOptions = {
+            onKeyPress: function (val, e, field, options) {
+                field.mask(CpfCnpjMaskBehavior.apply({}, arguments), options);
+            },
+        };
+        $(".mask-cpfcnpj").mask(CpfCnpjMaskBehavior, cpfCnpjpOptions);
+    }
+
     $(".datepicker").datepicker({
         dateFormat: 'dd/mm/yy',
         showOtherMonths: true,
@@ -69,12 +124,14 @@ $(document).ready(function () {
         monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
         monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
     });
+
     function SetaCronometro(campo, valor) {
         if (valor.toString().length == 1) {
             valor = "0" + valor;
         }
         $('#' + campo).html(valor);
     }
+
     function CalcularNovoCronometro(campo) {
         subtrai1 = false;
         $segundo = parseInt($("#" + campo).html());
@@ -86,6 +143,7 @@ $(document).ready(function () {
         SetaCronometro(campo, $segundo);
         return subtrai1;
     }
+
     if ($('.contegam-regressiva').length > 0) {
         setInterval(function () {
             if (CalcularNovoCronometro('qtd-segundos')) {
@@ -102,10 +160,6 @@ $(document).ready(function () {
         });
     }
 
-    // $('.btn-photo').on('click', function() {
-    //     $('#file-photo').trigger('click');
-    // });
-
     $('.groupFilePhoto').each(function () {
         var elementCentral = $(this);
         elementCentral.find('.btn-photo').on('click', function () {
@@ -121,10 +175,6 @@ $(document).ready(function () {
             uploadPhoto64(event, filePhoto, pathPhoto, typePhoto, boxPhoto);
         });
     });
-
-    // $('#file-photo').on('change', function(event) {
-    //     uploadPhoto64(event, '#file-photo', '#path-photo', '#type-photo', '.box-photo');
-    // });
 
     $(".sidebar-dropdown > a").click(function () {
         $(".sidebar-submenu").slideUp(200);

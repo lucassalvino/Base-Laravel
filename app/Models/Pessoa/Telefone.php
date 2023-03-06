@@ -17,8 +17,7 @@ Class Telefone extends BaseModel{
 
     public static function ObtemTelefonesUsuario($usuarioId){
         return Telefone::query()
-        ->join('users_telefone', 'users_telefone.telefone_id', '=', 'telefone.id')
-        ->where('users_telefone.usuario_id', '=', $usuarioId)
+        ->where('telefone.usuario_id', '=', $usuarioId)
         ->get([
             'telefone.id',
             'telefone.ddd',

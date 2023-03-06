@@ -4,17 +4,20 @@ namespace App\Models;
 
 use App\Models\Bases\BaseModelAuthenticatable;
 use App\Models\Enuns\Sexo;
+use App\Models\Pessoa\Documento;
+use App\Models\Pessoa\Endereco;
+use App\Models\Pessoa\Telefone;
+use App\Rules\ValidaEnum;
 use App\Utils\ArquivosStorage;
+use App\Utils\AuxCarbon;
 use App\Utils\EnvConfig;
+use App\Utils\Strings;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
 class User extends BaseModelAuthenticatable{
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     protected $table = "users";
@@ -52,7 +55,7 @@ class User extends BaseModelAuthenticatable{
             'email' => 'required|max:255|unique:users',
             'path_avatar' => 'required|max:300',
             'password' => 'required|max:300',
-            'sexo' => 'required|max:100',
+            'sexo' => ['required', 'max:100', new ValidaEnum(Sexo::class)],
             'data_nascimento' => 'date'
         ];
     }
@@ -61,23 +64,45 @@ class User extends BaseModelAuthenticatable{
         $validacao = $this->GetValidadorCadastro($request);
         $validacao['username'] = ['required', 'max:255', Rule::unique('users')->ignore($id)];
         $validacao['email'] = ['required', 'max:255', Rule::unique('users')->ignore($id)];
+        $validacao['password'] = ['max:300'];
+        $validacao['path_avatar'] = ['max:300'];
+        $validacao['sexo'] = ['max:100', new ValidaEnum(Sexo::class)];
         return $validacao;
     }
 
     public function NormalizaDados(&$dados, $atualizacao = false){
-        $existeSexo = array_key_exists('sexo', $dados);
-        if(!$existeSexo || ($existeSexo)){
+        if(!array_key_exists('sexo', $dados)){
             $dados['sexo'] = Sexo::NaoDefinido;
         }
-        if(array_key_exists('password', $dados) && !$atualizacao){
-            if(($atualizacao && strcasecmp('', $dados['password']) != 0) || (!$atualizacao)){
-                $dados['password'] = hash(EnvConfig::HashSenha(), $dados['password']);
+
+        if(array_key_exists('data_nascimento', $dados) && (!Strings::isNullOrEmpty($dados['data_nascimento']))){
+            $data = AuxCarbon::ObtenhaDataBanco($dados['data_nascimento']);
+            if(Strings::isNullOrEmpty($data)){
+                $data = AuxCarbon::ObtenhaDataBanco($dados['data_nascimento'], 'Y-m-d');
             }
+            $dados['data_nascimento'] = $data;
         }
+
         if(!$atualizacao){
             $dados['path_avatar'] = static::$pathAvatarPadrao;
             if(!array_key_exists('username', $dados) && array_key_exists('email', $dados)){
                 $dados['username'] = $dados['email'];
+            }
+
+            if(!array_key_exists('password', $dados)){
+                $dados['password'] = "Mudar@1234!";
+            }
+        }
+
+        if(array_key_exists('base_path_avatar', $dados) && array_key_exists('tipo_path_avatar', $dados)){
+            $nomeArquivo = self::SalvaImagem($dados['base_path_avatar'], $dados['tipo_path_avatar']);
+            if($nomeArquivo)
+                $dados['path_avatar'] = $nomeArquivo;
+        }
+
+        if(array_key_exists('password', $dados)){
+            if((!Strings::isNullOrEmpty($dados['password']))){
+                $dados['password'] = hash(EnvConfig::HashSenha(), $dados['password']);
             }
         }
     }
@@ -86,71 +111,10 @@ class User extends BaseModelAuthenticatable{
         $retorno = parent::ObtemElementoUnico($id);
         if($retorno){
             $retorno->path_avatar = ArquivosStorage::GetUrlView($retorno->path_avatar);
+            $retorno['documento'] = Documento::query()->where('usuario_id', '=', $id)->first();
+            $retorno['endereco'] = Endereco::query()->where('usuario_id', '=', $id)->first();
+            $retorno['telefone'] = Telefone::query()->where('usuario_id', '=', $id)->first();
         }
         return $retorno;
-    }
-
-    public static function CadastraElementoArray($dados){
-        DB::beginTransaction();
-        try{
-            $nomeArquivo = "";
-            if(array_key_exists('avatar_base_64', $dados) && array_key_exists('tipo_imagem_avatar', $dados)){
-                $nomeArquivo = self::SalvaImagem($dados['avatar_base_64'], $dados['tipo_imagem_avatar']);
-                if($nomeArquivo)
-                    $dados['path_avatar'] = $nomeArquivo;
-            }
-            $cadastro = parent::CadastraElementoArray($dados);
-            if(static::CheckIfIsValidator($cadastro)){
-                if(strcasecmp("", $nomeArquivo) != 0){// a imagem do usuário foi salva
-                    ArquivosStorage::DeletaArquivo($nomeArquivo);
-                }
-                return static::GeraErro($cadastro);
-            }
-            DB::commit();
-            return $cadastro;
-        }
-        catch(Exception $erro){
-            Log::error($erro);
-            return static::GeraErro([$erro->getMessage()]);
-        }
-    }
-
-    public static function AtualizaElementoArray($dados, &$instanciaBanco){
-        DB::beginTransaction();
-        try{
-            $nomeArquivo = "";
-            if(array_key_exists('sexo', $dados) || !Str::isUuid($dados['sexo'])){
-                $dados['sexo'] = $instanciaBanco->sexo;
-            }
-            if(array_key_exists('avatar_base_64', $dados) && array_key_exists('tipo_imagem_avatar', $dados)){
-                $nomeArquivo = self::SalvaImagem(
-                    $dados['avatar_base_64'],
-                    $dados['tipo_imagem_avatar'],
-                    $instanciaBanco->id
-                );
-                if($nomeArquivo)
-                    $dados['path_avatar'] = $nomeArquivo;
-            }else{
-                $dados['path_avatar'] = $instanciaBanco->path_avatar;
-            }
-            if(array_key_exists('password', $dados) && (strcasecmp('', $dados['password']) != 0)){
-                $dados['password'] = hash(EnvConfig::HashSenha(), $dados['password']);
-            }else{
-                $dados['password'] = $instanciaBanco->password;
-            }
-            $cadastro = parent::AtualizaElementoArray($dados, $instanciaBanco);
-            if(static::CheckIfIsValidator($cadastro)){
-                if(strcasecmp("", $nomeArquivo) != 0){// a imagem do usuário foi salva
-                    ArquivosStorage::DeletaArquivo($nomeArquivo);
-                }
-                return static::GeraErro($cadastro);
-            }
-            DB::commit();
-            return $cadastro;
-        }
-        catch(Exception $erro){
-            Log::error($erro);
-            return static::GeraErro([$erro->getMessage()]);
-        }
     }
 }

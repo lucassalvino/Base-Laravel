@@ -15,10 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(CategorizadoresSeeder::class);
         if(!User::query()->first())
             $this->call(UsersSeeder::class);
-        if(!ConfiguracoesSistema::query()->first())
-            $this->call(ConfiguracoesSistemaSeeder::class);
     }
 }

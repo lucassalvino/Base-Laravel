@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\Carteira\CarteirasController;
 use App\Http\Controllers\Web\admin\ChamadaJobsController;
 use App\Http\Controllers\Web\admin\Configuracoes\ConfiguracoesSistemaController;
+use App\Http\Controllers\Web\admin\Configuracoes\TaxasUsuarioController;
 use App\Http\Controllers\Web\admin\Configuracoes\TokenApiController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
@@ -103,6 +104,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         ConstruiRotaPadraoAdmin('grupousuarios', GrupoController::class);
 
         Route::prefix('/configuracoes')->group(function(){
+            ConstruiRotaPadraoAdmin('taxasusuario', TaxasUsuarioController::class );
             ConstruiRotaPadraoAdmin('tokenapi', TokenApiController::class);
             Route::get('/sistema', [ConfiguracoesSistemaController::class, 'Index'])->name('Index.configuracao');
         });

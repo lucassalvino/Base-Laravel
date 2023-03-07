@@ -102,6 +102,9 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
+                                        <a href="{{route('admin:taxasusuario.index')}}">Taxas</a>
+                                    </li>
+                                    <li>
                                         <a href="{{route('admin:Index.configuracao')}}">Sistema</a>
                                     </li>
                                     <li>

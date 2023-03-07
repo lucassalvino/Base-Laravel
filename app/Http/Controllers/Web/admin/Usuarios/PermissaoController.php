@@ -5,6 +5,7 @@ namespace  App\Http\Controllers\Web\admin\Usuarios;
 use App\Http\Controllers\Web\admin\BaseAdminController;
 use App\Models\Grupo;
 use App\Models\Relacionamentos\UsuarioGrupo;
+use App\Servicos\LoginServico;
 use App\Utils\BaseRetornoApi;
 use Illuminate\Http\Request;
 
@@ -49,6 +50,7 @@ class PermissaoController extends BaseAdminController
                 'grupo_id' => $dados['grupo_id']
             ));
         }
+        LoginServico::CriaRegistrosPadraoGrupo($dados['usuario_id'], $dados['grupo_id']);
         return BaseRetornoApi::GetRetornoSucesso("");
     }
 

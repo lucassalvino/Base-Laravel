@@ -4,6 +4,7 @@ namespace App\Servicos;
 use App\Models\Configuracoes\TokensAPI;
 use App\Models\Grupo;
 use App\Models\Login;
+use App\Models\Produtor\UsuarioTaxa;
 use App\Models\User;
 use App\Utils\ApiCache;
 use Illuminate\Support\Facades\DB;
@@ -13,9 +14,11 @@ class LoginServico{
     protected static $sessao;
     protected static $admin;
     protected static $root;
+    protected static $produtor;
 
     const SlugAdmin = 'administradores';
     const SlugRoot = 'root';
+    const SlugProdutor = 'produtor';
 
     public static function ObtemSessao($token){
         $chave = ApiCache::GeraChaveRequest(Array(
@@ -54,6 +57,8 @@ class LoginServico{
 
     private static function ResetaValidadores(){
         self::$admin = false;
+        self::$produtor = false;
+        self::$root = false;
     }
 
     public static function ObtemGrupoUsuario($usuario_id){
@@ -121,5 +126,22 @@ class LoginServico{
 
     public static function ObtemUsuariosAdministradores(){
         return static::ObtemUsuariosSlug(LoginServico::SlugAdmin);
+    }
+    
+    public static function CriaRegistrosPadraoGrupo($usuario_id, $grupo_id){
+        $grupo = Grupo::query()
+            ->where('id', '=', $grupo_id)
+            ->first();
+        if(strcasecmp($grupo->slug, self::SlugProdutor) == 0){
+            $taxa = UsuarioTaxa::query()
+                ->where('usuario_id', '=', $usuario_id)
+                ->first();
+            if(!$taxa){
+                $taxa = UsuarioTaxa::create(Array(
+                    'usuario_id' => $usuario_id,
+                    'taxas' => json_encode(UsuarioTaxa::ObtemArrayTaxasPadrao())
+                ));
+            }
+        }
     }
 }

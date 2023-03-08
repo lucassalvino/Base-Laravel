@@ -114,16 +114,12 @@ $(document).ready(function () {
         $(".mask-cpfcnpj").mask(CpfCnpjMaskBehavior, cpfCnpjpOptions);
     }
 
-    $(".datepicker").datepicker({
-        dateFormat: 'dd/mm/yy',
-        showOtherMonths: true,
-        selectOtherMonths: true,
-        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
-        dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+    //https://xdsoft.net/jqplugins/datetimepicker/
+    $.datetimepicker.setLocale('pt-BR');
+    $(".datetimepicker").datetimepicker({
+        format: 'd/m/Y H:i'
     });
+    $(".datetimepicker").mask("00/00/0000 00:00")
 
     function SetaCronometro(campo, valor) {
         if (valor.toString().length == 1) {

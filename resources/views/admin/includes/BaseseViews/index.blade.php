@@ -2,6 +2,9 @@
 if(!isset($titulo))
     $titulo = "Titulo";
 
+if(!isset($subtitulo))
+    $subtitulo = $titulo;
+
 if(!isset($urlNovo))
     $urlNovo = "#";
 
@@ -53,7 +56,7 @@ if(!isset($mostrarBtnCadastrar))
 </div>
 <div class="row mt-3 pt-2">
     <div class="col-12">
-        <h5>{{isset($_GET['trashed_only'])?$titulo.' na lixeira':$titulo.' cadastrados'}}</h5>
+        <h5>{{isset($_GET['trashed_only'])? $subtitulo.' na lixeira': $subtitulo.' cadastrados'}}</h5>
         @include('admin.includes.viewlixeira')
         <div class="card">
             <div class="card-body container-tabela">
@@ -71,7 +74,50 @@ if(!isset($mostrarBtnCadastrar))
                             @forelse($itensIndex as $item)
                                 <tr class="text text-center">
                                     @foreach($ItensHeader as $chave)
-                                        <td>{{$item[$chave['index']]}}</td>
+                                        @if(array_key_exists('tipo', $chave))
+                                            @php
+                                                $vlr = $item[$chave['index']];
+                                            @endphp
+                                            @if($chave['tipo'] == 'bool')
+                                                @php
+                                                    $vlrt = "Não";
+                                                    if(is_bool($vlr) && $vlr){
+                                                        $vlrt = "Sim";
+                                                    }elseif(!is_bool($vlr) && (
+                                                        (intval($vlr) == 1) ||
+                                                        (strcasecmp($vlr, "true") == 0)
+                                                    )){
+                                                        $vlrt = "Sim";
+                                                    }
+                                                @endphp
+                                                <td>{{$vlrt}}</td>
+                                            @elseif($chave['tipo'] == 'date' || 
+                                                    $chave['tipo'] == 'datetime' || 
+                                                    $chave['tipo'] == 'time')
+                                                @php
+                                                    $vlrt = " - ";
+                                                    $formato = 'd/m/Y';
+                                                    if($chave['tipo'] == 'datetime'){
+                                                        $formato = 'd/m/Y H:i';
+                                                    }elseif($chave['tipo'] == 'time'){
+                                                        $formato = 'H:i';
+                                                    }
+                                                    if(array_key_exists('formato', $chave)){
+                                                        $formato = $chave['formato'];
+                                                    }
+                                                    try{
+                                                        $vlrt = date($formato, $vlr);
+                                                    }catch(\Exception $erro){ 
+                                                        //faz nada kkkk
+                                                    }
+                                                @endphp
+                                                <td>{{$vlrt}}</td>
+                                            @else
+                                                <td>{{$item[$chave['index']]}}</td>
+                                            @endif
+                                        @else
+                                            <td>{{$item[$chave['index']]}}</td>
+                                        @endif
                                     @endforeach
                                     <td align="center">
                                         <div class="container-opcoes" data-id="{{$item['id']}}">

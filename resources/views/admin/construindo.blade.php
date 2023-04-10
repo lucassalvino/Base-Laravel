@@ -8,7 +8,9 @@
     </div>
     <hr>
     <div class="d-flex">
-        <img src="{{asset('assets/img/admin/programming.gif')}}" alt="Estou fazendo">
+        <h1>
+            <i class="fas fa-industry"></i>
+        </h1>
     </div>
 </div>
 @stop

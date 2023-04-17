@@ -143,6 +143,9 @@ class BaseModel extends Model{
         }
     }
 
+    public function EventoAlteracao($id, $atualizacao = true){
+    }
+
     public function NormalizaDados(&$dados, $atualizacao = false){
     }
 
@@ -162,9 +165,11 @@ class BaseModel extends Model{
         if ($valida->fails()) {
             return $valida;
         }else{
-            return self::create(
+            $idCadastro = self::create(
                 $dados
             )->id;
+            $instancia->EventoAlteracao($idCadastro, false);
+            return $idCadastro;
         }
     }
 
@@ -256,6 +261,7 @@ class BaseModel extends Model{
         }else{
             $instancia->UpdateRegistro($dados, $instanciaBanco);
             $instanciaBanco->save();
+            $instanciaBanco->EventoAlteracao($instanciaBanco->id, true);
             return $instanciaBanco->id;
         }
     }

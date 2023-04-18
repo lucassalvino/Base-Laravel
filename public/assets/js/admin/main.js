@@ -117,9 +117,31 @@ $(document).ready(function () {
     //https://xdsoft.net/jqplugins/datetimepicker/
     $.datetimepicker.setLocale('pt-BR');
     $(".datetimepicker").datetimepicker({
-        format: 'd/m/Y H:i'
+       format: 'd/m/Y H:i'
     });
-    $(".datetimepicker").mask("00/00/0000 00:00")
+    $(".datetimepicker").mask("00/00/0000 00:00");
+    
+    if($(".mask-money").length){
+        $.each($(".mask-money"), function (i, o) {
+            var prefix = 'R$ ';
+            var suffix = '';
+            var precision = '';
+            var permitirNegativo = false;
+            if ($(this).attr("data-mask-money-prefix") != undefined && $(this).attr("data-mask-money-prefix") != '') {
+                prefix = $(this).attr("data-mask-money-prefix");
+            }
+
+            if ($(this).attr("data-mask-money-suffix") != undefined && $(this).attr("data-mask-money-suffix") != '') {
+                suffix = $(this).attr("data-mask-money-suffix");
+            }
+
+            if($(this).attr("data-mask-money-negative") != undefined && $(this).attr("data-mask-money-negative") != ''){
+                permitirNegativo = true;
+            }
+
+            $(this).maskMoney({ prefix: prefix, suffix: suffix, decimal: ",", thousands: ".", allowNegative: permitirNegativo });
+        });
+    }
 
     function SetaCronometro(campo, valor) {
         if (valor.toString().length == 1) {

@@ -26,3 +26,4 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <link rel="stylesheet" href="{{asset('assets/css/jquery.datetimepicker.min.css')}}?v=1.0">
 <script src="{{asset('assets/js/jquery.datetimepicker.min.js')}}?v=1.0"></script>
+<script src="{{asset('assets/js/jquery.maskMoney.js')}}?v=1.0"></script>

@@ -106,7 +106,7 @@ if(!isset($mostrarBtnCadastrar))
                                                         $formato = $chave['formato'];
                                                     }
                                                     try{
-                                                        $vlrt = date($formato, $vlr);
+                                                        $vlrt = date($formato, strtotime($vlr));
                                                     }catch(\Exception $erro){ 
                                                         //faz nada kkkk
                                                     }
@@ -114,12 +114,17 @@ if(!isset($mostrarBtnCadastrar))
                                                 <td>{{$vlrt}}</td>
                                             @elseif($chave['tipo'] == 'money')
                                                 @php
+                                                    $prefixo = '';
                                                     $valor = $item[$chave['index']];
                                                     if(array_key_exists('inteiro', $chave) && $chave['inteiro']){
                                                         $valor = $valor/100;
                                                     }
+                                                    if($valor < 0){
+                                                        $prefixo = '-';
+                                                        $valor = $valor * -1;
+                                                    }
                                                 @endphp
-                                                <td>R$ {{ number_format($valor, 2, ',','.'); }}</td>
+                                                <td>{{$prefixo}}R$ {{ number_format($valor, 2, ',','.'); }}</td>
                                             @else
                                                 <td>{{$item[$chave['index']]}}</td>
                                             @endif

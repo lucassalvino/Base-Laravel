@@ -33,7 +33,7 @@ class TaxasUsuarioController extends BaseAdminController{
         );
     }
 
-    public function ObtemItensViewEdita(){
+    public function ObtemItensViewEdita($id){
         return Array(
             'usuarios' => static::ObtemUsuariosProdutores(true)
         );

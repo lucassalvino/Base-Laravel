@@ -26,7 +26,7 @@ class BaseAdminController extends Controller{
         return Array();
     }
 
-    public function ObtemItensViewEdita(){
+    public function ObtemItensViewEdita($id){
         return $this->ObtemItensViewNovo();
     }
 
@@ -49,7 +49,7 @@ class BaseAdminController extends Controller{
 
     public function Edita(Request $request, $id = "00000000-0000-0000-0000-000000000000"){
         $item = $this->ObtemElementoEditarVisualizar($request, $id);
-        $itensView = $this->ObtemItensViewEdita();
+        $itensView = $this->ObtemItensViewEdita($id);
         if(is_null($item))
             return $this->Novo($request);
         return view($this->viewEdita, compact('item', 'itensView'));

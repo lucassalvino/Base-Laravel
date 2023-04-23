@@ -13,7 +13,7 @@ $urlSubmit = route('configuracoessistema.api.cadastra');
     </div>
     <div class="d-flex w-100 border-top pt-3">
         <form class="w-100 formulario-padrao" action="{{$urlSubmit}}" method="POST"
-            enctype="multipart/form-data" data-onsubmit data-back data-Authorization="{{session('Authorization','')}}">
+            enctype="multipart/form-data" data-onsubmit data-reload="true" data-Authorization="{{session('Authorization','')}}">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">

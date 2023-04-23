@@ -30,4 +30,8 @@ Class ConfiguracoesSistema extends BaseModel{
                 return $config;
             }, 4);
     }
+
+    public function EventoAlteracao($id, $atualizacao = true){
+        ApiCache::Remove(ApiCache::GeraChaveRequest(["Configuracao_Sistema"]));
+    }
 }

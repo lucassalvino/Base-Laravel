@@ -5,7 +5,11 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 <title>
-    {{config('app.name')}} - @yield('title')
+    @hasSection('title')
+        {{config('app.name')}} - @yield('title')
+    @else
+        {{config('app.name')}}
+    @endif
 </title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 <link rel="stylesheet" href="{{asset('assets/css/admin/main.css')}}?v=1.0">

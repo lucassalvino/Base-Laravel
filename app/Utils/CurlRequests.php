@@ -63,6 +63,7 @@ class CurlRequests{
                 }
             }
         }
+        curl_close($this->ch);
         return Array(
             'retorno' => $result,
             'info' => $getInfo,

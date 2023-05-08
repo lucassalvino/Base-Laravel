@@ -39,9 +39,21 @@ class CurlRequests{
         return $this;
     }
 
+    public function SetPostFields($dadosRequest){
+        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($dadosRequest));
+        return $this;
+    }
+
     public function SetPost($dadosRequest) : CurlRequests{
         curl_setopt($this->ch, CURLOPT_POST, 1);
-        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($dadosRequest));
+        return $this->SetPostFields($dadosRequest);
+    }
+
+    public function SetDelete($dadosRequest = null){
+        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        if(!is_null($dadosRequest)){
+            return $this->SetPostFields($dadosRequest);
+        }
         return $this;
     }
 

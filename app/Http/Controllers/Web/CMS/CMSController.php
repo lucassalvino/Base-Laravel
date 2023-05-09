@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\CMS;
 use App\Http\Controllers\Controller;
 use App\Models\CMS\Banners;
 use App\Models\CMS\SEO;
+use App\Utils\ApiCache;
 use App\Utils\ArquivosStorage;
 use App\Utils\BaseRetornoApi;
 use Illuminate\Http\Request;
@@ -44,13 +45,13 @@ class CMSController extends Controller
 
     public function cadastrabanner(Request $request){
         $dados = $request->all();
-        $descktop = '';
+        $desktop = '';
         $mobile = '';
-        if($dados['patch_descktop_base_64'] && $dados['tipo_patch_descktop']){
-            $descktop = Banners::SalvaImagem($dados['patch_descktop_base_64'], $dados['tipo_patch_descktop']);
+        if($dados['path_desktop_base_64'] && $dados['tipo_path_desktop']){
+            $desktop = Banners::SalvaImagem($dados['path_desktop_base_64'], $dados['tipo_path_desktop']);
         }
-        if($dados['patch_mobile_base_64'] && $dados['tipo_patch_mobile']){
-            $mobile = Banners::SalvaImagem($dados['patch_mobile_base_64'], $dados['tipo_patch_mobile']);
+        if($dados['path_mobile_base_64'] && $dados['tipo_path_mobile']){
+            $mobile = Banners::SalvaImagem($dados['path_mobile_base_64'], $dados['tipo_path_mobile']);
         }
         if( strcasecmp($dados['id'], "00000000-0000-0000-0000-000000000000") != 0 ){
             $banner = Banners::query()->where('id', '=', $dados['id'])->first();
@@ -64,11 +65,11 @@ class CMSController extends Controller
             $banner->obs = $dados['obs'];
             $banner->corobs = $dados['corobs'];
             $banner->url = $dados['url'];
-            if($descktop != ''){
-                $banner->patch_descktop = $descktop;
+            if($desktop != ''){
+                $banner->path_desktop = $desktop;
             }
             if($mobile != ''){
-                $banner->patch_mobile = $mobile;
+                $banner->path_mobile = $mobile;
             }
             $banner->save();
         }else{
@@ -79,11 +80,13 @@ class CMSController extends Controller
                 'corsubtitulo' => $dados['corsubtitulo'],
                 'obs' => $dados['obs'],
                 'corobs' => $dados['corobs'],
-                'patch_descktop' => $descktop,
-                'patch_mobile' => $mobile,
+                'path_desktop' => $desktop,
+                'path_mobile' => $mobile,
                 'url' => $dados['url']
             ));
         }
+        $chave = ApiCache::GeraChaveRequest(['TODOS_BANNERS']);
+        ApiCache::LimpaCahce($chave);
         return BaseRetornoApi::GetRetornoSucesso("Banner cadastrado com sucesso");
     }
 
@@ -97,8 +100,8 @@ class CMSController extends Controller
         if(strcasecmp($id, '00000000-0000-0000-0000-000000000000') != 0){
             $banner = Banners::query()->where('id', '=', $id)->first();
             if($banner){
-                $banner->patch_descktop = ArquivosStorage::GetUrlView($banner->patch_descktop);
-                $banner->patch_mobile = ArquivosStorage::GetUrlView($banner->patch_mobile);
+                $banner->path_desktop = ArquivosStorage::GetUrlView($banner->path_desktop);
+                $banner->path_mobile = ArquivosStorage::GetUrlView($banner->path_mobile);
             }
         }
         return view('admin.cms.cadastrabanner', compact('banner'));

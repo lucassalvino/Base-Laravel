@@ -50,6 +50,7 @@
     </div>
 </div>
 <script>
-    $("#seo-menu").addClass('active');
+    $("#menu-cms").addClass('active');
+    $("#menu-cms > .sidebar-submenu").show();
 </script>
 @stop

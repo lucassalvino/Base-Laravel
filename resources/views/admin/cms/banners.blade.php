@@ -24,6 +24,7 @@
                         <thead>
                             <tr>
                                 <th>Titulo</th>
+                                <th>URL</th>
                                 <th>Opções</th>
                             </tr>
                         </thead>
@@ -31,6 +32,7 @@
                             @forelse($banners as $item)
                                 <tr class="text text-center">
                                     <td>{{$item->titulo}}</td>
+                                    <td>{{$item->url}}</td>
                                     <td align="center">
                                         <div class="container-opcoes" data-id="{{$item->id}}">
                                             <a href="{{ route('admin:cms.cadastrabanner', $item->id)}}" title="Editar">
@@ -44,7 +46,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="2">Nenhum retorno</td>
+                                    <td colspan="3">Nenhum retorno</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -73,12 +75,8 @@
 
 @if(isset($menuativo))
     <script>
-        jQuery(function($){
-            if ($("#{{$menuativo}}").length) {
-                $("#{{$menuativo}}").addClass('active');
-                $("#{{$menuativo}} > .sidebar-submenu").show();
-            }
-        });
+        $("#menu-cms").addClass('active');
+        $("#menu-cms > .sidebar-submenu").show();
     </script>
 @endif
 @stop

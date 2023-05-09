@@ -485,6 +485,14 @@ class BaseModel extends Model{
         ));
         return $nomeArquivo;
     }
+    
+    public static function SalvaImagemCropped($dataRequest, $usuario_id = null, $caminhorelativo = false, $storageFolder = 'imagens'){
+        $dataImage = json_decode($dataRequest, true);
+        $typeImage = $dataImage['input']['type'];
+        $img = $dataImage['output']['image'];
+        $base64 = str_replace('data:'.$typeImage.';base64,', '', $img);
+        return self::SalvaImagem($base64, $typeImage, $usuario_id, $caminhorelativo, $storageFolder);
+    }
 
     public static $BasePath = 'resources'.DIRECTORY_SEPARATOR.'storage';
 

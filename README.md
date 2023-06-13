@@ -70,7 +70,6 @@ Obs.: Em produção utilizar o supervisor. Ler mais em SUPERVISOR.md
 
 # Comandos Desenvolvimento
 
-* `php artisan scribe:generate`: Atualiza documentação API
 * `php artisan make:migration NOME_MIGRATION`: Cria um migration
 
 

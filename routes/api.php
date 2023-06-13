@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\Configuracoes\TaxasUsuarioController;
 use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\LoginApiController;
-use App\Http\Controllers\Api\PadroesController;
 use App\Http\Controllers\Api\TokenApiApiController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\MonitoramentoController;
@@ -43,15 +42,6 @@ if(!function_exists('ConstruiRotaPadraoApi')){
 
 // rotinas publicas
 Route::namespace('Api')->middleware(['cors'])->group(function(){
-    Route::prefix('/padroes')->group(function(){
-        Route::post('/',[PadroesController::class, 'Cadastra'])->name("exemplocadastro");
-        Route::get('/',[PadroesController::class, 'Listagem'])->name("exemplolistagem");
-        Route::get('/{id}',[PadroesController::class, 'Detalhado'])->name("exemplodetalhado");
-        Route::put('/{id}',[PadroesController::class, 'Atualiza'])->name("exemploatualiza");
-        Route::delete('/{id}',[PadroesController::class, 'Deleta'])->name("exemplodeleta");
-        Route::post('/restore/{id}',[PadroesController::class, 'Restaura'])->name("exemplorestaura");
-    });
-
     Route::prefix('/login')->group(function(){
         Route::post('/resetar_senha', [LoginApiController::class, 'ResetarSenha'])->name('ResetarSenha');
         Route::post('/registra_resetar_senha', [LoginApiController::class, 'RegistraResetarSenha'])->name('RegistraResetarSenha');

@@ -40,7 +40,9 @@ class CurlRequests{
     }
 
     public function SetPostFields($dadosRequest){
-        curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($dadosRequest));
+        if(!is_null($dadosRequest)){
+            curl_setopt($this->ch, CURLOPT_POSTFIELDS, json_encode($dadosRequest));
+        }
         return $this;
     }
 

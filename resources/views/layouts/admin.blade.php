@@ -70,6 +70,12 @@
                                     <li>
                                         <a href="{{route('admin:cms.banner')}}">Banners</a>
                                     </li>
+                                    <li>
+                                        <a href="{{route('admin:pagina.index')}}">Páginas</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('admin:termos-aceite.index')}}">Termos aceite</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

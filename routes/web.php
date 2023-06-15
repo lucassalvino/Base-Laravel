@@ -9,6 +9,8 @@ use App\Http\Controllers\Web\admin\Configuracoes\TokenApiController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
 use App\Http\Controllers\Web\admin\MonitoramentoController;
+use App\Http\Controllers\Web\admin\PaginaAdminController;
+use App\Http\Controllers\Web\admin\TermosAceiteController;
 use App\Http\Controllers\Web\admin\Usuarios\GrupoController;
 use App\Http\Controllers\Web\admin\Usuarios\PermissaoController;
 use App\Http\Controllers\Web\admin\Usuarios\UsuarioController as UsuarioAdminController;
@@ -55,20 +57,6 @@ if(!function_exists('ConstruiRotaPadraoAdmin')){
     }
 }
 
-/* Área publica */
-Route::middleware(['cors'])->group(function(){
-    Route::prefix('/login')->group(function(){
-        Route::get('/', [PublicoController::class, 'login'])->name('site.login');
-        Route::post('/', [PublicoController::class, 'RealizarLogin'])->name('fazer.login');
-    });
-
-    Route::get('/logout', [PublicoController::class, 'RealizarLogout'])->name('fazer.logout');
-
-    Route::get('/', function () {
-        return view('welcome');
-    });
-});
-
 // Área não permitida para quem está logado
 Route::middleware(['cors', 'CheckDeslogado'])->group(function(){
     Route::get('/cadastre-se', function () {
@@ -101,6 +89,8 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         Route::get('/', [DashBoardController::class, 'Index'])->name("home");
         ConstruiRotaPadraoAdmin('usuario', UsuarioAdminController::class);
         ConstruiRotaPadraoAdmin('grupousuarios', GrupoController::class);
+        ConstruiRotaPadraoAdmin('pagina', PaginaAdminController::class);
+        ConstruiRotaPadraoAdmin('termos-aceite', TermosAceiteController::class);
 
         Route::prefix('/configuracoes')->group(function(){
             ConstruiRotaPadraoAdmin('taxasusuario', TaxasUsuarioController::class );
@@ -125,6 +115,23 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         });
     });
 });
+
+/* Área publica */
+Route::middleware(['cors'])->group(function(){
+    Route::prefix('/login')->group(function(){
+        Route::get('/', [PublicoController::class, 'login'])->name('site.login');
+        Route::post('/', [PublicoController::class, 'RealizarLogin'])->name('fazer.login');
+    });
+
+    Route::get('/logout', [PublicoController::class, 'RealizarLogout'])->name('fazer.logout');
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    
+    Route::get('/{slug}', [PaginaAdminController::class, 'ViewPagina'])->name('cms.view.pagina');
+});
+
 
 /* API CSRF */
 Route::namespace('Api')->middleware(['cors'])->group(function(){

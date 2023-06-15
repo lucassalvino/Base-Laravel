@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\Configuracoes\TaxasUsuarioController;
 use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\LoginApiController;
+use App\Http\Controllers\Api\PaginaApiController;
+use App\Http\Controllers\Api\TermosAceiteAPIController;
 use App\Http\Controllers\Api\TokenApiApiController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\MonitoramentoController;
@@ -77,6 +79,8 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
         Route::prefix('/chamada-jobs')->group(function(){});
     });
 
+    ConstruiRotaPadraoApi('pagina', PaginaApiController::class);
+    ConstruiRotaPadraoApi('termos-aceite', TermosAceiteAPIController::class);
     ConstruiRotaPadraoApi('usuario', UsuarioController::class);
     ConstruiRotaPadraoApi('grupousuarios', GrupoController::class);
     ConstruiRotaPadraoApi('tokenapi', TokenApiApiController::class);

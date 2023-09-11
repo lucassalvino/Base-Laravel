@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'VerificaSessao' => \App\Http\Middleware\VerificaSessao::class,
         'VerificaSessaoWeb' => \App\Http\Middleware\VerificaSessaoWeb::class,
         'VerificaSessaoWebAdmin' => \App\Http\Middleware\VerificaSessaoWebAdmin::class,
+        'WhiteListMiddleware' => \App\Http\Middleware\WhiteListMiddleware::class,
         'CheckDeslogado' => \App\Http\Middleware\CheckDeslogado::class,
         'CheckLoginAdministrativo' => \App\Http\Middleware\CheckLoginAdministrativo::class
     ];

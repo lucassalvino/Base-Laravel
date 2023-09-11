@@ -91,3 +91,8 @@ Obs.: Em produção utilizar o supervisor. Ler mais em SUPERVISOR.md
 * ```STORAGE```
 * * `S3`: Será utilzilido o armazenamento no S3 da AWS. Quando selecionado, é necessário configurar as credenciais da AWS (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION, AWS_BUCKET, AWS_USE_PATH_STYLE_ENDPOINT).
 * * `local`: Será armazenado localmente, dentro de public/storage
+
+
+# Middleware
+
+* `WhiteListMiddleware`: Aplica Bloqueio de IPs e Domínios configurados em 'white_list'. Ver Admin -> Configurações -> White List

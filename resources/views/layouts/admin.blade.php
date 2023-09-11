@@ -99,6 +99,9 @@
                                     <li>
                                         <a href="{{route('admin:tokenapi.index')}}">API Key</a>
                                     </li>
+                                    <li>
+                                        <a href="{{route('admin:whitelist.index')}}">White List</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>

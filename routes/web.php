@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\admin\ChamadaJobsController;
 use App\Http\Controllers\Web\admin\Configuracoes\ConfiguracoesSistemaController;
 use App\Http\Controllers\Web\admin\Configuracoes\TaxasUsuarioController;
 use App\Http\Controllers\Web\admin\Configuracoes\TokenApiController;
+use App\Http\Controllers\Web\admin\Configuracoes\WhiteListController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
 use App\Http\Controllers\Web\admin\MonitoramentoController;
@@ -95,6 +96,7 @@ Route::group(['prefix' => '/admin', 'as' => 'admin:'], function(){
         Route::prefix('/configuracoes')->group(function(){
             ConstruiRotaPadraoAdmin('taxasusuario', TaxasUsuarioController::class );
             ConstruiRotaPadraoAdmin('tokenapi', TokenApiController::class);
+            ConstruiRotaPadraoAdmin('whitelist', WhiteListController::class);
             Route::get('/sistema', [ConfiguracoesSistemaController::class, 'Index'])->name('Index.configuracao');
         });
 

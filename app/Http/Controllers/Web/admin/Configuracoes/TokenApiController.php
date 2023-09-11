@@ -11,7 +11,8 @@ class TokenApiController extends BaseAdminController{
     public function __construct(){
         parent::__construct(TokensAPI::class, 
             'admin.pages.Configuracoes.TokenAPI.index',
-            'admin.pages.Configuracoes.TokenAPI.novo'
+            'admin.pages.Configuracoes.TokenAPI.novo',
+            'admin.pages.Configuracoes.TokenAPI.edita'
         );
     }
     

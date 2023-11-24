@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Utils\BaseRetornoApi;
 
 class BaseAPIController extends Controller{
     protected $class = null;
@@ -34,10 +35,14 @@ class BaseAPIController extends Controller{
         return $this->class::RestoreElemento($request, $id);
     }
 
-    public function Detalhado(Request $request, $id)
-    {
-        return $this->class::Detalhado($request, $id);
+    public function Detalhado(Request $request, $id){
+        $detalhado = $this->class::Detalhado($request, $id);
+        if($detalhado){
+            return $detalhado;
+        }
+        return BaseRetornoApi::GetRetorno404("Não foi possível encontrar");
     }
+
     function Atualiza(Request $request, $id)
     {
         return $this->class::AtualizaElemento($request, $id);

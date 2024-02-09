@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Configuracoes\ConfiguracoesSistemaAPIController;
 use App\Http\Controllers\Api\Configuracoes\TaxasUsuarioController;
 use App\Http\Controllers\Api\Configuracoes\WhiteListController;
+use App\Http\Controllers\Api\DuvidasApiController;
 use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\LoginApiController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\MonitoramentoController;
 use App\Http\Controllers\Web\admin\Usuarios\PermissaoController;
 use App\Http\Controllers\Web\CMS\CMSController;
+use App\Models\Duvidas;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -87,6 +89,7 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
     ConstruiRotaPadraoApi('tokenapi', TokenApiApiController::class);
     ConstruiRotaPadraoApi('taxasusuario', TaxasUsuarioController::class);
     ConstruiRotaPadraoApi('whitelist', WhiteListController::class);
+    ConstruiRotaPadraoApi('duvidas', DuvidasApiController::class);
     
     Route::prefix('/configuracoessistema')->group(function(){
         Route::post('/cadastra', [ConfiguracoesSistemaAPIController::class, "CadastraAtualizaConfiguracao"])->name('configuracoessistema.api.cadastra');

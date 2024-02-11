@@ -5,7 +5,7 @@ use App\Models\Bases\BaseModel;
 
 Class DuvidasFrequentes extends BaseModel{
     protected $table = 'duvidas_frequentes';
-    
+
     protected $fillable = [
         'id', 'titulo', 'ordem', 'resposta'
     ];
@@ -18,9 +18,9 @@ Class DuvidasFrequentes extends BaseModel{
         ];
     }
 
-    public function GetValidadorAtualizacao($request, $id){
-        $valida = $this->GetValidadorCadastro($request);
-        $valida['titulo'] = ['required', 'max:255'];
-        return $valida; 
+    public function NormalizaDados(&$dados, $atualizacao = false){
+        if(!array_key_exists('ordem', $dados)){
+            $dados['ordem'] = 0;
+        }
     }
 }

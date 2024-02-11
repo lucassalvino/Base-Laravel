@@ -16,12 +16,11 @@ class Duvidas extends Migration
         Schema::create('duvidas_frequentes', function (Blueprint $table){
             $table->uuid('id')->primary();
             $table->string('titulo', 255);
-            $table->integer('ordem');
+            $table->integer('ordem')->default(0);
             $table->text('resposta')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
-
     }
 
     /**

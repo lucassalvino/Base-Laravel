@@ -77,7 +77,7 @@
                                         <a href="{{route('admin:termos-aceite.index')}}">Termos aceite</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('admin:duvidas.index')}}">Dúvidas Frequentes</a> 
+                                        <a href="{{route('admin:duvidas-frequentes.index')}}">Dúvidas Frequentes</a> 
                                     </li>
                                 </ul>
                             </div>

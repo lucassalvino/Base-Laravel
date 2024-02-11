@@ -3,11 +3,13 @@ namespace App\Models;
 
 use App\Models\Bases\BaseModel;
 
-Class Duvidas extends BaseModel{
-    protected $table = 'duvidas';
+Class DuvidasFrequentes extends BaseModel{
+    protected $table = 'duvidas_frequentes';
+    
     protected $fillable = [
         'id', 'titulo', 'ordem', 'resposta'
     ];
+
     public function GetValidadorCadastro($request){
         return [
             'titulo' => ['required', 'max:255'],
@@ -15,6 +17,7 @@ Class Duvidas extends BaseModel{
             'resposta' => 'required'
         ];
     }
+
     public function GetValidadorAtualizacao($request, $id){
         $valida = $this->GetValidadorCadastro($request);
         $valida['titulo'] = ['required', 'max:255'];

@@ -1,10 +1,10 @@
 @extends('admin.includes.BaseseViews.index', 
 [
 'titulo' => 'Dúvidas Frequentes',
-'urlNovo' => route('admin:duvidas.novo'),
-'urlEditar' => route('admin:duvidas.edita', ''),
-'urlDeletar' => route('duvidas.api.deleta', ''),
-'urlRestaurar' => route('duvidas.api.restaura', ''),
+'urlNovo' => route('admin:duvidas-frequentes.novo'),
+'urlEditar' => route('admin:duvidas-frequentes.edita', ''),
+'urlDeletar' => route('duvidas-frequentes.api.deleta', ''),
+'urlRestaurar' => route('duvidas-frequentes.api.restaura', ''),
 'menuativo' => 'menu-cms',
 'ItensHeader' => 
     [
@@ -15,10 +15,6 @@
         [
             'nome' => 'Ordem',
             'index' => 'ordem'
-        ],
-        [
-            'nome' => 'Resposta',
-            'index' => 'resposta'
         ]
     ]
 ])

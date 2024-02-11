@@ -13,7 +13,7 @@ class Duvidas extends Migration
      */
     public function up()
     {
-        Schema::create('duvidas', function (Blueprint $table){
+        Schema::create('duvidas_frequentes', function (Blueprint $table){
             $table->uuid('id')->primary();
             $table->string('titulo', 255);
             $table->integer('ordem');
@@ -31,6 +31,6 @@ class Duvidas extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('duvidas');
+        Schema::dropIfExists('duvidas_frequentes');
     }
 }

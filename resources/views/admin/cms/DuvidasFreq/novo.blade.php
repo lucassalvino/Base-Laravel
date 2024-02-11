@@ -1,5 +1,5 @@
 @extends('admin.includes.BaseseViews.novo',[
-    'urlSubmit' => route('duvidas.api.cadastra'),
+    'urlSubmit' => route('duvidas-frequentes.api.cadastra'),
     'titulo' => 'Cadastro de Dúvidas Frequentes',
     'menuativo' => 'menu-cms'
 ])
@@ -11,7 +11,7 @@
     <div class="col-md-3">
             <div class="form-group">
                 <label for="ordem">Ordem *</label>
-                <input type="number" name="ordem" class="form-control"  id="ordem" placeholder="Ordem" required>
+                <input type="number" name="ordem" class="form-control"  id="ordem" placeholder="Ordem" required value="0">
             </div>
         </div>
         <div class="col-md-6">

@@ -1,5 +1,5 @@
 @extends('admin.includes.BaseseViews.novo',[
-    'urlSubmit' => route('duvidas.api.editar', $item->id),
+    'urlSubmit' => route('duvidas-frequentes.api.editar', $item->id),
     'titulo' => 'Edição de Dúvidas Frequentes',
     'menuativo' => 'menu-cms',
     'textoBotao' => 'Atualizar',
@@ -29,7 +29,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="resposta">Resposta *</label>
-                <input type="hidden" name="resposta" class="form-control"  id="resposta">
+                <input type="hidden" name="resposta" value="{{$item->resposta}}" class="form-control"  id="resposta">
                 <textarea id="resposta_editor"></textarea>
             </div>
         </div>

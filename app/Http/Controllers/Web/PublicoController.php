@@ -35,6 +35,7 @@ class PublicoController extends BaseWebController{
     public function RealizarLogout(Request $request) {
         $token = session('Authorization', '');
         Login::LogoutToken($token);
+        $request->session()->flush();
         return redirect('login');
     }
 }

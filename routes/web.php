@@ -132,7 +132,7 @@ Route::middleware(['cors'])->group(function(){
     Route::get('/', function () {
         return view('welcome');
     });
-    
+
     Route::get('/{slug}', [PaginaAdminController::class, 'ViewPagina'])->name('cms.view.pagina');
 });
 

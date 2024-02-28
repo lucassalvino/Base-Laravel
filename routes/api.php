@@ -90,7 +90,7 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
     ConstruiRotaPadraoApi('taxasusuario', TaxasUsuarioController::class);
     ConstruiRotaPadraoApi('whitelist', WhiteListController::class);
     ConstruiRotaPadraoApi('duvidas-frequentes', DuvidasFrequentesApiController::class);
-    
+
     Route::prefix('/configuracoessistema')->group(function(){
         Route::post('/cadastra', [ConfiguracoesSistemaAPIController::class, "CadastraAtualizaConfiguracao"])->name('configuracoessistema.api.cadastra');
     });

@@ -59,14 +59,9 @@ class BaseModel extends Model{
     public function ConstruiFiltroListagem(Builder $consulta, Request $request) : Builder{
         return $consulta;
     }
-
     public function ColunasListagem() : Array{
         return $this->fillable;
     }
-
-    /**
-     * Gera array para ordenação a partir da requisicao orderby
-     */
     public function ColunasOrdenacao(Request $request) : Array{
         $arrayorder = $request->get('orderby', []);
         if(!is_array($arrayorder)) return [];
@@ -485,7 +480,7 @@ class BaseModel extends Model{
         ));
         return $nomeArquivo;
     }
-    
+
     public static function SalvaImagemCropped($dataRequest, $usuario_id = null, $caminhorelativo = false, $storageFolder = 'imagens'){
         $dataImage = json_decode($dataRequest, true);
         $typeImage = $dataImage['input']['type'];

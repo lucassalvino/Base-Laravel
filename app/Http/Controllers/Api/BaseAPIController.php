@@ -7,7 +7,7 @@ use App\Utils\BaseRetornoApi;
 
 class BaseAPIController extends Controller{
     protected $class = null;
-    
+
     public function __construct($class = null) {
         $this->class = $class;
     }
@@ -18,7 +18,7 @@ class BaseAPIController extends Controller{
         }
         return $this->class::CadastraElemento($request);
     }
-    
+
     public function Listagem(Request $request){
         return $this->class::ListagemElemento($request);
     }
@@ -30,7 +30,7 @@ class BaseAPIController extends Controller{
     public function Deletar(Request $request, $id){
         return $this->class::DeleteElemento($request, $id);
     }
-    
+
     public function Restore(Request $request, $id){
         return $this->class::RestoreElemento($request, $id);
     }

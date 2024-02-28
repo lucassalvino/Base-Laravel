@@ -7,7 +7,7 @@ class BaseEnum
         $obj = new static;
         return array_key_exists($tipo, $obj->enumeradores);
     }
-    
+
     public static function GetString($opcao): string{
         $obj = new static;
         if(array_key_exists($opcao, $obj->enumeradores)){

@@ -127,7 +127,7 @@ class LoginServico{
     public static function ObtemUsuariosAdministradores(){
         return static::ObtemUsuariosSlug(LoginServico::SlugAdmin);
     }
-    
+
     public static function CriaRegistrosPadraoGrupo($usuario_id, $grupo_id){
         $grupo = Grupo::query()
             ->where('id', '=', $grupo_id)

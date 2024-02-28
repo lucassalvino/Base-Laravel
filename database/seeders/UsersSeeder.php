@@ -39,7 +39,7 @@ class UsersSeeder extends Seeder {
             'grupo_id' => $grupoAdmin->id,
             'usuario_id' => $usuario->id
         ));
-        
+
         $usuarioGrupo = UsuarioGrupo::create(Array(
             'grupo_id' => $grupoRoot->id,
             'usuario_id' => $usuario->id

@@ -17,7 +17,7 @@ class ApiCache{
     public static function Existe($chave){
         return Cache::has($chave);
     }
-    
+
     public static function AddCache($chave, $valor, $fatorTempo = 1){
         return Cache::put($chave, $valor, (static::ObtemTempoCache() * $fatorTempo));
     }
@@ -25,7 +25,7 @@ class ApiCache{
     public static function Obtem($chave){
         return Cache::get($chave);
     }
-    
+
     public static function Remove($chave){
         Cache::forget($chave);
     }

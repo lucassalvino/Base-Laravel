@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Mont";
+    src: url("Mont-Bold.ttf") format("truetype");
+}
+
 /* resets */
 
 body {
@@ -59,4 +64,39 @@ img {
 .menu img {
     width: 100px;
     height: 74.83px;
+}
+
+/* footer */
+.footer-bg {
+    background-color: #0a223c;
+}
+
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer .titulo {
+    color: #75f695;
+    font-weight: 900;
+    font-size: 18px;
+}
+
+.footer .texto {
+    color: #fff;
+    font-weight: 900;
+    font-size: 16px;
+}
+
+.footer img {
+    width: 190px;
+    height: 115px;
 }

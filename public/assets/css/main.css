@@ -1,3 +1,62 @@
-body{
+/* resets */
+
+body {
     background-color: white;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    padding: 0px;
+    list-style: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* header */
+
+.header-bg {
+    background-color: #0a223c;
+}
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.botoes-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.botoes-menu a {
+    color: #75f695;
+    display: inline-block;
+    padding: 16px 0px;
+    font-size: 18px;
+    position: relative;
+    font-weight: 900;
+}
+
+.botoes-menu a:hover {
+    color: #51b784;
+}
+
+.menu img {
+    width: 100px;
+    height: 74.83px;
 }

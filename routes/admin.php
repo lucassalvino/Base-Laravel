@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\admin\Configuracoes\ConfiguracoesSistemaController;
 use App\Http\Controllers\Web\admin\Configuracoes\TaxasUsuarioController;
 use App\Http\Controllers\Web\admin\Configuracoes\TokenApiController;
 use App\Http\Controllers\Web\admin\Configuracoes\WhiteListController;
+use App\Http\Controllers\Web\admin\ContatosAdminController;
 use App\Http\Controllers\Web\admin\DashBoardController;
 use App\Http\Controllers\Web\admin\DuvidasFrequentesAdminController;
 use App\Http\Controllers\Web\admin\LoginController as LoginControllerAdmin;
@@ -42,6 +43,7 @@ Route::group(['as' => 'admin:'], function(){
         ConstruiRotaPadraoAdmin('pagina', PaginaAdminController::class);
         ConstruiRotaPadraoAdmin('termos-aceite', TermosAceiteController::class);
         ConstruiRotaPadraoAdmin('duvidas-frequentes', DuvidasFrequentesAdminController::class);
+        ConstruiRotaPadrao('contatos', ContatosAdminController::class);
 
         Route::prefix('/configuracoes')->group(function(){
             ConstruiRotaPadraoAdmin('taxasusuario', TaxasUsuarioController::class );

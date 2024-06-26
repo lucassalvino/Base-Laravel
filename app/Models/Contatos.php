@@ -3,7 +3,7 @@ namespace App\Models;
 
 use App\Models\Bases\BaseModel;
 
-Class Contato extends BaseModel{
+Class Contatos extends BaseModel{
     protected $table = 'contato';
 
     protected $fillable = [

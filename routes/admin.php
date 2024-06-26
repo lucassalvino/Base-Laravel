@@ -43,7 +43,7 @@ Route::group(['as' => 'admin:'], function(){
         ConstruiRotaPadraoAdmin('pagina', PaginaAdminController::class);
         ConstruiRotaPadraoAdmin('termos-aceite', TermosAceiteController::class);
         ConstruiRotaPadraoAdmin('duvidas-frequentes', DuvidasFrequentesAdminController::class);
-        ConstruiRotaPadrao('contatos', ContatosAdminController::class);
+        ConstruiRotaPadraoAdmin('contatos', ContatosAdminController::class);
 
         Route::prefix('/configuracoes')->group(function(){
             ConstruiRotaPadraoAdmin('taxasusuario', TaxasUsuarioController::class );

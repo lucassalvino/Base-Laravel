@@ -130,6 +130,23 @@
                         </li>
                     </ul>
                 </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="sidebar-dropdown" id="menu-contatos">
+                            <a href="#">
+                                <i class="fas fa-inbox"></i>
+                                <span>Entre em Contato</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="#">Contatos</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="sidebar-footer">
                 <a href="#">

@@ -140,7 +140,7 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="#">Contatos</a>
+                                        <a href="{{route('admin:contatos.index')}}">Contatos</a>
                                     </li>
                                 </ul>
                             </div>

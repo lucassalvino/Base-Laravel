@@ -4,7 +4,7 @@ namespace App\Models;
 use App\Models\Bases\BaseModel;
 
 Class Contatos extends BaseModel{
-    protected $table = 'contato';
+    protected $table = 'contatos';
 
     protected $fillable = [
         'id', 'nome', 'email', 'telefone', 'assunto', 'mensagem'

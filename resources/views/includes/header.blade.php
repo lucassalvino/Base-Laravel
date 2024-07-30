@@ -60,14 +60,14 @@
 <body>
     <header class="header-bg">
         <div class="menu">
-            <img src="{{asset('assets/img/admin/fav_icon_cit.png')}}">
+            <a href="{{route('welcome')}}">
+                <h2 style="color: #75f695;">Consulta de Filmes</h2>
+            </a>
             <nav aria-label="primaria">
                 <div class="d-flex justify-content-end">
                     <ul class="botoes-menu">
-                        <li><a href="#">HOME</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">SOBRE</a></li>
-                        <li><a href="#">CONTATO</a></li>
+                        <li><a href="{{route('welcome')}}">HOME</a></li>
+                        <li><a href="{{route('sobre')}}">SOBRE</a></li>
                     </ul>
                 </div>
             </nav>

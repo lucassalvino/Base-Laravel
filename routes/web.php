@@ -3,6 +3,7 @@
 use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\PaginaAdminController;
+use App\Http\Controllers\Web\ConsultaFilmeController;
 use App\Http\Controllers\Web\PublicoController;
 use App\Utils\Strings;
 use Illuminate\Support\Facades\Route;
@@ -66,8 +67,11 @@ Route::middleware(['cors'])->group(function(){
 
     Route::get('/', function () {
         return view('welcome');
-    });
+    })->name('welcome');
 
+    Route::get('/sobre', [PublicoController::class, 'Sobre'])->name('sobre');
+    Route::post('/consulta-filme', [ConsultaFilmeController::class, 'ConsultarFilme'])->name('consulta-filme');
+    
     Route::get('/{slug}', [PaginaAdminController::class, 'ViewPagina'])->name('cms.view.pagina');
 });
 

@@ -38,4 +38,8 @@ class PublicoController extends BaseWebController{
         $request->session()->flush();
         return redirect('login');
     }
+
+    public function Sobre(Request $request){
+        return view('publico.sobre');
+    }
 }

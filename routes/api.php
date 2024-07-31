@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Configuracoes\ConfiguracoesSistemaAPIController;
 use App\Http\Controllers\Api\Configuracoes\TaxasUsuarioController;
 use App\Http\Controllers\Api\Configuracoes\WhiteListController;
+use App\Http\Controllers\Api\ConsultaFilmeAPIController;
 use App\Http\Controllers\Api\ContatosAPIController;
 use App\Http\Controllers\Api\DuvidasFrequentesApiController;
 use App\Http\Controllers\BuscasController;
@@ -52,6 +53,9 @@ Route::namespace('Api')->middleware(['cors'])->group(function(){
         Route::post('/resetar_senha', [LoginApiController::class, 'ResetarSenha'])->name('ResetarSenha');
         Route::post('/registra_resetar_senha', [LoginApiController::class, 'RegistraResetarSenha'])->name('RegistraResetarSenha');
         Route::post('/', [LoginApiController::class, 'RealizaLogin'])->name('RealizaLogin');
+    });
+    Route::prefix('/consultas')->group(function(){
+        Route::post('/filme', [ConsultaFilmeAPIController::class, 'ConsultarFilme'])->name('consulta.filme.api');
     });
 });
 

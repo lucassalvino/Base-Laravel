@@ -2,7 +2,10 @@
     font-family: "Mont";
     src: url("Mont-Bold.ttf") format("truetype");
 }
-
+:root{
+    --primary: #0a223c !important;
+    --primary-hover: #51b784;;
+}
 /* resets */
 
 body {
@@ -65,7 +68,16 @@ img {
     width: 100px;
     height: 74.83px;
 }
-
+/* Elementos */
+.btn-primary{
+    border-color: var(--primary);
+    background-color: var(--primary);
+}
+.btn-primary:hover{
+    color: #fff;
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
 /* footer */
 .footer-bg {
     background-color: #0a223c;

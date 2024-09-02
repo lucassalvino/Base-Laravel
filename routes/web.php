@@ -70,8 +70,7 @@ Route::middleware(['cors'])->group(function(){
     })->name('welcome');
 
     Route::get('/sobre', [PublicoController::class, 'Sobre'])->name('sobre');
-
-    Route::get('/consulta-filme', [ConsultaFilmeController::class, 'ConsultarFilme'])->name('consulta-filme');
+    Route::post('/consulta-filme', [ConsultaFilmeController::class, 'ConsultarFilme'])->name('consulta-filme');
     
     Route::get('/{slug}', [PaginaAdminController::class, 'ViewPagina'])->name('cms.view.pagina');
 });

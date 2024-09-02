@@ -74,6 +74,7 @@ img {
     background-color: var(--primary);
 }
 .btn-primary:hover{
+    color: #fff;
     background-color: var(--primary-hover);
     border-color: var(--primary-hover);
 }

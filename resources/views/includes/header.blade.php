@@ -42,35 +42,15 @@
     <link rel="shortcut icon" href="{{asset('assets/img/favicon.png')}}">
     <meta name="format-detection" content="telephone=no">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    {{--
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="{{asset('assets/js/validator.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.5/dist/sweetalert2.all.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script src="{{asset('assets/js/requisicaoformulario.js')}}?v=1.0"></script>
-
-    {{--
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mina:wght@400;700&display=swap" rel="stylesheet"> --}}
 </head>
 
 <body>
     <header class="header-bg">
-        <div class="menu">
-            <img src="{{asset('assets/img/admin/fav_icon_cit.png')}}">
-            <nav aria-label="primaria">
-                <div class="d-flex justify-content-end">
-                    <ul class="botoes-menu">
-                        <li><a href="#">HOME</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">SOBRE</a></li>
-                        <li><a href="#">CONTATO</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
     </header>
 </body>

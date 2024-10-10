@@ -30,11 +30,6 @@ class UsersSeeder extends Seeder {
             'slug' => "root"
         ));
 
-        $grupoProdutor = Grupo::create(Array(
-            'nome' => "Produtor",
-            'slug' => "produtor"
-        ));
-
         $usuarioGrupo = UsuarioGrupo::create(Array(
             'grupo_id' => $grupoAdmin->id,
             'usuario_id' => $usuario->id

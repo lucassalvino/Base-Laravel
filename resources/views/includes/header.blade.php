@@ -28,18 +28,22 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <script src="{{asset('assets/js/main.js')}}?v=1.0"></script>
-
-    <meta name="description" content="teste" />
+    @php
+        if(!isset($data_seo)){
+            $data_seo = [];
+        }
+    @endphp
+    <meta name="description" content="{{$data_seo['descricao'] ?? ""}}" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="NOME" />
-    <meta property="og:site_name" content="NOME" />
-    <meta property="og:url" content="LINK" />
-    <meta property="og:description" content="teste" />
+    <meta property="og:title" content="{{$data_seo['titulo'] ?? ""}}" />
+    <meta property="og:site_name" content="{{$data_seo['titulo'] ?? ""}}" />
+    <meta property="og:url" content="{{$data_seo['url'] ?? url('/')}}" />
+    <meta property="og:description" content="{{$data_seo['descricao'] ?? ""}}" />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:image" content="IMG PADRAO" />
-    <meta name="keywords" content="PALAVRAS" />
+    <meta property="og:image" content="{{$data_seo['img_compartilhamento'] ?? ""}}" />
+    <meta name="keywords" content="{{$data_seo['palavras_chave'] ?? ""}}" />
     <meta name="author" content="AUTORES">
-    <link rel="shortcut icon" href="{{asset('assets/img/favicon.png')}}">
+    <link rel="shortcut icon" href="{{$data_seo['img_favicon'] ?? asset('assets/img/favicon.png')}}">
     <meta name="format-detection" content="telephone=no">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

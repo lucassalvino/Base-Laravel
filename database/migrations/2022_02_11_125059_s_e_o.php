@@ -20,6 +20,9 @@ class SEO extends Migration
             $table->string('url', 255)->default("http://localhost/");
             $table->string('palavras_chave', 500)->default("baselaravel");
             $table->text("script_tracking")->default("");
+            $table->string('img_compartilhamento', 300)->nullable();
+            $table->json('social_links')->nullable();
+            $table->string('img_favicon', 300)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

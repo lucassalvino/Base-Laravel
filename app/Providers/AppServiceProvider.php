@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\CMS\SEO;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
 
@@ -27,6 +28,15 @@ class AppServiceProvider extends ServiceProvider
         if(env('FORCE_HTTPS',false)) {
             URL::forceScheme('https');
         }
+        
+        $seo = [];
+        try{
+            $seo = SEO::ObtemSeo();
+        }catch(Exception $erro){
+            //para novos ambientes o banco de dados não existe
+        }
+        View::share("data_seo", $seo);
+
         $mainPath = database_path('migrations');
         $directories = glob($mainPath . '/*' , GLOB_ONLYDIR);
         $paths = array_merge([$mainPath], $directories);

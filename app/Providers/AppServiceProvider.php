@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\CMS\SEO;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
         if(env('FORCE_HTTPS',false)) {
             URL::forceScheme('https');
         }
-        
+
         $seo = [];
         try{
             $seo = SEO::ObtemSeo();

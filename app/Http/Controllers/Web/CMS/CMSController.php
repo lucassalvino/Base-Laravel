@@ -17,25 +17,12 @@ class CMSController extends Controller
     }
 
     public function cadastraseo(Request $request){
-        $dados = $request->all();
         $seo = SEO::query()->first();
         if($seo){
-            $seo->descricao = $dados['descricao'];
-            $seo->titulo = $dados['titulo'];
-            $seo->url = $dados['url'];
-            $seo->palavras_chave = $dados['palavras_chave'];
-            $seo->script_tracking = $dados['script_tracking'];
-            $seo->save();
+            return SEO::AtualizaElemento($request, $seo->id);
         }else{
-            SEO::create(Array(
-                'descricao' => $dados['descricao'],
-                'titulo' => $dados['titulo'],
-                'url' => $dados['url'],
-                'palavras_chave' => $dados['palavras_chave'],
-                'script_tracking' => $dados['script_tracking'],
-            ));
+            return SEO::CadastraElemento($request);
         }
-        return BaseRetornoApi::GetRetornoSucesso("Dados de SEO salvos com sucesso");
     }
 
     public function banner(){

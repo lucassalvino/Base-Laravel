@@ -13,6 +13,10 @@ class CMSController extends Controller
 {
     public function seo() {
         $seo = SEO::query()->first();
+        if($seo){
+            $seo->img_compartilhamento = ArquivosStorage::GetUrlView($seo->img_compartilhamento);
+            $seo->img_favicon = ArquivosStorage::GetUrlView($seo->img_favicon);
+        }
         return view('admin.cms.seo', compact('seo'));
     }
 

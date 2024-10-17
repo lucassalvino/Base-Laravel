@@ -48,6 +48,7 @@ class BaseAdminController extends Controller{
     }
 
     public function Edita(Request $request, $id = "00000000-0000-0000-0000-000000000000"){
+        $id = $request->id;
         $item = $this->ObtemElementoEditarVisualizar($request, $id);
         $itensView = $this->ObtemItensViewEdita($id);
         if(is_null($item))

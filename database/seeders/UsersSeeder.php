@@ -6,7 +6,7 @@ use App\Models\ConfiguracoesSistema;
 use App\Models\Grupo;
 use App\Models\Relacionamentos\UsuarioGrupo;
 use App\Models\User;
-use App\Utils\EnvConfig;
+use App\Servicos\UsuarioServico;
 use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder {
@@ -17,26 +17,18 @@ class UsersSeeder extends Seeder {
             'name' => "kame",
             'email' => "lucassalvino1@gmail.com",
             'path_avatar' => User::$pathAvatarPadrao,
-            'password' => hash(EnvConfig::HashSenha(), 'Mudar@1234!')
+            'password' => 'nds'
         ));
+
+        UsuarioServico::AtualizaSenhaUsuario($usuario->id, "Mudar@1234!");
 
         $grupoAdmin = Grupo::create(Array(
             'nome' => "Administradores",
             'slug' => "administradores"
         ));
 
-        $grupoRoot = Grupo::create(Array(
-            'nome' => "Root",
-            'slug' => "root"
-        ));
-
         $usuarioGrupo = UsuarioGrupo::create(Array(
             'grupo_id' => $grupoAdmin->id,
-            'usuario_id' => $usuario->id
-        ));
-
-        $usuarioGrupo = UsuarioGrupo::create(Array(
-            'grupo_id' => $grupoRoot->id,
             'usuario_id' => $usuario->id
         ));
 

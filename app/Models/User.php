@@ -10,14 +10,13 @@ use App\Models\Pessoa\Telefone;
 use App\Rules\ValidaEnum;
 use App\Utils\ArquivosStorage;
 use App\Utils\AuxCarbon;
-use App\Utils\EnvConfig;
 use App\Utils\Strings;
-use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Validation\Rule;
+
 class User extends BaseModelAuthenticatable{
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     protected $table = "users";
@@ -98,12 +97,6 @@ class User extends BaseModelAuthenticatable{
             $nomeArquivo = self::SalvaImagem($dados['base_path_avatar'], $dados['tipo_path_avatar']);
             if($nomeArquivo)
                 $dados['path_avatar'] = $nomeArquivo;
-        }
-
-        if(array_key_exists('password', $dados)){
-            if((!Strings::isNullOrEmpty($dados['password']))){
-                $dados['password'] = hash(EnvConfig::HashSenha(), $dados['password']);
-            }
         }
     }
 

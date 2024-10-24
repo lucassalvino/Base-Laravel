@@ -13,11 +13,9 @@ use Illuminate\Http\Request;
 class LoginServico{
     protected static $sessao;
     protected static $admin;
-    protected static $root;
     protected static $produtor;
 
     const SlugAdmin = 'administradores';
-    const SlugRoot = 'root';
     const SlugProdutor = 'produtor';
 
     public static function ObtemSessao($token){
@@ -58,7 +56,6 @@ class LoginServico{
     private static function ResetaValidadores(){
         self::$admin = false;
         self::$produtor = false;
-        self::$root = false;
     }
 
     public static function ObtemGrupoUsuario($usuario_id){
@@ -82,18 +79,15 @@ class LoginServico{
             if(strcasecmp($grupo->slug, static::SlugAdmin) == 0){
                 self::$admin = true;
             }
-            if(strcasecmp($grupo->slug, static::SlugRoot) == 0){
-                self::$root = true;
-            }
         }
     }
 
     public static function UsuarioAdmin($sessao){
         if(self::$sessao && strcasecmp(self::$sessao['api_token'], $sessao['api_token']) == 0){
-            return self::$admin || self::$root;
+            return self::$admin;
         }
         static::AtualizaValidadores($sessao);
-        return self::$admin || self::$root;
+        return self::$admin;
     }
 
     public static function ObtemUsuariosSlug($slug){

@@ -16,7 +16,7 @@ class ConfiguracoesSistemaController extends BaseAdminController{
 
     public function Index(Request $request){
         $configuracao = ConfiguracoesSistema::query()->first();
-        $usuarios = UsuarioServico::ObtemUsuariosGrupo(LoginServico::SlugRoot);
+        $usuarios = UsuarioServico::ObtemUsuariosGrupo(LoginServico::SlugAdmin);
         return view('admin.pages.Configuracoes.ConfiguracoesSistema', compact('configuracao', 'usuarios'));
     }
 }

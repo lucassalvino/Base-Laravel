@@ -69,6 +69,18 @@ class UsuarioServico{
         return DB::select($sql);
     }
 
+    public static function GetHashSenhaUsuario($user_id, $senha){
+        $senha = base64_encode($senha) .  base64_encode($user_id);
+        return  hash('sha512', $senha);
+    }
+
+    public static function AtualizaSenhaUsuario($user_id, $senha){
+        User::query()->where('id', '=', $user_id)
+        ->update([
+            'password' => self::GetHashSenhaUsuario($user_id, $senha)
+        ]);
+    }
+
     public function CadastraUsuario(Request $request){
         DB::beginTransaction();
         try{
@@ -77,6 +89,7 @@ class UsuarioServico{
             if(!User::VerificaRetornoSucesso($cadastro)){
                 return User::GeraErro($cadastro);
             }
+            self::AtualizaSenhaUsuario($cadastro, $request->get('password', 'Mudar@1234!'));
             $dadosEndereco = $request->get('endereco');
             if(!is_null($dadosEndereco)){
                 $dadosEndereco['usuario_id'] = $cadastro;
@@ -119,6 +132,9 @@ class UsuarioServico{
             $atualizacao = User::AtualizaElementoArray($dadosUpdate, $usuario);
             if(!User::VerificaRetornoSucesso($atualizacao)){
                 return User::GeraErro($atualizacao);
+            }
+            if(!is_null($request->get('password'))){
+                self::AtualizaSenhaUsuario($id, $request->get('password'));
             }
             $dadosEndereco = $request->get('endereco');
             if(!is_null($dadosEndereco)){

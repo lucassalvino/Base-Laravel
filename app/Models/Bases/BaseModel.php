@@ -520,4 +520,44 @@ class BaseModel extends Model{
         $query = vsprintf($query, $consulta->getBindings());
         return $query;
     }
+    
+    /*
+        $tabelasEnvolvidas
+        nometabela => [
+            id => 'id' // nome campo referencia
+            fillable => $model->GetFillable() //campos obtidos na query
+        ]
+    */
+    public static function GetArrayObjetos1NUnicaConsulta(Builder $consulta, $tabelasEnvolvidas, $tabelaPrincipal){
+        $colunasListagem = [];
+        $dadosArrayRetorno = [];
+        foreach($tabelasEnvolvidas as $tabela => $fillable){
+            $dadosArrayRetorno[$tabela] = [];
+            foreach($fillable['fillable'] as $column){
+                $colunasListagem[] = "{$tabela}.{$column} as {$tabela}__{$column}";
+            }
+        }
+        $dados = $consulta->get($colunasListagem);
+        foreach($dados as $dtDb){
+            foreach($tabelasEnvolvidas as $tabela => $fillable){
+                $id = $fillable['id'];
+                $fillable = $fillable['fillable'];
+                $obj = [];
+                foreach($fillable as $column){
+                    $obj[$column] = $dtDb["{$tabela}__{$column}"];
+                }
+                if(!array_key_exists($obj[$id], $dadosArrayRetorno[$tabela])){
+                    $dadosArrayRetorno[$tabela][$obj[$id]] = $obj;
+                }
+            }
+        }
+        $dadosRetorno = [];
+        foreach($dadosArrayRetorno as $tabela => $dataArray){
+            $dadosRetorno[$tabela] = array_values($dataArray);
+            if(strcmp($tabela, $tabelaPrincipal) == 0){
+                $dadosRetorno[$tabela] = array_values($dadosRetorno[$tabela][0]);
+            }
+        }
+        return $dadosRetorno;
+    }
 }

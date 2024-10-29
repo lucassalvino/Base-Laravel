@@ -555,7 +555,7 @@ class BaseModel extends Model{
         foreach($dadosArrayRetorno as $tabela => $dataArray){
             $dadosRetorno[$tabela] = array_values($dataArray);
             if(strcmp($tabela, $tabelaPrincipal) == 0){
-                $dadosRetorno[$tabela] = array_values($dadosRetorno[$tabela][0]);
+                $dadosRetorno[$tabela] = ($dadosRetorno[$tabela][0]);
             }
         }
         return $dadosRetorno;

@@ -65,8 +65,8 @@ Route::middleware(['cors'])->group(function(){
     Route::get('/logout', [PublicoController::class, 'RealizarLogout'])->name('fazer.logout');
 
     Route::get('/', function () {
-        return view('welcome');
-    });
+        return redirect()->route('site.login');
+    })->name('home.site');
 
     Route::get('/{slug}', [PaginaAdminController::class, 'ViewPagina'])->name('cms.view.pagina');
 });

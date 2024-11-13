@@ -129,13 +129,15 @@ class BaseModel extends Model{
 
     public function UpdateRegistro($request, Model &$item){
         $colunasEdicao = $this->ColunasEdicao();
+        $arrayEdicao = [];
         foreach($colunasEdicao as $campo){
             if(strcasecmp('id', $campo) == 0)
                 continue;
             if(array_key_exists($campo, $request)){
-                $item->{$campo} = $request[$campo];
+                $arrayEdicao[$campo] = $request[$campo];
             }
         }
+        $item->update($arrayEdicao);
     }
 
     public function EventoAlteracao($id, $atualizacao = true){
@@ -255,7 +257,6 @@ class BaseModel extends Model{
             return $valida;
         }else{
             $instancia->UpdateRegistro($dados, $instanciaBanco);
-            $instanciaBanco->save();
             $instanciaBanco->EventoAlteracao($instanciaBanco->id, true);
             return $instanciaBanco->id;
         }

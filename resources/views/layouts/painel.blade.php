@@ -116,8 +116,7 @@
                             </li>
                             <li class="user-footer">
                                 <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                                <a href="{{ route('fazer.logout') }}"
-                                    class="btn btn-default btn-flat float-end"> Logout </a>
+                                <a href="#" class="btn btn-default btn-flat float-end" id="realizar-logout">Logout</a>
                             </li>
                         </ul>
                     </li>
@@ -220,6 +219,23 @@
             });
             $(".nav-link").removeClass('active');
             $(".menu-open").removeClass('menu-open');
+            $("#realizar-logout").on("click", function(e){
+                e.preventDefault();
+                Swal.fire({
+                    title: "Deseja realmente deslogar?",
+                    text: "Será necessário realizar login novamente para acessar seu dashboard",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Logout",
+                    cancelButtonText: "Continuar Logado"
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ route('fazer.logout') }}";
+                    }
+                });
+            });
             @if ($menuativo)
                 @php
                     $menuativo = explode('|', $menuativo);

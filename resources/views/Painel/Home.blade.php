@@ -66,16 +66,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 connectedSortable">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3 class="card-title">Tipos de pagamento</h3>
-                    </div>
-                    <div class="card-body">
-                        <div id="revenue-chart-donut" style="display: flex; justify-content: center;"></div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 @stop
@@ -186,65 +176,10 @@
             },
         };
 
-        const sales_chart_options_donut = {
-            series: [
-                {{ $dadosGraficos['transacoes_tipo_pagamento']['Credit'] ?? 0 }},
-                {{ $dadosGraficos['transacoes_tipo_pagamento']['Boleto'] ?? 0 }},
-                {{ $dadosGraficos['transacoes_tipo_pagamento']['PIX'] ?? 0}},
-            ],
-            labels: ['Credito', 'Boleto', 'Pix'],
-            chart: {
-                type: 'donut',
-                width: '50%'
-            },
-            responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                },
-                {
-                    breakpoint: 576,
-                    options: {
-                        chart: {
-                            width: '100%'
-                        },
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                },
-                {
-                    breakpoint: 768,
-                    options: {
-                        chart: {
-                            width: '70%'
-                        },
-                    }
-                },
-                {
-                    breakpoint: 992,
-                    options: {
-                        chart: {
-                            width: '60%'
-                        },
-                    }
-                },
-            ]
-        };
-
         const sales_chart = new ApexCharts(
             document.querySelector("#revenue-chart"),
             sales_chart_options,
         );
         sales_chart.render();
-
-        const sales_chart_donut = new ApexCharts(
-            document.querySelector("#revenue-chart-donut"),
-            sales_chart_options_donut,
-        );
-        sales_chart_donut.render();
     </script>
 @stop

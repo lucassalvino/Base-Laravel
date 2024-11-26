@@ -201,6 +201,7 @@
   height: auto;
   width: 270px;
 }
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
@@ -212,6 +213,18 @@ body {
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.groupFilePhoto img{
+  min-height: 170px;
+  height: 170px;
+  min-width: 170px;
+  width: 170px;
+  object-fit: contain;
+}
+
+.groupFilePhoto:hover{
+  cursor: pointer;
 }
 
 hr {

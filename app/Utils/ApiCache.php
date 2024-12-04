@@ -35,6 +35,7 @@ class ApiCache{
     }
 
     public static function GeraChaveRequest(Array $filtros){
+        $filtros['APP_NAME'] = env('APP_NAME', 'CITSYSTEMS');
         return md5(json_encode($filtros));
     }
 

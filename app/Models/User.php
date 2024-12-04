@@ -101,12 +101,32 @@ class User extends BaseModelAuthenticatable{
     }
 
     public static function ObtemElementoUnico($id){
-        $retorno = parent::ObtemElementoUnico($id);
-        if($retorno){
-            $retorno->path_avatar = ArquivosStorage::GetUrlView($retorno->path_avatar);
-            $retorno['documento'] = Documento::query()->where('usuario_id', '=', $id)->first();
-            $retorno['endereco'] = Endereco::query()->where('usuario_id', '=', $id)->first();
-            $retorno['telefone'] = Telefone::query()->where('usuario_id', '=', $id)->first();
+        $consulta = User::query()
+            ->leftJoin('documento', 'documento.usuario_id', '=', 'users.id')
+            ->leftJoin('endereco', 'endereco.usuario_id', '=', 'users.id')
+            ->leftJoin('telefone', 'telefone.usuario_id', '=', 'users.id')
+            ->where('users.id', '=', $id);
+        $modelPrincipal = new User();
+        $retorno = static::GetArrayObjetos1NUnicaConsulta($consulta, [
+            $modelPrincipal->table => [
+                'id' => 'id',
+                'fillable' => $modelPrincipal->GetFillable()
+            ],
+            'documento' => [
+                'id' => 'id', 
+                'fillable' => (new Documento())->GetFillable()
+            ],
+            'endereco' => [
+                'id' => 'id', 
+                'fillable' => (new Endereco())->GetFillable()
+            ],
+            'telefone' => [
+                'id' => 'id', 
+                'fillable' => (new Telefone())->GetFillable()
+            ]
+        ], $modelPrincipal->table);
+        if(!Strings::isNullOrEmpty(($retorno['users']['path_avatar']??null))){
+            $retorno['users']['path_avatar'] = ArquivosStorage::GetUrlView($retorno['users']['path_avatar']);
         }
         return $retorno;
     }

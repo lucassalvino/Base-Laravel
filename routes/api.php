@@ -36,6 +36,7 @@ if(!function_exists('ConstruiRotaPadraoApi')){
             Route::get('/', [$controller, 'Listagem'])->name($nome.'.api.listagem');
             Route::get('/{id}', [$controller, 'Detalhado'])->name($nome.'.api.detalhado');
             Route::put('/{id}', [$controller, 'Atualiza'])->name($nome.'.api.editar');
+            Route::patch('/{id}', [$controller, 'AtualizaParcial'])->name($nome.'.api.editar.parcial');
             Route::delete('/{id}', [$controller, 'Deleta'])->name($nome.'.api.deleta');
             Route::post('/restore/{id}', [$controller, 'Restaura'])->name($nome.'.api.restaura');
             Route::post('/clone/{id}', [$controller, 'ClonarRegistro'])->name($nome.'.api.clone');
@@ -59,6 +60,7 @@ Route::namespace('Api')->middleware(['cors'])->group(function(){
 Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(){
     Route::prefix('/login')->group(function(){
         Route::delete('/', [LoginApiController::class, 'Logout'])->name('Logout');
+        Route::post('/alterar-senha', [LoginApiController::class, 'AlteraSenha'])->name('alterar.senha');
     });
 
     Route::prefix("/buscas")->group(function(){

@@ -249,10 +249,19 @@ class BaseModel extends Model{
         return $data;
     }
 
-    public static function AtualizaElementoArray($dados, &$instanciaBanco){
+    public static function AtualizaElementoArray($dados, &$instanciaBanco, $patch = false){
         $instancia = new static;
         $instancia->NormalizaDados($dados, true);
-        $valida = Validator::make($dados, $instancia->GetValidadorAtualizacao($dados, $instanciaBanco->id), $instancia->GetMenssagensValidacao());
+        $validadores = $instancia->GetValidadorAtualizacao($dados, $instanciaBanco->id);
+        if($patch){
+            $dtValida = $validadores;
+            foreach($dtValida as $key => $validacao){
+                if(!array_key_exists($key, $dados)){
+                    unset($validadores[$key]);
+                }
+            }
+        }
+        $valida = Validator::make($dados, $validadores, $instancia->GetMenssagensValidacao());
         if($valida->fails()){
             return $valida;
         }else{
@@ -262,12 +271,12 @@ class BaseModel extends Model{
         }
     }
 
-    public static function AtualizaElemento(Request $request, $id){
+    public static function AtualizaElemento(Request $request, $id, $patch = false){
         try{
             $item = static::query()->where('id', '=', $id)->first();
             if($item){
                 $dados = $request->all();
-                $atualiza = static::AtualizaElementoArray($dados, $item);
+                $atualiza = static::AtualizaElementoArray($dados, $item, $patch);
                 if( static::CheckIfIsValidator($atualiza) ){
                     return BaseRetornoApi::GetRetornoErro($atualiza->errors()->all(), "O registro não foi atualizado");
                 }else{
@@ -285,6 +294,10 @@ class BaseModel extends Model{
         catch(Exception $erro){
             return BaseRetornoApi::GetRetornoErroException($erro);
         }
+    }
+
+    public static function AtualizaParcial(Request $request, $id){
+        return self::AtualizaElemento($request, $id, true);
     }
 
     #region ClonarRegistro

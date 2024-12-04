@@ -1,7 +1,9 @@
 <?php
 namespace App\Servicos;
 
+use App\Email\Emails\EmailSenhaAlterada;
 use App\Models\Enuns\TipoDocumento;
+use App\Models\HistoricoAlteracaoSenha;
 use App\Models\Pessoa\Documento;
 use App\Models\Pessoa\Endereco;
 use App\Models\Pessoa\Telefone;
@@ -202,5 +204,51 @@ class UsuarioServico{
 
     public function Restaura(Request $request, $id){
         return User::RestoreElemento($request, $id);
+    }
+
+    public static function SenhaAtendeRequisitos($senha){
+        return (
+            preg_match("/[a-z]/", $senha) +
+            preg_match("/[A-Z]/", $senha) +
+            preg_match("/[0-9]/", $senha) + 
+            preg_match("/\W|_/", $senha) +
+            (strlen($senha) >= 8)
+            ) >= 5;
+    }
+
+    public static function AlterarSenha(Request $request){
+        $headers = (apache_request_headers());
+        $sessao = $request->get('sessao');
+        $logAlteracao = HistoricoAlteracaoSenha::CriaHistoricoAlteracaoSenha([
+            'usuario_id' => $sessao['user_id'],
+            'usuario_acao_id' => $sessao['user_id'],
+            'user_agent' => $headers['User-Agent'] ?? 'Não definido',
+            'endereco_ip_request' => $request->ip(),
+            'endereco_ip_real' => $request->get('ipaddress', 'Não informado'),
+            'host_request' => $headers['Origin'] ?? route('home.site')
+        ]);
+        $senhaAtual = $request->get('senhaatual');
+        $novasenha = $request->get('novasenha');
+        $confirmanovasenha = $request->get('confirmanovasenha');
+        $usuario = User::query()->where('id', '=', $sessao['user_id'])->first();
+        if(strcmp($usuario->password, self::GetHashSenhaUsuario($usuario->id, $senhaAtual)) != 0){
+            return BaseRetornoApi::GetRetornoErro(["A senha atual está incorreta"]);
+        }
+        if(strcmp($novasenha, $confirmanovasenha)){
+            return BaseRetornoApi::GetRetornoErro(["As novas senhas não coincidem"]);
+        }
+        if(!static::SenhaAtendeRequisitos($novasenha)){
+            return BaseRetornoApi::GetRetornoErro(["A nova senha não atende os requisitos mínimos de segurança"]);
+        }
+        $usuario->update([
+            'password' => self::GetHashSenhaUsuario($usuario->id, $novasenha)
+        ]);
+        $email = new EmailSenhaAlterada();
+        $email->nomeUsuario = $usuario->name;
+        $email->userAgent = $logAlteracao->user_agent;
+        $email->ipalteracao = $logAlteracao->endereco_ip_real;
+        $email->EnviaEmail("Sua senha foi alterada", $usuario->email);
+        $logAlteracao->update(['sucesso_alteracao' => 1]);
+        return BaseRetornoApi::GetRetornoSucesso("Senha Alterada com sucesso");
     }
 }

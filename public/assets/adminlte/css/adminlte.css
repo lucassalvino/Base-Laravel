@@ -227,6 +227,41 @@ body {
   cursor: pointer;
 }
 
+#mensagensenhavalidacao {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 8px;
+  margin-top: 10px;
+}
+
+#mensagensenhavalidacao p {
+  padding: 0px;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -5px;
+  content: "✔";
+}
+
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -5px;
+  content: "✖";
+}
+
 hr {
   margin: 1rem 0;
   color: inherit;

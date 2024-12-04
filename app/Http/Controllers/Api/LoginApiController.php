@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Login;
 use App\Models\ResetarSenha;
 use App\Models\User;
+use App\Servicos\UsuarioServico;
 use App\Utils\ArquivosStorage;
 use App\Utils\BaseRetornoApi;
 use Illuminate\Http\Request;
@@ -60,13 +61,13 @@ class LoginApiController extends Controller
         return ResetarSenha::RegistraResetarSenha($request->all());
     }
 
-    /**
-     * Desloga o usuário atual
-     * @authenticated
-     */
     public function Logout(Request $request)
     {
         return Login::Logout($request);
+    }
+
+    public function AlteraSenha(Request $request){
+        return UsuarioServico::AlterarSenha($request);
     }
 
     public function ObtemDadosLogado(Request $request){

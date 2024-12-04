@@ -35,6 +35,10 @@ class BaseAPIController extends Controller{
         return $this->class::RestoreElemento($request, $id);
     }
 
+    public function AtualizaParcial(Request $request, $id){
+        return $this->class::AtualizaParcial($request, $id);
+    }
+
     public function Detalhado(Request $request, $id){
         $detalhado = $this->class::Detalhado($request, $id);
         if($detalhado){

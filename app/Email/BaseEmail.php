@@ -1,7 +1,8 @@
-<?php 
+<?php
 namespace App\Email;
 
 use App\Servicos\IntegracaoMautic;
+use App\Servicos\IntregracaoSES;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -12,23 +13,13 @@ class BaseEmail extends Mailable{
 
     public $dadosEnvio = null;
 
-    /**
-     * ID do formulário no mautic. Deve ser numero inteiro
-     */
     public $FormularioId = 0;
-
-    /**
-     * Este assunto somente sera utilizado quando o tipo de envio for SMTP
-     */
     public $Assunto = "";
-
-    /**
-     * Esta é a view que sera utilizada para envio quando o tipo de envio for SMTP
-     */
     public $view = "";
 
     function __construct($dadosEnvio){
         $this->dadosEnvio = $dadosEnvio;
+        $this->Assunto = $this->dadosEnvio['assunto_email'];
     }
 
     public function SubmetMautic(){
@@ -36,9 +27,15 @@ class BaseEmail extends Mailable{
         $integracao->SubmeteFormulario($this->dadosEnvio, $this->FormularioId);
     }
 
+    public function SendSES(){
+        $integracao = new IntregracaoSES();
+        $integracao->SendEmail($this->dadosEnvio['email'], $this->dadosEnvio['assunto_email'], $this->dadosEnvio['html_email_geral']);
+    }
+
     public function build(){
         return $this
         ->subject($this->Assunto)
-        ->view( $this->view , $this->dadosEnvio);
+        ->from(env('MAIL_FROM_ADDRESS'), env('APP_NAME'))
+        ->html($this->dadosEnvio['html_email_geral']);
     }
 }

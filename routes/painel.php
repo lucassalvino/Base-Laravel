@@ -20,5 +20,6 @@ if(!function_exists('ConstruiRotaPadraoPainel')){
 Route::group(['as' => 'painel:'], function(){
     Route::middleware(['cors', 'VerificaSessaoWeb'])->group(function(){
         Route::get('/', [PainelController::class, 'Home'])->name('home.painel');
+        Route::get('/meu-perfil', [PainelController::class, 'MeuPerfil'])->name('meu-perfil');
     });
 });

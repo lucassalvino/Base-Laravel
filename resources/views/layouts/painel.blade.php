@@ -76,14 +76,6 @@
                             <i class="bi bi-list"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <select name="gateway_client" id="gateway_client" class="form-select">
-                            @foreach ($gatewayClientes as $gt)
-                                <option value="{{ $gt->id }}" @if (($_GET['gateway_client_id'] ?? '') == $gt->id) selected @endif>
-                                    {{ $gt->name }}</option>
-                            @endforeach
-                        </select>
-                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -111,12 +103,18 @@
                             </li>
                             <li class="user-body">
                                 <div class="row">
-                                    <div class="col-4 text-center"> <a href="#">Tema</a> </div>
+                                    <div class="col-12 text-center">
+                                        <a href="{{route('painel:meu-perfil')}}" class="btn btn-default btn-flat">Perfil</a>
+                                        <a href="#" class="btn btn-default btn-flat" id="alterar_senha">Redefinir senha</a>
+                                    </div>
                                 </div>
                             </li>
                             <li class="user-footer">
-                                <a href="#" class="btn btn-default btn-flat">Perfil</a>
-                                <a href="#" class="btn btn-default btn-flat float-end" id="realizar-logout">Logout</a>
+
+                                <li class="user-footer">
+                                    <a href="#" class="btn btn-warning btn-flat float-end"
+                                        id="realizar-logout">Logout</a>
+                                </li>
                             </li>
                         </ul>
                     </li>
@@ -128,10 +126,10 @@
                 <a href="{{ route('painel:home.painel') }}" class="brand-link">
                     @if ($client)
                         <img src="{{ $pathImg ?? asset('assets/img/logo-cit.png') }}" alt="CIT"
-                            class="brand-image opacity-75 shadow">
+                            class="brand-image opacity-75">
                     @else
                         <img src="{{ asset('assets/img/logo-cit.png') }}" alt="CIT"
-                            class="brand-image opacity-75 shadow">
+                            class="brand-image opacity-75">
                     @endif
                     <span class="brand-text fw-light">{{ $client->name ?? 'CIT' }}</span>
                 </a>
@@ -170,6 +168,59 @@
             </div>
         </main>
         @yield('modais')
+        <div class="modal fade" id="modalAlterarSenha" tabindex="-1" aria-labelledby="modalAlterarSenhaLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalAlterarSenhaLabel">Alterar Minha Senha</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4 pt-3">
+                                    <div class="form-group">
+                                        <label for="senhaatual">Senha atual:*</label>
+                                        <input type="password" name="senhaatual" class="form-control" id="senhaatual" placeholder="Digite sua senha" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pt-3">
+                                    <div class="form-group">
+                                        <label for="novasenha">Nova senha:*</label>
+                                        <input type="password" name="novasenha" class="form-control" id="novasenha" placeholder="Digite sua nova senha" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pt-3">
+                                    <div class="form-group">
+                                        <label for="confirmanovasenha">Confirmação da nova senha:*</label>
+                                        <input type="password" name="confirmanovasenha" class="form-control" id="confirmanovasenha" placeholder="Confirme sua nova senha" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div id="mensagensenhavalidacao">
+                                    <h5>Sua nova senha deve ter pelo menos:</h5>
+                                    <p id="letter" class="invalid">Uma letra <b>minúscula</b></p>
+                                    <p id="capital" class="invalid">Uma letra <b>maiúscula</b></p>
+                                    <p id="number" class="invalid">Um <b>número</b></p>
+                                    <p id="especial" class="invalid">Um caractere <b>especial</b></p>
+                                    <p id="length" class="invalid">No mínimo <b>8 caracteres</b></p>
+                                    <p id="confirmpassword" class="invalid" style="display: none;">A senha e confirmação da senha <b>não coincidem</b></p>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-12 d-flex justify-content-end gap-2">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary" id="btnalterarsenha" disabled>Alterar Senha</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <footer class="app-footer">
             <div class="float-end d-none d-sm-inline"></div><strong>
                 Copyright &copy; {{ date('Y') }}&nbsp;
@@ -211,11 +262,124 @@
         integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
     @yield('scripts_adicionais')
     <script>
+        var ipaddress = "";
         $(document).ready(function() {
             $("#gateway_client").on("change", function() {
                 var url = new URL(window.location.href);
                 url.searchParams.set('gateway_client_id', $("#gateway_client").val());
                 window.location.href = url.toString();
+            });
+             $("#alterar_senha").on("click", function(e){
+                e.preventDefault();
+                $("#mensagensenhavalidacao").hide();
+                $("#modalAlterarSenha").modal('show');
+                $.ajax({
+                    url: "https://api.ipify.org/?format=json",
+                    type: 'GET',
+                    success: function(dados) {
+                        ipaddress = dados.ip;
+                    },
+                    error: function(error) { ipaddress = "ERRO OBTENCAO IP"; }
+                });
+            });
+            var inputsenha = document.getElementById("novasenha");
+            var inputconfirmasenha = document.getElementById("confirmanovasenha");
+            var senhaatual = document.getElementById("senhaatual");
+            var letter = document.getElementById("letter");
+            var capital = document.getElementById("capital");
+            var number = document.getElementById("number");
+            var especial = document.getElementById("especial");
+            var length = document.getElementById("length");
+            var confirmpassword = document.getElementById("confirmpassword");
+            var requisitsMinimosSenha = false;
+            inputsenha.onfocus = function() {
+                $("#mensagensenhavalidacao").show('slow');
+            }
+            inputconfirmasenha.onfocus = function() {
+                $("#confirmpassword").show('slow');
+            }
+            function ValidaRequisitosSenha() {
+                function defineValido(obj){
+                    obj.classList.remove("invalid");
+                    obj.classList.add("valid");
+                }
+                function defineInvalido(obj){
+                    obj.classList.remove("valid");
+                    obj.classList.add("invalid");
+                    requisitsMinimosSenha = false;
+                }
+                
+                function validaRegex(obj, regex){
+                    if(inputsenha.value.match(regex)) {
+                        defineValido(obj);
+                        return true;
+                    } else {
+                        defineInvalido(obj);
+                    }
+                    return false;
+                }
+                requisitsMinimosSenha = true;
+                validaRegex(letter, /[a-z]/g);//minuscula
+                validaRegex(capital, /[A-Z]/g);//maiuscula
+                validaRegex(number, /[0-9]/g);//numeros
+                validaRegex(especial, /\W|_/);//especial
+                
+                if(inputsenha.value.length >= 8) {
+                    defineValido(length);
+                } else {
+                    defineInvalido(length);
+                }
+
+                if(requisitsMinimosSenha && $("#novasenha").val() == $("#confirmanovasenha").val()){
+                    defineValido(confirmpassword);
+                }else{
+                    defineInvalido(confirmpassword);
+                }
+
+                if(requisitsMinimosSenha && $("#senhaatual").val() == ''){
+                    requisitsMinimosSenha = false;
+                }
+
+                if(requisitsMinimosSenha){
+                    $("#btnalterarsenha").prop("disabled", false);
+                }else{
+                    $("#btnalterarsenha").prop("disabled", true);
+                }
+            }
+            inputsenha.onkeyup = ValidaRequisitosSenha;
+            inputconfirmasenha.onkeyup = ValidaRequisitosSenha;
+            senhaatual.onkeyup = ValidaRequisitosSenha;
+            $("#btnalterarsenha").on("click", function(){
+                var load = CriaLoad();
+                $.ajax({
+                    url: "{{route('alterar.senha')}}",
+                    dataType: 'JSON',
+                    type: 'POST',
+                    data: {
+                        senhaatual : $("#senhaatual").val(),
+                        novasenha : $("#novasenha").val(),
+                        confirmanovasenha : $("#confirmanovasenha").val(),
+                        ipaddress : ipaddress
+                    },
+                    headers:{
+                        'Authorization': "{{session('Authorization','')}}"
+                    },
+                    success: function(result){
+                        load.close();
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            text: `${result.mensagem}`,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(function(){
+                            location.reload();
+                        });
+                    },
+                    error: function(err, resp, text) {
+                        load.close();
+                        ExibeMensagemErroAPI(err);
+                    }
+                });
             });
             $(".nav-link").removeClass('active');
             $(".menu-open").removeClass('menu-open');

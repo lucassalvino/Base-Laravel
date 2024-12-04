@@ -41,4 +41,8 @@ class UsuarioController extends Controller implements IAPIController{
     public function ClonarRegistro (Request $request, $id){
         return User::ClonaRegistro($request, $id);
     }
+
+    public function AtualizaParcial(Request $request, $id){
+        return User::AtualizaParcial($request, $id);
+    }
 }

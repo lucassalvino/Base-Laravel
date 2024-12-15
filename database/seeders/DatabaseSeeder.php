@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
     {
         if(!User::query()->first())
             $this->call(UsersSeeder::class);
+        $this->call(MenusSeeders::class);
     }
 }

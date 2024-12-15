@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DuvidasFrequentesApiController;
 use App\Http\Controllers\BuscasController;
 use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\LoginApiController;
+use App\Http\Controllers\Api\MenusAPIController;
 use App\Http\Controllers\Api\PaginaApiController;
 use App\Http\Controllers\Api\TermosAceiteAPIController;
 use App\Http\Controllers\Api\TokenApiApiController;
@@ -93,7 +94,8 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
     ConstruiRotaPadraoApi('taxasusuario', TaxasUsuarioController::class);
     ConstruiRotaPadraoApi('whitelist', WhiteListController::class);
     ConstruiRotaPadraoApi('duvidas-frequentes', DuvidasFrequentesApiController::class);
-    ConstruiRotaPadraoApi('contatos',ContatosAPIController::class);
+    ConstruiRotaPadraoApi('contatos', ContatosAPIController::class);
+    ConstruiRotaPadraoApi('menus', MenusAPIController::class);
 
     Route::prefix('/configuracoessistema')->group(function(){
         Route::post('/cadastra', [ConfiguracoesSistemaAPIController::class, "CadastraAtualizaConfiguracao"])->name('configuracoessistema.api.cadastra');

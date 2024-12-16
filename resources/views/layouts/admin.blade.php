@@ -51,7 +51,7 @@
                                         <a href="{{route('admin:grupo.permissoes')}}">Usuários por grupo</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('admin:grupo.permissoes')}}">Menus por grupo</a>
+                                        <a href="{{route('admin:grupo.menus')}}">Menus por grupo</a>
                                     </li>
                                 </ul>
                             </div>
@@ -200,5 +200,15 @@
             </div>
         </main>
     </div>
+    @if(isset($menuativo))
+    <script>
+        jQuery(function($){
+            if ($("#{{$menuativo}}").length) {
+                $("#{{$menuativo}}").addClass('active');
+                $("#{{$menuativo}} > .sidebar-submenu").show();
+            }
+        });
+    </script>
+@endif
 </body>
 </html>

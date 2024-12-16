@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
+use App\Models\Menu\Menu;
 use App\Models\User;
 use Illuminate\Http\Request;
 class BuscasController extends Controller{
@@ -49,5 +50,16 @@ class BuscasController extends Controller{
             $this->OrdernarRetorno(
                 $consulta, ['name']
             ), ['id', 'name']);
+    }
+
+    public function Menus(Request $request){
+        $consulta = $this->ContruiFiltroIlike(
+            Menu::query(), 
+            $this->ObtemTermoBusca($request), 
+            ['nome']);
+        return $this->ObtemItensExibir(
+            $this->OrdernarRetorno(
+                $consulta, ['nome']
+            ), ['id', 'nome']);
     }
 }

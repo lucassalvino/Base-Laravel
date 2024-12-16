@@ -69,8 +69,8 @@
                     </div>
                 </div>
                 @php
-                    $social =[];
-                    if(!is_null($seo->social_links)){
+                    $social = [];
+                    if($seo && !is_null($seo->social_links)){
                         $social = json_decode($seo->social_links, true);
                     }
                 @endphp

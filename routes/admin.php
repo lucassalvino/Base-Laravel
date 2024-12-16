@@ -54,7 +54,9 @@ Route::group(['as' => 'admin:'], function(){
 
         Route::group(['prefix' => '/permissoes'], function(){
             Route::get('/grupopermissoes', [PermissaoController::class, 'Index'])->name('grupo.permissoes');
+            Route::get('/menusgrupos', [PermissaoController::class, 'MenusGrupo'])->name('grupo.menus');
             Route::get('/usuariogrupo/{id}', [PermissaoController::class, 'UsuariosGrupo'])->name('grupo.usuarios');
+            Route::get('/menugrupo/{id}', [PermissaoController::class, 'MenusGrupoEdicao'])->name('grupo.menu.edicao');
         });
 
         Route::prefix('/cms')->group(function(){

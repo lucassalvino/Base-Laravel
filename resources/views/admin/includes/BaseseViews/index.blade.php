@@ -196,15 +196,4 @@ if(!isset($mostrarBtnCadastrar))
 @yield('scripts_adicionais')
 
 @include('admin.includes.deletar_restaurar')
-
-@if(isset($menuativo))
-    <script>
-        jQuery(function($){
-            if ($("#{{$menuativo}}").length) {
-                $("#{{$menuativo}}").addClass('active');
-                $("#{{$menuativo}} > .sidebar-submenu").show();
-            }
-        });
-    </script>
-@endif
 @stop

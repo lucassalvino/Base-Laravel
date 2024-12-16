@@ -16,7 +16,6 @@ use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Web\admin\MonitoramentoController;
 use App\Http\Controllers\Web\admin\Usuarios\PermissaoController;
 use App\Http\Controllers\Web\CMS\CMSController;
-use App\Models\Duvidas;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,11 +65,15 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
 
     Route::prefix("/buscas")->group(function(){
         Route::get('/usuario', [BuscasController::class, 'Usuarios'])->name("api.busca.usuarios");
+        Route::get('/menu', [BuscasController::class, 'Menus'])->name("api.busca.menus");
     });
 
     Route::group(['prefix' => 'usuariogrupo'], function(){
         Route::post('/adicionausuariogrupo', [PermissaoController::class, 'AdicionaUsuarioGrupo'])->name("adicione.usuario.grupo");
         Route::post('/removerusuariogrupo', [PermissaoController::class, 'RemoverUsuarioGrupo'])->name('remove.usuario.grupo');
+
+        Route::post('/adicionamenugrupo', [PermissaoController::class, 'AdicionamenuGrupo'])->name("adicione.menu.grupo");
+        Route::post('/removermenugrupo', [PermissaoController::class, 'RemoverMenuGrupo'])->name('remove.menu.grupo');
     });
 
     Route::get('/obtem-dados-logado', [LoginApiController::class, 'ObtemDadosLogado'])->name('obtem-dados-logado');

@@ -45,6 +45,7 @@
     <meta name="author" content="CIT Systems">
     <meta name="description" content="CIT Systems">
     <meta name="keywords" content="CIT Systems">
+    <meta name="_authorization" content="{{ session('Authorization','') }}">
     <link rel="shortcut icon" href="{{ asset('assets/img/logo-cit.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -64,6 +65,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.5/dist/sweetalert2.all.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -232,7 +236,7 @@
     <script>
         var paginajsimport = `{{ App\Utils\Strings::slugify($titulo) }}`;
     </script>
-    <script src="{{ asset('/assets/js/main.js') }}"></script>
+    <script src="{{ asset('/assets/js/main.js') }}?v=1.00"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>

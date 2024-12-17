@@ -142,22 +142,6 @@
                 <nav class="mt-2">
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
                         data-accordion="false">
-                        <li class="nav-item"> <a href="#" class="nav-link menu-dashboard"> <i
-                                    class="nav-icon bi bi-speedometer"></i>
-                                <p>
-                                    Dashboard
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('painel:home.painel') }}" class="nav-link menu-status">
-                                        <i class="nav-icon bi bi-circle"></i>
-                                        <p>Status</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
                     </ul>
                 </nav>
             </div>
@@ -268,6 +252,52 @@
     <script>
         var ipaddress = "";
         $(document).ready(function() {
+            var token = $('meta[name="_authorization"]').attr('content');
+            $.ajax({
+                url: "{{route('obtem-dados-logado')}}",
+                dataType: 'JSON',
+                type: 'GET',
+                headers:{
+                    'Authorization': token
+                },
+                success: function(result){
+                    var menus = result.menus;
+                    var html = "";
+                    for(var i = 0; i<menus.length; i++){
+                        let setasubmenu = "";
+                        if(menus[i].submenus.length > 0){
+                            setasubmenu = `<i class="nav-arrow bi bi-chevron-right"></i>`;
+                        }
+                        let part = `
+                        <a href="${menus[i].path}" class="nav-link"> 
+                            <i class="${menus[i].icone}"></i>
+                            <p>
+                                ${menus[i].nome}
+                                ${setasubmenu}
+                            </p>
+                        </a>
+                        `;
+                        let subpart = "";
+                        for(var j = 0; j < menus[i].submenus.length; j++){
+                            let submenu = menus[i].submenus[j];
+                            subpart += `<li class="nav-item">
+                                            <a href="${submenu.path}" class="nav-link">
+                                                <i class="${submenu.icone}"></i>
+                                                <p>${submenu.nome}</p>
+                                            </a>
+                                        </li>`;
+                        }
+                        if(menus[i].submenus.length > 0){
+                            part = part + `<ul class="nav nav-treeview"> ${subpart} </ul>`;
+                        }
+                        html = html + `<li class="nav-item"> ${part} </li>`;
+                    }
+                    $(".sidebar-menu").html(html);
+                },
+                error: function(err, resp, text) {
+                    ExibeMensagemErroAPI(err);
+                }
+            });
             $("#gateway_client").on("change", function() {
                 var url = new URL(window.location.href);
                 url.searchParams.set('gateway_client_id', $("#gateway_client").val());

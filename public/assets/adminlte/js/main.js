@@ -105,9 +105,18 @@ $(document).ready(function () {
     }
 
     if ($('.mask-telefone').length){
-        $('.mask-telefone').mask("(00) 0000-00009");
+        var TelefoneMaskBehavior = function (val) {
+            return val.replace(/\D/g, "").length <= 10
+                ? "(00) 0000-00009"
+                : "(00) 00000-0000";
+        },
+        telefoneOptions = {
+            onKeyPress: function (val, e, field, options) {
+                field.mask(TelefoneMaskBehavior.apply({}, arguments), options);
+            },
+        };
+        $('.mask-telefone').mask(TelefoneMaskBehavior, telefoneOptions);
     }
-
     if ($('.mask-date').length){
         $('.mask-date').mask("00/00/0000");
     }

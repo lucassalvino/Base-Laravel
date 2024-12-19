@@ -1,7 +1,6 @@
 @extends('layouts.painel', [
     'titulo' => 'Dashboard',
-    'menuativo' => 'menu-dashboard|menu-status',
-    'menuexpand' => 'menu-dashboard',
+    'menuativo' => 'menu-dashboard|menu-status'
 ])
 
 @section('content')

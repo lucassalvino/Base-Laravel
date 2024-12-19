@@ -20,15 +20,12 @@ if(!isset($acaoPosSubmit))
 if(!isset($menuativo))
     $menuativo = '';
 
-if(!isset($menuexpand))
-    $menuexpand = '';
 @endphp
 
 @extends('layouts.painel',
     [
         "titulo" => $titulo,
-        "menuativo" => $menuativo,
-        "menuexpand" => $menuexpand
+        "menuativo" => $menuativo
     ]
 )
 

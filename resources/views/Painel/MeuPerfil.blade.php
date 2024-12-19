@@ -9,7 +9,6 @@
     'urlSubmit' => route('usuario.api.editar', $usuario['id']),
     'titulo' => 'Meu perfil',
     'menuativo' => 'menu-config|menu-perfil',
-    'menuexpand' => 'menu-config',
     'textoBotao' => 'Salvar',
     'verboSubmissao' => 'PUT',
     'acaoPosSubmit' => 'data-reload',

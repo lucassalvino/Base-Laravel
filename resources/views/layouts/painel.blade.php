@@ -8,9 +8,6 @@
     if (!isset($menuativo)) {
         $menuativo = '';
     }
-    if (!isset($menuexpand)) {
-        $menuexpand = '';
-    }
 
     $gatewayClientes = [];
     $dataRequest = request()->all();
@@ -39,14 +36,14 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>CIT Systems</title>
+    <title>SamantaTur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="CIT Systems">
+    <meta name="title" content="Samanta Tur">
     <meta name="author" content="CIT Systems">
-    <meta name="description" content="CIT Systems">
-    <meta name="keywords" content="CIT Systems">
+    <meta name="description" content="Samanta Tur">
+    <meta name="keywords" content="">
     <meta name="_authorization" content="{{ session('Authorization','') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/img/logo-cit.png') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/img/ico-samanta.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -125,17 +122,17 @@
                 </ul>
             </div>
         </nav>
-        <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <aside class="app-sidebar shadow" data-bs-theme="light">
             <div class="sidebar-brand">
                 <a href="{{ route('painel:home.painel') }}" class="brand-link">
                     @if ($client)
-                        <img src="{{ $pathImg ?? asset('assets/img/logo-cit.png') }}" alt="CIT"
-                            class="brand-image opacity-75">
+                        <img src="{{ $pathImg ?? asset('assets/img/ico-samanta.png') }}" alt="CIT"
+                            class="brand-image ">
                     @else
-                        <img src="{{ asset('assets/img/logo-cit.png') }}" alt="CIT"
-                            class="brand-image opacity-75">
+                        <img src="{{ asset('assets/img/ico-samanta.png') }}" alt="CIT"
+                            class="brand-image ">
                     @endif
-                    <span class="brand-text fw-light">{{ $client->name ?? 'CIT' }}</span>
+                    <span class="brand-text fw-light">SAMANTA<span>TUR</span></span>
                 </a>
             </div>
             <div class="sidebar-wrapper">
@@ -212,7 +209,7 @@
         <footer class="app-footer">
             <div class="float-end d-none d-sm-inline"></div><strong>
                 Copyright &copy; {{ date('Y') }}&nbsp;
-                <a href="{{ route('home.site') }}" class="text-decoration-none">CITSystems</a>.
+                <a href="{{ route('home.site') }}" class="text-decoration-none">SamantaTur</a>.
             </strong>
             Todos os direitos reservados.
         </footer>
@@ -269,7 +266,7 @@
                             setasubmenu = `<i class="nav-arrow bi bi-chevron-right"></i>`;
                         }
                         let part = `
-                        <a href="${menus[i].path}" class="nav-link"> 
+                        <a href="${menus[i].path}" class="nav-link" data-path="${menus[i].path}" data-id="${menus[i].id}"> 
                             <i class="${menus[i].icone}"></i>
                             <p>
                                 ${menus[i].nome}
@@ -281,7 +278,7 @@
                         for(var j = 0; j < menus[i].submenus.length; j++){
                             let submenu = menus[i].submenus[j];
                             subpart += `<li class="nav-item">
-                                            <a href="${submenu.path}" class="nav-link">
+                                            <a href="${submenu.path}" class="nav-link" data-path="${submenu.path}" data-id="${submenu.id}" data-parent_id="${menus[i].id}">
                                                 <i class="${submenu.icone}"></i>
                                                 <p>${submenu.nome}</p>
                                             </a>
@@ -293,6 +290,16 @@
                         html = html + `<li class="nav-item"> ${part} </li>`;
                     }
                     $(".sidebar-menu").html(html);
+                    @if ($menuativo)
+                        var menuat = $('.nav-link[data-path="{{$menuativo}}"]');
+                        if(menuat.data('parent_id')){
+                            $($('.nav-link[data-id="'+menuat.data('parent_id')+'"]').parent()).addClass('menu-open');
+                        }
+                        if($('.nav-link[data-path="{{$menuativo}}"] .bi-circle').length){
+                            $('.nav-link[data-path="{{$menuativo}}"] .bi-circle').removeClass("bi-circle").addClass("bi-circle-fill");
+                        }
+                        menuat.addClass('active');
+                    @endif
                 },
                 error: function(err, resp, text) {
                     ExibeMensagemErroAPI(err);
@@ -434,25 +441,6 @@
                     }
                 });
             });
-            @if ($menuativo)
-                @php
-                    $menuativo = explode('|', $menuativo);
-                @endphp
-                @foreach ($menuativo as $menu)
-                    $(".{{ $menu }}").addClass('active');
-                    if($(".{{ $menu }} .bi-circle").length){
-                        $(".{{ $menu }} .bi-circle").removeClass("bi-circle").addClass("bi-circle-fill");
-                    }
-                @endforeach
-            @endif
-            @if ($menuexpand)
-                @php
-                    $menuexpand = explode('|', $menuexpand);
-                @endphp
-                @foreach ($menuexpand as $menu)
-                    $($(".{{ $menu }}").parent()).addClass('menu-open');
-                @endforeach
-            @endif
         });
     </script>
 </body>

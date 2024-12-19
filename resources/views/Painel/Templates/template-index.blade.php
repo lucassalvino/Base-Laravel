@@ -8,9 +8,6 @@ if(!isset($acaoPosSubmit))
 if(!isset($menuativo))
     $menuativo = '';
 
-if(!isset($menuexpand))
-    $menuexpand = '';
-
 if(!isset($urlNovo))
     $urlNovo = "#";
 
@@ -55,8 +52,7 @@ if(!isset($classBtnCadastro)){
 @extends('layouts.painel',
     [
         "titulo" => $titulo,
-        "menuativo" => $menuativo,
-        "menuexpand" => $menuexpand
+        "menuativo" => $menuativo
     ]
 )
 

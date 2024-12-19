@@ -5,10 +5,13 @@ namespace  App\Http\Controllers\Web\admin\Usuarios;
 use App\Http\Controllers\Web\admin\BaseAdminController;
 use App\Models\Grupo;
 use App\Models\Menu\GrupoMenu;
+use App\Models\Menu\Menu;
 use App\Models\Relacionamentos\UsuarioGrupo;
 use App\Servicos\LoginServico;
 use App\Utils\BaseRetornoApi;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PermissaoController extends BaseAdminController
 {
@@ -38,14 +41,12 @@ class PermissaoController extends BaseAdminController
     public function MenusGrupoEdicao(Request $request, $id){
         $grupo = Grupo::query()->where('id', '=', $id)->first();
         $menusGrupos = GrupoMenu::query()
-            ->join('menus', 'menus.id', '=', 'grupo_menu.menu_id')
             ->where('grupo_menu.grupo_id', '=',  $id)
-            ->paginate(20, [
-                'menus.id as menu_id',
-                'grupo_menu.grupo_id',
-                'menus.nome as nome_menu'
+            ->get([
+                'grupo_menu.*'
             ]);
-        return view('admin.pages.Usuarios.Permissoes.Menus.editamenu', compact('grupo', 'menusGrupos'));
+        $menus = Menu::ObtemMenusView();
+        return view('admin.pages.Usuarios.Permissoes.Menus.editamenu', compact('grupo', 'menusGrupos', 'menus'));
     }
 
     public function AdicionaUsuarioGrupo(Request $request){
@@ -69,49 +70,36 @@ class PermissaoController extends BaseAdminController
         return BaseRetornoApi::GetRetornoSucesso("");
     }
 
-    public function AdicionamenuGrupo(Request $request){
-        $dados = $request->all();
-        $registro = GrupoMenu::withTrashed()
-            ->where('grupo_id', '=', $dados['grupo_id'])
-            ->where('menu_id', '=', $dados['menu_id'])
-            ->first();
-        if($registro){
-            if($registro->trashed()){
-                $registro->restore();
-                $registro->save();
+    public function AtualizaMenuGrupo(Request $request){
+        try{
+            DB::beginTransaction();
+            $menus = $request->get('menus', []);
+            $grupoid = $request->get('grupo_id', null);
+            GrupoMenu::withTrashed()
+                ->where('grupo_id', '=', $grupoid)
+                ->delete();
+            foreach($menus as $menu){
+                $registro = GrupoMenu::withTrashed()
+                    ->where('grupo_id', '=', $grupoid)
+                    ->where('menu_id', '=', $menu)
+                    ->first();
+                if($registro){
+                    if($registro->trashed()){
+                        $registro->restore();
+                        $registro->save();
+                    }
+                }else{
+                    GrupoMenu::create(Array(
+                        'grupo_id' => $grupoid,
+                        'menu_id' => $menu
+                    ));
+                }
             }
-        }else{
-            GrupoMenu::create(Array(
-                'grupo_id' => $dados['grupo_id'],
-                'menu_id' => $dados['menu_id']
-            ));
+            DB::commit();
+            return BaseRetornoApi::GetRetornoSucesso("");
+        }catch(Exception $erro){
+            DB::rollBack();
+            return GrupoMenu::GeraErro([$erro->getMessage()]);
         }
-        return BaseRetornoApi::GetRetornoSucesso("");
-    }
-
-    public function RemoverUsuarioGrupo(Request $request){
-        $dados = $request->all();
-        $registro = UsuarioGrupo::query()
-            ->where('grupo_id', '=', $dados['grupo_id'])
-            ->where('usuario_id', '=', $dados['usuario_id'])
-            ->first();
-        if($registro){
-            $registro->delete();
-            $registro->save();
-        }
-        return BaseRetornoApi::GetRetornoSucesso("");
-    }
-
-    public function RemoverMenuGrupo(Request $request){
-        $dados = $request->all();
-        $registro = GrupoMenu::query()
-            ->where('grupo_id', '=', $dados['grupo_id'])
-            ->where('menu_id', '=', $dados['menu_id'])
-            ->first();
-        if($registro){
-            $registro->delete();
-            $registro->save();
-        }
-        return BaseRetornoApi::GetRetornoSucesso("");
     }
 }

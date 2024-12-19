@@ -70,10 +70,7 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
 
     Route::group(['prefix' => 'usuariogrupo'], function(){
         Route::post('/adicionausuariogrupo', [PermissaoController::class, 'AdicionaUsuarioGrupo'])->name("adicione.usuario.grupo");
-        Route::post('/removerusuariogrupo', [PermissaoController::class, 'RemoverUsuarioGrupo'])->name('remove.usuario.grupo');
-
-        Route::post('/adicionamenugrupo', [PermissaoController::class, 'AdicionamenuGrupo'])->name("adicione.menu.grupo");
-        Route::post('/removermenugrupo', [PermissaoController::class, 'RemoverMenuGrupo'])->name('remove.menu.grupo');
+        Route::post('/atualizamenugrupo', [PermissaoController::class, 'AtualizaMenuGrupo'])->name("atualiza.menu.grupo");
     });
 
     Route::get('/obtem-dados-logado', [LoginApiController::class, 'ObtemDadosLogado'])->name('obtem-dados-logado');

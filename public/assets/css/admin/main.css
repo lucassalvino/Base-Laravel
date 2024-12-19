@@ -258,9 +258,8 @@ label {
   margin-left: 0px;
 }
 
-.form-check {
-  display: flex;
-  justify-content: flex-end;
+.no-bullets {
+  list-style-type: none;
 }
 
 .container-form-login img {

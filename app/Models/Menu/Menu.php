@@ -24,15 +24,24 @@ Class Menu extends BaseModel{
         ];
     }
     
-    public static function ObtemMenusView($usuario_id){
+    public static function ObtemMenusView($usuario_id = null){
         $menus = [];
+        $filtro = " where 1=1 ";
+        $inner = " left ";
+        $complmentoUser = "";
+        if(!is_null($usuario_id)){
+            $filtro = " and usuario_grupo.usuario_id = '{$usuario_id}'";
+            $inner = " inner ";
+            $complmentoUser = " and sub.id in (select id from menusAcesso) ";
+        }
         $dbMenus = DB::select("WITH menusAcesso as (
             select 
                 menus.id
             From menus
-            inner join grupo_menu ON grupo_menu.menu_id = menus.id
-            inner join usuario_grupo on grupo_menu.grupo_id = usuario_grupo.grupo_id
-            where usuario_grupo.usuario_id = '{$usuario_id}'
+            {$inner} join grupo_menu ON grupo_menu.menu_id = menus.id and grupo_menu.deleted_at is null
+            left join usuario_grupo on grupo_menu.grupo_id = usuario_grupo.grupo_id and usuario_grupo.deleted_at is null
+            {$filtro}
+            and menus.deleted_at is null
             group by menus.id
         )
         select 
@@ -47,10 +56,10 @@ Class Menu extends BaseModel{
             sub.path as sub_path,
             sub.ordem as sub_ordem
         From menus
-        left join menus as sub on sub.parent_id = menus.id
-        inner join menusAcesso on menusAcesso.id = menus.id
-        inner join menusAcesso as subacesso on subacesso.id = menusAcesso.id
+        left join menus as sub on sub.parent_id = menus.id and sub.deleted_at is null {$complmentoUser}
+        {$inner} join menusAcesso on menusAcesso.id = menus.id
         where menus.parent_id is null
+        and menus.deleted_at is null
         order by menus.ordem, sub.ordem");
         foreach($dbMenus as $bdmenu){
             if(!array_key_exists($bdmenu->id, $menus)){

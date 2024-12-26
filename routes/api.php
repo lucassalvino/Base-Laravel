@@ -70,6 +70,7 @@ Route::namespace('Api')->middleware(['cors', 'VerificaSessao'])->group(function(
 
     Route::group(['prefix' => 'usuariogrupo'], function(){
         Route::post('/adicionausuariogrupo', [PermissaoController::class, 'AdicionaUsuarioGrupo'])->name("adicione.usuario.grupo");
+        Route::post('/removeusuariogrupo', [PermissaoController::class, 'RemoverUsuarioGrupo'])->name("remove.usuario.grupo");
         Route::post('/atualizamenugrupo', [PermissaoController::class, 'AtualizaMenuGrupo'])->name("atualiza.menu.grupo");
     });
 

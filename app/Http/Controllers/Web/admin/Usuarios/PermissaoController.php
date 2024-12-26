@@ -70,6 +70,19 @@ class PermissaoController extends BaseAdminController
         return BaseRetornoApi::GetRetornoSucesso("");
     }
 
+    public function RemoverUsuarioGrupo(Request $request){
+        $dados = $request->all();
+        $registro = UsuarioGrupo::query()
+            ->where('grupo_id', '=', $dados['grupo_id'])
+            ->where('usuario_id', '=', $dados['usuario_id'])
+            ->first();
+        if($registro){
+            $registro->delete();
+            $registro->save();
+        }
+        return BaseRetornoApi::GetRetornoSucesso("");
+    }
+
     public function AtualizaMenuGrupo(Request $request){
         try{
             DB::beginTransaction();

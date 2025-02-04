@@ -82,7 +82,7 @@ class CurlRequests{
             'retorno' => $result,
             'info' => $getInfo,
             'http_status' => $codigo,
-            'sucesso' => ($codigo == 200),
+            'sucesso' => ($codigo >= 200 && $codigo <= 299),
             'realiza_login' => ($codigo == 403)
         );
     }

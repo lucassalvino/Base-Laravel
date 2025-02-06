@@ -36,14 +36,14 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>SamantaTur</title>
+    <title>Cit Systems</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="Samanta Tur">
+    <meta name="title" content="Cit Systems">
     <meta name="author" content="CIT Systems">
-    <meta name="description" content="Samanta Tur">
+    <meta name="description" content="Cit Systems">
     <meta name="keywords" content="">
     <meta name="_authorization" content="{{ session('Authorization','') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/img/ico-samanta.png') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/img/logo-cit.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -126,13 +126,13 @@
             <div class="sidebar-brand">
                 <a href="{{ route('painel:home.painel') }}" class="brand-link">
                     @if ($client)
-                        <img src="{{ $pathImg ?? asset('assets/img/ico-samanta.png') }}" alt="CIT"
+                        <img src="{{ $pathImg ?? asset('assets/img/logo-cit.png') }}" alt="CIT"
                             class="brand-image ">
                     @else
-                        <img src="{{ asset('assets/img/ico-samanta.png') }}" alt="CIT"
+                        <img src="{{ asset('assets/img/logo-cit.png') }}" alt="CIT"
                             class="brand-image ">
                     @endif
-                    <span class="brand-text fw-light">SAMANTA<span>TUR</span></span>
+                    <span class="brand-text fw-light">CIT<span>Systems</span></span>
                 </a>
             </div>
             <div class="sidebar-wrapper">
